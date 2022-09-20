@@ -4,10 +4,10 @@ const Wrapper = styled.div`
   /* color:red */
 `;
 
-export default function Home() {
+export default function Login() {
   return (
     <Wrapper>
-      <h1>메인페이지</h1>
+      <h1>로그인</h1>
     </Wrapper>
   )
 }
