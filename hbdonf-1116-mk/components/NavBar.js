@@ -3,7 +3,6 @@ import {useRouter} from "next/router"
 import styled from "styled-components";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/auth-context";
-import { Logo } from "./Icons";
 import NavToggleBtn from "./NavToggleBtn";
 
 const StyledNav = styled.nav`
@@ -201,8 +200,8 @@ export default function NavBar(){
                 <MobileNav>
                     <h1>
                         <span className="hide">VMGO</span>
-                        <Link href={getLocalStorage() ? "/dashboard" : "/"}>
-                            <a title="VMGO"><Logo/></a>
+                        <Link href={getLocalStorage() ? "/mypage" : "/"}>
+                            <a title="VMGO">LOGO</a>
                         </Link>
                     </h1>
                     <MobileNavBtn opened={isOpened}>
@@ -216,23 +215,21 @@ export default function NavBar(){
                             {
                                 getLocalStorage() &&
                                 <li>
-                                    <Link href={getLocalStorage() ? "/dashboard" : "/"}>
-                                        <a onClick={toggleNavMenu} className={router.pathname === ("/" && "/dashboard") ? "active" : ""}>대시보드</a>
+                                    <Link href={getLocalStorage() ? "/mypage" : "/"}>
+                                        <a onClick={toggleNavMenu} className={router.pathname === ("/" && "/mypage") ? "active" : ""}>내 메세지 보러가기</a>
                                     </Link>
                                 </li>
                             }
                             <li>
-                                <Link href="/challenge">
-                                    <a onClick={toggleNavMenu} className={router.pathname === "/challenge" ? "active" : ""}>챌린지</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/group_watching">
-                                    <a onClick={toggleNavMenu} className={router.pathname === "/group_watching" ? "active" : ""}>단관</a>
+                                <Link href="/luckydraw">
+                                    <a onClick={toggleNavMenu} className={router.pathname === "/luckydraw" ? "active" : ""}>특전 보러가기</a>
                                 </Link>
                             </li>
                         </ul>
                         <ul className="user-menu">
+                            <li>
+                                언어세팅
+                            </li>
                             <li>
                                 {
                                     getLocalStorage() ?
@@ -248,9 +245,9 @@ export default function NavBar(){
                         <li>
                             <h1>
                                 <span className="hide">VMGO</span>
-                                <Link href={getLocalStorage() ? "/dashboard" : "/"}>
-                                    <a className={router.pathname === ("/" && "/dashboard") ? "active" : ""} title="VMGO">
-                                        <Logo/>
+                                <Link href={getLocalStorage() ? "/mypage" : "/"}>
+                                    <a className={router.pathname === ("/" && "/mypage") ? "active" : ""} title="VMGO">
+                                        LOGO
                                         {/* {fbaseInfo?.displayName} */}
                                     </a>
                                 </Link>
@@ -259,23 +256,19 @@ export default function NavBar(){
                         {
                             getLocalStorage() &&
                             <li>
-                                <Link href={getLocalStorage() ? "/dashboard" : "/"}>
-                                    <a className={router.pathname === ("/" && "/dashboard") ? "active" : ""}>대시보드</a>
+                                <Link href={getLocalStorage() ? "/mypage" : "/"}>
+                                    <a className={router.pathname === ("/" && "/mypage") ? "active" : ""}>내 메세지 보러가기</a>
                                 </Link>
                             </li>
                         }
                         <li>
-                            <Link href="/challenge">
-                                <a className={router.pathname === "/challenge" ? "active" : ""}>챌린지</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/group_watching">
-                                <a className={router.pathname === "/group_watching" ? "active" : ""}>단관</a>
+                            <Link href="/luckydraw">
+                                <a className={router.pathname === "/luckydraw" ? "active" : ""}>특전 보러가기</a>
                             </Link>
                         </li>
                     </ul>
                     <ul className="user-menu">
+                        <li>언어세팅</li>
                         <li>
                             {
                                 getLocalStorage() ?
