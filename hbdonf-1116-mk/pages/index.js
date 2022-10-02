@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MusicBar from '../components/MusicBar';
 import WorkBtn from '../components/WorkBtn';
+import Marquee from "react-marquee-slider";
+import times from "lodash/times";
+
 
 const Wrapper = styled.div`
-  /* color:red */
-
   section{
     min-height: 100vh;
     outline: 1px solid floralwhite;
@@ -28,6 +29,23 @@ const Wrapper = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+  }
+
+  .section-message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .inner{
+      width:100%;
+      height:90vh;
+      
+      .test{
+        /* width:50rem;
+        height: 50rem; */
+        outline: 1px solid gold;
+      }
     }
   }
 
@@ -92,22 +110,30 @@ const Wrapper = styled.div`
 `;
 
 export default function Home() {
+  const [message, setMessage] = useState();
   const [mkWork, setMkWork] = useState();
   const [mkWorkCate, setMkWorkCate] = useState("composed");
   const [musicData, setMusicData] = useState();
 
   useEffect(() => {
+    const getMessage = async () => {
+      const result = await (
+        await fetch('/api/message')
+      ).json();
+  
+      setMessage(result);
+    };
+
     const getMkWork = async () => {
       const result = await (
         await fetch('/api/mk_work')
       ).json();
   
       setMkWork(result);
-      console.log(result);
     };
 
+    getMessage();
     getMkWork();
-
   }, []);
 
   return (
@@ -130,8 +156,35 @@ export default function Home() {
         </div>
       </section>
       <section className='section-message'>
-        <h2>메세지 영역</h2>
-        <div className='inner center-content'></div>
+        <h2 className='hide'>메세지 영역</h2>
+        <div className='inner'>
+          <Marquee velocity={50} minScale={0.7} resetAfterTries={200} scatterRandomly>
+            {times(7, Number).map(id => {
+              // <Photo src={photos[id]} key={`marquee-example-people-${id}`} style={{ 
+              //   marginLeft: "87px",
+              // }} />
+              // <p>{message[id].type}</p>
+              // <p>{message[id].text}</p>
+              return (
+                <div className='test'>
+                  <p>{id}</p>
+                  {
+                    message &&
+                    <>
+                      <p>{message[id]?.id}</p>
+                      <p>{message[id]?.text}</p>
+                    </>
+                  }
+                </div>
+              );
+            })}
+          </Marquee>
+          {
+            // message?.map((item, index) => (
+            //   <p key={index}>type : {item.type} / {item.text}</p>
+            // ))
+          }
+        </div>
       </section>
       <section className='section-mk-work'>
         <h2 className='hide'>민균이 천재 자랑영역</h2>
