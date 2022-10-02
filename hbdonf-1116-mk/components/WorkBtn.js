@@ -9,9 +9,9 @@ const StyledBtn = styled.button`
     background-size:cover;
 `;
 
-export default function WorkBtn({data}){
+export default function WorkBtn({data, onclick}){
     return (
-        <StyledBtn backgroundImage={data.thumbnail}>
+        <StyledBtn backgroundImage={data.thumbnail} onClick={() => {onclick(data);}}>
             {/* <img src={data.thumbnail} alt={data.title.ko}/> */}
             <p>{data.title.ko}</p>
         </StyledBtn>

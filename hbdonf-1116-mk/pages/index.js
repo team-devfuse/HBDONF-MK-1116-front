@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import MusicBar from '../components/MusicBar';
 import WorkBtn from '../components/WorkBtn';
 
 const Wrapper = styled.div`
@@ -93,6 +94,7 @@ const Wrapper = styled.div`
 export default function Home() {
   const [mkWork, setMkWork] = useState();
   const [mkWorkCate, setMkWorkCate] = useState("composed");
+  const [musicData, setMusicData] = useState();
 
   useEffect(() => {
     const getMkWork = async () => {
@@ -169,7 +171,7 @@ export default function Home() {
                   if(item.category.indexOf(mkWorkCate) > -1){
                     return(
                       <li key={index}>
-                        <WorkBtn data={item}/>
+                        <WorkBtn data={item} onclick={setMusicData}/>
                       </li>
                     )
                   }
@@ -180,6 +182,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {
+        musicData && 
+          <MusicBar data={musicData} onclick={setMusicData}/>
+      }
     </Wrapper>
   )
 }

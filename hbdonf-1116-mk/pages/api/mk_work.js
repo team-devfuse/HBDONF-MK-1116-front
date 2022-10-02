@@ -10,6 +10,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/zVE-cvSu10k",
+    vidid:"zVE-cvSu10k",
     thumbnail:"https://i.ytimg.com/vi/zVE-cvSu10k/maxresdefault.jpg"
   },
   {
@@ -22,6 +23,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/iI3r8NY2hsI",
+    vidid:"iI3r8NY2hsI",
     thumbnail:"https://i.ytimg.com/vi/iI3r8NY2hsI/maxresdefault.jpg"
   },
   {
@@ -34,6 +36,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/PInS4rkK83o",
+    vidid:"PInS4rkK83o",
     thumbnail:"https://i.ytimg.com/vi/PInS4rkK83o/maxresdefault.jpg"
   },
   {
@@ -46,6 +49,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/hTkJjJ4nxCw",
+    vidid:"hTkJjJ4nxCw",
     thumbnail:"https://i.ytimg.com/vi/hTkJjJ4nxCw/maxresdefault.jpg"
   },
   {
@@ -58,6 +62,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://www.youtube.com/watch?v=Q3iAE7hwhfM",
+    vidid:"Q3iAE7hwhfM",
     thumbnail:"https://namu.wiki/jump/hNPh8r7%2Fv6CSrXsi8GzA7tuKqQ8FGFTsaGw%2Breiii56r%2FdWxISADPd5vriAGsJEB4L0Wy1wREO%2FD8LmOWg6GSw%3D%3D"
   },
   {
@@ -70,6 +75,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://www.youtube.com/watch?v=2oFgu31WyVU",
+    vidid:"2oFgu31WyVU",
     thumbnail:"https://namu.wiki/jump/hNPh8r7%2Fv6CSrXsi8GzA7tuKqQ8FGFTsaGw%2Breiii56r%2FdWxISADPd5vriAGsJEB4L0Wy1wREO%2FD8LmOWg6GSw%3D%3D"
   },
   {
@@ -82,6 +88,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/LautlAmASQQ",
+    vidid:"LautlAmASQQ",
     thumbnail:"https://i.ytimg.com/vi/LautlAmASQQ/maxresdefault.jpg"
   },
   {
@@ -154,6 +161,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://www.youtube.com/watch?v=BodVjFLsi8o",
+    vidid:"BodVjFLsi8o",
     thumbnail:"https://namu.wiki/jump/teuarAaC0zd5a%2F24EYdyFYi5ZVd0ey4Fd2OF3JmLgrO1jeWS9mkK5%2Bcn5MJjYwtGa3s3eva5wzaclxz8ldp1jQ%3D%3D"
   },
   {
@@ -166,6 +174,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://www.youtube.com/watch?v=Ev2_piRRQqY",
+    vidid:"Ev2_piRRQqY",
     thumbnail:"https://namu.wiki/jump/teuarAaC0zd5a%2F24EYdyFYi5ZVd0ey4Fd2OF3JmLgrO1jeWS9mkK5%2Bcn5MJjYwtGa3s3eva5wzaclxz8ldp1jQ%3D%3D"
   },
   {
@@ -202,6 +211,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/tiDPJxaTgJU",
+    vidid:"tiDPJxaTgJU",
     thumbnail:"https://i.ytimg.com/vi/tiDPJxaTgJU/maxresdefault.jpg"
   },
   {
@@ -214,6 +224,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/hVggHrnIED4",
+    vidid:"hVggHrnIED4",
     thumbnail:"https://i.ytimg.com/vi/hVggHrnIED4/maxresdefault.jpg"
   },
   {
@@ -226,6 +237,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/1g5HFWxKxp8",
+    vidid:"1g5HFWxKxp8",
     thumbnail:"https://i.ytimg.com/vi/MzO1kmYQyfg/maxresdefault.jpg"
   },
   {
@@ -238,6 +250,7 @@ const workList = [
     },
     type:"youtube",
     link:"https://youtu.be/MzO1kmYQyfg",
+    vidid:"MzO1kmYQyfg",
     thumbnail:"https://i.ytimg.com/vi/1g5HFWxKxp8/maxresdefault.jpg"
   },
 ];
