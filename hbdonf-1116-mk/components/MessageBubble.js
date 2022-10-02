@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { bubble_info } from '../lib/bubble_info';
 
 const Wrapper = styled.div`
     position: relative;
@@ -34,10 +35,12 @@ const Wrapper = styled.div`
     }
 `;
 
-export default function MessageBubble({data, text}){
+export default function MessageBubble({level, text}){
+    const data = bubble_info.find(item => item.level == level);
+
     return (
-        <Wrapper level={data.level}>
-            <img src={data.image_url} alt={data.text}/>
+        <Wrapper level={level}>
+            <img src={data.image_url} alt={text}/>
             <p style={{"width":`${data.width}%`,"height":`${data.height}%`,"left":`${data.left}%`,"top":`${data.top}%`}}>
                 {text}
             </p>

@@ -2,27 +2,37 @@
 const messageList = [
   {
     id:1,
-    type:3,
+    level:3,
     text:"민균아생일축하어쩌구"
   },
   {
     id:2,
-    type:2,
+    level:2,
     text:"민균아생일축하어쩌구"
   },
   {
     id:3,
-    type:3,
+    level:3,
     text:"민균아생일축하어쩌구"
   },
   {
     id:4,
-    type:4,
+    level:4,
     text:"민균아생일축하어쩌구"
   },
   {
     id:5,
-    type:5,
+    level:5,
+    text:"민균아생일축하어쩌구"
+  },
+  {
+    id:6,
+    level:4,
+    text:"민균아생일축하어쩌구"
+  },
+  {
+    id:7,
+    level:5,
     text:"민균아생일축하어쩌구"
   },
 ];

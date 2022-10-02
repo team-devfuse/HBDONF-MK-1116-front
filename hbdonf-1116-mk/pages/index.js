@@ -4,6 +4,7 @@ import MusicBar from '../components/MusicBar';
 import WorkBtn from '../components/WorkBtn';
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
+import MessageBubble from '../components/MessageBubble';
 
 
 const Wrapper = styled.div`
@@ -40,11 +41,18 @@ const Wrapper = styled.div`
     .inner{
       width:100%;
       height:90vh;
-      
-      .test{
-        /* width:50rem;
-        height: 50rem; */
-        outline: 1px solid gold;
+
+      &>div>div{
+        display: flex;
+        align-items: center;
+      }
+
+      &>div>div>div:nth-child(2n){
+        align-self: flex-start;
+      }
+
+      &>div>div>div:nth-child(3n){
+        align-self: flex-end;
       }
     }
   }
@@ -158,32 +166,14 @@ export default function Home() {
       <section className='section-message'>
         <h2 className='hide'>메세지 영역</h2>
         <div className='inner'>
-          <Marquee velocity={50} minScale={0.7} resetAfterTries={200} scatterRandomly>
+          <Marquee velocity={50} resetAfterTries={100}>
             {times(7, Number).map(id => {
-              // <Photo src={photos[id]} key={`marquee-example-people-${id}`} style={{ 
-              //   marginLeft: "87px",
-              // }} />
-              // <p>{message[id].type}</p>
-              // <p>{message[id].text}</p>
               return (
-                <div className='test'>
-                  <p>{id}</p>
-                  {
-                    message &&
-                    <>
-                      <p>{message[id]?.id}</p>
-                      <p>{message[id]?.text}</p>
-                    </>
-                  }
-                </div>
+                message &&
+                <MessageBubble level={message[id]?.level} text={message[id]?.text} />
               );
             })}
           </Marquee>
-          {
-            // message?.map((item, index) => (
-            //   <p key={index}>type : {item.type} / {item.text}</p>
-            // ))
-          }
         </div>
       </section>
       <section className='section-mk-work'>

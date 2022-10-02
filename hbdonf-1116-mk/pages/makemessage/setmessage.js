@@ -31,8 +31,7 @@ const Wrapper = styled.div`
 
 export default function Setmessage() {
   const router = useRouter();
-  // const { level } = router.query;
-  const level  = 5;
+  const { level } = router.query;
   return (
     <Wrapper>
       <div className='inner center-content'>
@@ -48,7 +47,7 @@ export default function Setmessage() {
                 if(item.level <= level){
                   return (
                     <li key={index}>
-                      <MessageBubble data={item} text={item.title}/>
+                      <MessageBubble level={item.level} text={item.title}/>
                     </li>
                   );
                 }
