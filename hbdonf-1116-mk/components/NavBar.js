@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/auth-context";
 import NavToggleBtn from "./NavToggleBtn";
+import { Icon } from "./Icons";
+
 
 const StyledNav = styled.nav`
     width:100%;
-    height:6rem;
+    height:10rem;
     position:fixed;
     z-index:11;
     transition: background 0.2s ease-in-out;
@@ -29,7 +31,7 @@ const StyledNav = styled.nav`
     }
 
     h1{
-        width:8rem;
+        width:6rem;
         font-family: 'PyeongChangPeace', sans-serif;
         cursor: pointer;
     }
@@ -133,7 +135,9 @@ export default function NavBar(){
             <MobileNav>
                     <h1>
                         <Link href="/">
-                            <a title="HOME">HOME</a>
+                            <a title="HOME">
+                                <Icon.Logo/>
+                            </a>
                         </Link>
                     </h1>
                     <MobileNavBtn opened={isOpened}>

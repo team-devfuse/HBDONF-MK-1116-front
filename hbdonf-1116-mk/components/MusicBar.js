@@ -8,17 +8,24 @@ const StyledBtn = styled.div`
     bottom: 0;
     background-color: var(--color-light);
 
-    .close-btn{
-        color:red;
+    .btn-area{
+        text-align: right;
+
+        .close-btn{
+            padding:1rem;
+            font-size: var(--font-size-big);
+            font-weight: 600;
+            color:red;
+        }
     }
 `;
 
 export default function MusicBar({data, onclick}){
     return (
         <StyledBtn backgroundImage={data.thumbnail}>
-            <button className="close-btn" onClick={() => {onclick();}}>X</button>
-            {/* <img src={data.thumbnail} alt={data.title.ko}/> */}
-            <p>{data.title.ko}</p>
+            <p className="btn-area">
+                <button className="close-btn" onClick={() => {onclick();}}>X</button>
+            </p>
             {
                 data.type === "soundcloud" ? 
                 <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"

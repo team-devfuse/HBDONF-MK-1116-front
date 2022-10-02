@@ -48,7 +48,7 @@ export default function AudioProg({width, volume}){
                 <circle className="circle-prog" mask="url(#mask1)" cx={width/2} cy={width/2} r={(width-strokeWidth)/2} stroke="url(#gradient)" stroke-width={strokeWidth} stroke-dasharray="10 10"/>
             </svg>
             <div className="guide-area" style={{"width":`${width-100}px`, "height":`${width-100}px`}}>
-                test
+                {volume}
             </div>
         </Wrapper>
     );

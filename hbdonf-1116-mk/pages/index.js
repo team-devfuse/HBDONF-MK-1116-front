@@ -10,7 +10,6 @@ import MessageBubble from '../components/MessageBubble';
 const Wrapper = styled.div`
   section{
     min-height: 100vh;
-    outline: 1px solid floralwhite;
 
     .inner{
       width: 90%;
@@ -24,6 +23,15 @@ const Wrapper = styled.div`
 
     .inner{
       width:100%;
+      position: relative;
+
+      img{
+        position: absolute;
+        left:0;
+        bottom:0;
+        transform: translateY(20%);
+        width:100%;
+      }
     }
 
     video{
@@ -37,6 +45,8 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    background: url("assets/image/bg_ripped_paper.png") no-repeat center bottom;
+    background-size: 100%;
 
     .inner{
       width:100%;
@@ -58,9 +68,8 @@ const Wrapper = styled.div`
   }
 
   .section-mk-work{
-    display: flex;
-    align-items: center;
-    img{width:100%;}
+    min-height: unset;
+    padding:10rem 0 20rem;
 
     .inner{
       outline: 1px solid red;
@@ -161,6 +170,7 @@ export default function Home() {
               type="video/mp4"
             />
           </video>
+          <img src="assets/image/bg_ripped_paper.png" alt=""/>
         </div>
       </section>
       <section className='section-message'>
