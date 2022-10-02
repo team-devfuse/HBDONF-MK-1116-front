@@ -1,10 +1,42 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import MessageNav from '../../components/MessageNav';
+import AudioProg from '../../components/AudioProg';
+import LevelArea from '../../components/LevelArea';
 
 const Wrapper = styled.div`
-  /* color:red */
   padding-top: 6rem;
+  text-align: center;
+  height: 100%;
+  min-height: calc(100vh - 6rem);
+
+  .inner{
+    max-width: 720px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .txt-area{
+      width: 100%;
+      padding: 4rem 0;
+      text-align: left;
+      font-size: var(--font-size-big);
+      font-weight: 600;
+    }
+
+    .level-area{
+      padding-top: 4rem;
+    }
+
+    &>.btn-area{
+      width:100%;
+      padding: 4rem 0;
+    }
+  }
 `;
 
 export default function Soriziller() {
@@ -12,6 +44,7 @@ export default function Soriziller() {
   const [volume, setVolume] = useState();
   const [level, setLevel] = useState(0);
   const [time, setTime] = useState(100);
+  const [isMobile, setIsMobile] = useState();
 
   const nextStep = () => {
     router.push({
@@ -77,28 +110,43 @@ export default function Soriziller() {
     else if(volume >= 121 && volume <= 150){level<5 && setLevel(5)} // 5
   }, [volume]);
   
+  /** 모바일 여부에 따라 prog-circle width 설정 */
+  useEffect(() => {
+    getIsMobile();
+
+    window.onresize = (e) => {
+        getIsMobile();
+    };
+  });
+
+  const getIsMobile = () => {
+    const winW = window.innerWidth;
+    
+    if(winW<1024){
+        setIsMobile(true);
+    } else{
+        setIsMobile(false);
+    }
+  };
+  
   return (
     <Wrapper>
-      <h1>소리질러모드</h1>
-      <h2>remain time : {time}</h2>
-      <p>volume : {volume}</p>
-      <p>level : {level}</p>
-        <div class="svg-test">
-          <svg xmlns="http://www.w3.org/2000/svg" width="366" height="366" viewBox="0 0 366 366" fill="none">
-          </svg>
-          <svg class="prog1" xmlns="http://www.w3.org/2000/svg" width="366" height="366" viewBox="0 0 366 366" fill="none">
-            <defs>
-              <mask id="mask1">
-                <rect width="366" height="366" fill="#000"/>
-                <circle cx="183" cy="183" r="165.5" stroke="#fff" stroke-width="35" stroke-dasharray="600" stroke-dashoffset="600"/>
-              </mask>
-            </defs>
-            <circle mask="url(#mask1)" cx="183" cy="183" r="165.5" stroke="#303030" stroke-width="35" stroke-dasharray="10 10"/>
-           </svg>
+      <div className='inner center-content'>
+        <MessageNav backPath="/makemessage" step={1}/>
+        <div className='txt-area'>
+          {time}초 동안 소리를 질러 말풍선을 획득해주세요
+          <p>remain time : {time} / volume : {volume} / level : {level}</p>
         </div>
-      <button className='default-btn' onClick={nextStep}>
-        다음
-      </button>
+        <AudioProg width={isMobile ? 300 : 400} volume={volume}/>
+        <div className='level-area'>
+          <LevelArea level={level}/>
+        </div>
+        <div className='btn-area'>
+          <button className='default-btn' onClick={nextStep}>
+            다음
+          </button>
+        </div>
+      </div>
     </Wrapper>
   )
 }
