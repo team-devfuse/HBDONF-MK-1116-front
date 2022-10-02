@@ -81,7 +81,8 @@ body{
   font-size: var(--font-size-default);
   font-family: GmarketSans, sans-serif;
   word-break: keep-all;
-  background-color: var(--color-dark);
+  background: url("/assets/image/bg_default_m.png") no-repeat center center fixed, #222222;
+  background-size: cover;
 }
 
 body::after{
@@ -109,7 +110,6 @@ a{
 }
 
 main{
-  padding-top: 6rem;
   min-height:100vh;
   position: relative;
   overflow: hidden;
@@ -117,7 +117,7 @@ main{
 
 .center-content{
   width:90%;
-  max-width:72rem;
+  max-width:1024px;
   margin:0 auto;
 }
 
