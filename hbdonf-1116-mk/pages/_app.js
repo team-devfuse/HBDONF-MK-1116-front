@@ -44,7 +44,7 @@ export default function App({Component, pageProps}){
   return (
     <>
       <Head>
-        <title>{process.env.NODE_ENV==='development' ? '[dev]' : ''}VMGO{router.pathname !== "/" ? " | "+pathstr : ""}</title>
+        <title>{process.env.NODE_ENV==='development' ? '[dev]' : ''}[HBDONF 1116]Soriziller!!!</title>
         <meta property="og:url" content={thisPage}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content="summary"/>

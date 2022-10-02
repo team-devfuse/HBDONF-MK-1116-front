@@ -14,7 +14,7 @@ const StyledNav = styled.nav`
     ${props => {
         if(props.scrollY>10){
             return(`
-                background-color: rgba(13,6,39,0.95);
+                background-color: rgba(44,44,44,0.95);
                 // backdrop-filter: blur(10px);
             `)
         }
@@ -52,54 +52,6 @@ const StyledNav = styled.nav`
     }
 `;
 
-const PcNav = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-
-    ul{
-        display: flex;
-    }
-
-    li a{
-        transition: color .2s ease-in-out;
-    }
-
-    li:hover a,
-    li:focus a{
-        color:#81a3f9;
-    }
-    
-    .main-menu li{
-        padding-right: 2rem;
-    }
-
-    .main-menu li a{
-        font-size: var(--font-size-big);
-        font-weight: 600;
-    }
-
-    .main-menu li:first-child{
-        padding-right: 4rem;
-    }
-
-    .user-menu li{
-        padding-left: 2rem;
-    }
-
-    .user-menu li .default-btn{
-        height:3rem;
-        background-color: var(--color-light-30);
-    }
-    
-    .user-menu li .default-btn:hover,
-    .user-menu li .default-btn:focus{
-        filter:none;
-        background-color: var(--color-light-50);
-    }
-`;
-
 const MobileNav = styled.div`
     display: flex;
     justify-content: space-between;
@@ -127,7 +79,7 @@ const MobileNavLayer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     z-index: 10;
-    background-color: rgba(13,6,39,0.95);
+    background-color: rgba(44,44,44,0.95);
     backdrop-filter: blur(10px);
     transform: translateX(100%);
     transition: transform .4s ease-in-out;
@@ -144,7 +96,8 @@ const MobileNavLayer = styled.div`
         padding-bottom: 2rem;
     }
 
-    .main-menu li a{
+    .main-menu li a,
+    .main-menu li button{
         font-size: var(--font-size-big);
         font-weight: 600;
     }
@@ -155,7 +108,6 @@ export default function NavBar(){
     const router = useRouter();
     const {fbaseInfo, Logout, getLocalStorage} = useContext(AuthContext);
     let [scrollY, setScrollY] = useState();
-    let [isMobile, setIsMobile] = useState();
     let [isOpened, setIsOpened] = useState(false);
 
     const listener = e => {
@@ -164,29 +116,12 @@ export default function NavBar(){
     };
     
     useEffect(() => {
-        getIsMobile();
-
         window.addEventListener("scroll", listener);
-
-        window.onresize = (e) => {
-            getIsMobile();
-        };
 
         return () => {
             window.removeEventListener("scroll", listener);
         };
     });
-
-    const getIsMobile = () => {
-        const winW = window.innerWidth;
-        
-        if(winW<1024){
-            setIsMobile(true);
-        } else{
-            setIsMobile(false);
-            setIsOpened(false);
-        }
-    };
 
     const toggleNavMenu = () => {
         isOpened ? setIsOpened(false) : setIsOpened(true);
@@ -195,91 +130,54 @@ export default function NavBar(){
 
     return (
         <StyledNav scrollY={scrollY} >
-            {
-                isMobile ?
-                <MobileNav>
+            <MobileNav>
                     <h1>
-                        <span className="hide">VMGO</span>
-                        <Link href={getLocalStorage() ? "/mypage" : "/"}>
-                            <a title="VMGO">LOGO</a>
+                        <Link href="/">
+                            <a title="HOME">HOME</a>
                         </Link>
                     </h1>
                     <MobileNavBtn opened={isOpened}>
                         <button onClick={toggleNavMenu} aria-label="gnb button">
-                            {/* {isOpened ? "X" : "="} */}
                             <NavToggleBtn isOpened={isOpened}/>
                         </button>
                     </MobileNavBtn>
                     <MobileNavLayer opened={isOpened}>
                         <ul className="main-menu">
                             {
-                                getLocalStorage() &&
+                                // 로그인시 노출. 조건 수정 필요
+                                // getLocalStorage() &&
                                 <li>
-                                    <Link href={getLocalStorage() ? "/mypage" : "/"}>
-                                        <a onClick={toggleNavMenu} className={router.pathname === ("/" && "/mypage") ? "active" : ""}>내 메세지 보러가기</a>
+                                    <Link href="/mypage">
+                                        <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
                                     </Link>
                                 </li>
                             }
                             <li>
-                                <Link href="/luckydraw">
-                                    <a onClick={toggleNavMenu} className={router.pathname === "/luckydraw" ? "active" : ""}>특전 보러가기</a>
+                                <Link href="/makemessage">
+                                    <a onClick={toggleNavMenu} className={router.pathname === "/makemessage" ? "active" : ""}>메세지 생성(삭제메뉴)</a>
                                 </Link>
                             </li>
-                        </ul>
-                        <ul className="user-menu">
                             <li>
-                                언어세팅
+                                <Link href="/allmessage">
+                                    <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>모든 메세지 보러가기</a>
+                                </Link>
                             </li>
                             <li>
                                 {
                                     getLocalStorage() ?
-                                    <button className="default-btn" onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
-                                    <button className="default-btn" onClick={() => {router.push("/login"); toggleNavMenu();}}>로그인</button>
+                                    <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
+                                    <button onClick={() => {router.push("/login"); toggleNavMenu();}}>로그인</button>
                                 }
                             </li>
+                        </ul>
+                        <ul className="user-menu">
+                            <li>
+                                언어세팅 한글 / ENG / 일본어
+                            </li>
+                            <li>contact dev7fuse@gmail.com</li>
                         </ul>                  
                     </MobileNavLayer>
-                </MobileNav> :
-                <PcNav className="center-content">
-                    <ul className="main-menu">
-                        <li>
-                            <h1>
-                                <span className="hide">VMGO</span>
-                                <Link href={getLocalStorage() ? "/mypage" : "/"}>
-                                    <a className={router.pathname === ("/" && "/mypage") ? "active" : ""} title="VMGO">
-                                        LOGO
-                                        {/* {fbaseInfo?.displayName} */}
-                                    </a>
-                                </Link>
-                            </h1>
-                        </li>
-                        {
-                            getLocalStorage() &&
-                            <li>
-                                <Link href={getLocalStorage() ? "/mypage" : "/"}>
-                                    <a className={router.pathname === ("/" && "/mypage") ? "active" : ""}>내 메세지 보러가기</a>
-                                </Link>
-                            </li>
-                        }
-                        <li>
-                            <Link href="/luckydraw">
-                                <a className={router.pathname === "/luckydraw" ? "active" : ""}>특전 보러가기</a>
-                            </Link>
-                        </li>
-                    </ul>
-                    <ul className="user-menu">
-                        <li>언어세팅</li>
-                        <li>
-                            {
-                                getLocalStorage() ?
-                                <button className="default-btn" onClick={Logout}>로그아웃</button> :
-                                <button className="default-btn" onClick={() => {router.push("/login");}}>로그인</button>
-                            }
-                        </li>
-                    </ul>                   
-                </PcNav>
-            }
-            
+            </MobileNav>
         </StyledNav>
     );
 }

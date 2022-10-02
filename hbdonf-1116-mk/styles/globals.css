@@ -35,8 +35,10 @@
   --color-etion:#F58500;
   --color-wyatt:#2D1ED9;
   --color-u:#4791FF;
-  --color-dark:#050022;
+  --color-dark:#2C2C2C;
   --color-point:#4367E5;
+  --color-point:#097C3C;
+  --color-point-dark:#09572f;
   --color-warn:#FCBA56;
   /* --color-warn:#FC5656; */
   --color-light:#F4F6F9;
@@ -144,6 +146,11 @@ main{
   border-radius: .6rem;
   cursor:pointer;
   transition: all 0.2s ease-in-out;
+}
+
+.sub-btn{
+  background-color: #8F8F8F;
+  color: #CFCFCF;
 }
 
 .txt-btn:hover, .txt-btn:focus{
