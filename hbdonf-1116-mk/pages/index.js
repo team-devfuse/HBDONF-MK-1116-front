@@ -5,6 +5,9 @@ import WorkBtn from '../components/WorkBtn';
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 
 
 const Wrapper = styled.div`
@@ -151,6 +154,8 @@ export default function Home() {
 
     getMessage();
     getMkWork();
+
+    AOS.init();
   }, []);
 
   return (
@@ -176,11 +181,13 @@ export default function Home() {
       <section className='section-message'>
         <h2 className='hide'>메세지 영역</h2>
         <div className='inner'>
-          <Marquee velocity={50} resetAfterTries={100}>
-            {times(7, Number).map(id => {
+          <Marquee velocity={40} resetAfterTries={100}>
+            {times(7, Number).map((id, index) => {
               return (
                 message &&
-                <MessageBubble level={message[id]?.level} text={message[id]?.text} />
+                <div data-aos="fade-up" data-aos-duration="1000">
+                  <MessageBubble key={index} level={message[id]?.level} text={message[id]?.text} />
+                </div>
               );
             })}
           </Marquee>
@@ -189,21 +196,21 @@ export default function Home() {
       <section className='section-mk-work'>
         <h2 className='hide'>민균이 천재 자랑영역</h2>
         <div className='inner center-content'>
-          <div className='img-area'>
+          <div className='img-area' data-aos="fade-up" data-aos-offset="100" data-aos-duration="1200">
             <picture>
               <source media="(min-width: 1024px)"
-              srcset="assets/image/img_who_is_mk_pc.png 769w,
+              srcSet="assets/image/img_who_is_mk_pc.png 769w,
               assets/image/img_who_is_mk_pc@2x.png 1538w,
               assets/image/img_who_is_mk_pc@3x.png 2307w"/>
               <source media="(max-width: 1023px)"
-              srcset="assets/image/img_who_is_mk_m.png 360w,
+              srcSet="assets/image/img_who_is_mk_m.png 360w,
               assets/image/img_who_is_mk_m@2x.png 720w,
               assets/image/img_who_is_mk_m@3x.png 1080w"/>
               <img 
               src="assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
           </div>
-          <div className='info-area'>
+          <div className='info-area' data-aos="fade-up" data-aos-offset="300" data-aos-duration="1200">
             <ul className='tab-menu'>
               <li className={mkWorkCate === "composed" ? "selected" : ""}>
                 <button onClick={() => {setMkWorkCate("composed");}}>Composed</button>
