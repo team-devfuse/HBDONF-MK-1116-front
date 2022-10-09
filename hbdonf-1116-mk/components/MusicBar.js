@@ -12,6 +12,7 @@ const StyledBtn = styled.div`
     flex-direction: column;
     justify-content: end;
     border-radius: 1.5rem 1.5rem 0 0;
+    z-index: 11;
 
     .btn-area{
         display: flex;
@@ -41,7 +42,7 @@ export default function MusicBar({data, onclick}){
     return (
         <StyledBtn backgroundImage={data.thumbnail}>
             <p className="btn-area">
-                <b>{data.category}</b>
+                <b>{data.category.join(", ")}</b>
                 <button className="close-btn" onClick={() => {onclick();}}><Icon.Close color="#000" size="1.8rem"/></button>
             </p>
             {
