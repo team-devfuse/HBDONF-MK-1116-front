@@ -5,9 +5,6 @@ import WorkBtn from '../components/WorkBtn';
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
-import AOS from "aos";
-import "aos/dist/aos.css";
-
 
 
 const Wrapper = styled.div`
@@ -154,8 +151,6 @@ export default function Home() {
 
     getMessage();
     getMkWork();
-
-    AOS.init();
   }, []);
 
   return (
@@ -185,7 +180,7 @@ export default function Home() {
             {times(7, Number).map((id, index) => {
               return (
                 message &&
-                <div data-aos="fade-up" data-aos-duration="1000">
+                <div>
                   <MessageBubble key={index} level={message[id]?.level} text={message[id]?.text} />
                 </div>
               );
@@ -196,7 +191,7 @@ export default function Home() {
       <section className='section-mk-work'>
         <h2 className='hide'>민균이 천재 자랑영역</h2>
         <div className='inner center-content'>
-          <div className='img-area' data-aos="fade-up" data-aos-offset="100" data-aos-duration="1200">
+          <div className='img-area'>
             <picture>
               <source media="(min-width: 1024px)"
               srcSet="assets/image/img_who_is_mk_pc.png 769w,
@@ -210,7 +205,7 @@ export default function Home() {
               src="assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
           </div>
-          <div className='info-area' data-aos="fade-up" data-aos-offset="300" data-aos-duration="1200">
+          <div className='info-area'>
             <ul className='tab-menu'>
               <li className={mkWorkCate === "composed" ? "selected" : ""}>
                 <button onClick={() => {setMkWorkCate("composed");}}>Composed</button>
