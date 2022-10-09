@@ -8,8 +8,13 @@ import MessageBubble from '../components/MessageBubble';
 
 
 const Wrapper = styled.div`
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+
   section{
     min-height: 100vh;
+    scroll-snap-align: start;
 
     .inner{
       width: 90%;
