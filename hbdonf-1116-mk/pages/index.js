@@ -115,7 +115,7 @@ const Wrapper = styled.div`
       max-width: 1920px;
 
       .img-area{
-        padding-top: 5.5rem;
+        padding-top: 5rem;
         width:40%;
         opacity: 0;
         transform: translateY(10%);
@@ -145,7 +145,7 @@ const Wrapper = styled.div`
               border: 1px solid var(--color-point);
               color: var(--color-point);
               border-radius: 5rem;
-              font-weight: 600;
+              font-weight: 800;
             }
 
             &:nth-child(2){
@@ -217,8 +217,13 @@ const Wrapper = styled.div`
         flex-direction: column;
         align-items: center;
 
-        .img-area, .info-area{
+        .img-area{
+          width:100vw;
+        }
+
+        .info-area{
           width:100%;
+          padding-top: 2rem;
         }
       }
     }
