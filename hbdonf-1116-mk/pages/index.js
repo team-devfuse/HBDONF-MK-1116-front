@@ -9,7 +9,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 
-
 const Wrapper = styled.div`
   section{
     min-height: 100vh;
@@ -134,7 +133,100 @@ export default function Home() {
   const [mkWork, setMkWork] = useState();
   const [mkWorkCate, setMkWorkCate] = useState("composed");
   const [musicData, setMusicData] = useState();
+  const [scrollY, setScrollY] = useState();
+  const [scrollIsUp, setScrollIsUp] = useState("none");
+  const [bodyBottom, setBodyBottom] = useState();
+  const [section2Top, setSection2Top] = useState();
+  const [section3Top, setSection3Top] = useState();
+  const [eventDoing, setEventDoing] = useState(false);
+  const [pageNow, setPageNow] = useState(1);
 
+
+  /** 스크롤 액션 */
+  const scrollListener = () => {
+    const bodyOffset = document.body.getBoundingClientRect();
+    // setScrollY(-bodyOffset.top);
+    setScrollY((prev) => {
+      if(prev > -bodyOffset.top){
+        setScrollIsUp("up");
+      } else if (prev < -bodyOffset.top){
+        setScrollIsUp("down");
+      }
+      
+      return(-bodyOffset.top);
+    });
+
+    setTimeout(() => {
+      setScrollIsUp("none");
+      setEventDoing(false);
+    }, 1000);
+  };
+
+  const getSectionTop = () => {
+    if (document) {
+      const section2= document.querySelector('.section-message');
+      const section3= document.querySelector('.section-mk-work');
+      setSection2Top(section2?.offsetTop);
+      setSection3Top(section3?.offsetTop);
+      setBodyBottom(document.body.offsetHeight);
+    }
+  };
+
+  useEffect(() => {
+    getSectionTop();
+    window.addEventListener('scroll', scrollListener);
+    window.addEventListener('resize', getSectionTop);
+
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+      window.removeEventListener('resize', getSectionTop);
+    };
+  }, []); 
+
+  // 스크롤 시 자동이동
+  const scrollMove = (moveTo) => {
+    setEventDoing(true);
+    window.scrollTo({
+      top: moveTo,
+      left: 0,
+      behavior:"smooth"
+    });
+  }; 
+
+
+  useEffect(() => {
+    if(scrollIsUp === "none"){
+      setEventDoing(false);
+    }
+
+    if(pageNow == 1 && scrollIsUp === "down"){
+      // 1페이지에서 내릴 시 2페이지로 이동
+      console.log("1페이지에서 내릴 시 2페이지로 이동");
+      !eventDoing && scrollMove(section2Top);
+      !eventDoing && setPageNow(2);
+      
+      // setEventDoing(false);
+    } else if(pageNow == 2){
+      if(scrollIsUp=="up"){
+        // 2페이지에서 올릴 때 1페이지로 이동
+        console.log("2페이지에서 올릴 때 1페이지로 이동");
+        !eventDoing && scrollMove(0);
+        !eventDoing && setPageNow(1);
+      } else if(scrollIsUp === "down"){
+        // 2페이지에서 내릴 때 3페이지로 이동
+        console.log("2페이지에서 내릴 때 3페이지로 이동");
+        !eventDoing && scrollMove(bodyBottom);
+        !eventDoing && setPageNow(3);
+      }
+    } else if(pageNow == 3 && scrollIsUp=="up"){
+        // 3페이지에서 올릴 때 2페이지로 이동
+        console.log("3페이지에서 올릴 때 2페이지로 이동");
+        !eventDoing && scrollMove(section2Top);
+        !eventDoing && setPageNow(2);
+    }
+  }, [scrollY]);
+
+  /** 데이터 받아오기 */
   useEffect(() => {
     const getMessage = async () => {
       const result = await (
@@ -160,6 +252,10 @@ export default function Home() {
 
   return (
     <Wrapper>
+      <h1 style={{"position":"fixed","zIndex":"100"}}>
+        scrollY : {scrollY} / pageNow : {pageNow}<br/>
+        {scrollIsUp} / {eventDoing ? "eventDoing" : "not eventDoing"}
+      </h1>
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
         <div className='inner'>
