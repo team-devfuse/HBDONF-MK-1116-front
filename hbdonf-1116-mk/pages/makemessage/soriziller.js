@@ -103,11 +103,11 @@ export default function Soriziller() {
 
   /** 볼륨에 따라 레벨 세팅 */
   useEffect(() => {
-    if(volume >= 0 && volume <= 30){level<1 && setLevel(1)} // 1
-    else if(volume >= 31 && volume <= 60){level<2 && setLevel(2)} // 2
-    else if(volume >= 61 && volume <= 90){level<3 && setLevel(3)} // 3
-    else if(volume >= 91 && volume <= 120){level<4 && setLevel(4)} // 4
-    else if(volume >= 121 && volume <= 150){level<5 && setLevel(5)} // 5
+    if(volume >= 0 && volume <= 80){level<1 && setLevel(1)} // 1
+    else if(volume >= 81 && volume <= 90){level<2 && setLevel(2)} // 2
+    else if(volume >= 91 && volume <= 100){level<3 && setLevel(3)} // 3
+    else if(volume >= 141 && volume <= 150){level<4 && setLevel(4)} // 4
+    else if(volume >= 151 && volume <= 160){level<5 && setLevel(5)} // 5
   }, [volume]);
   
   /** 모바일 여부에 따라 prog-circle width 설정 */
