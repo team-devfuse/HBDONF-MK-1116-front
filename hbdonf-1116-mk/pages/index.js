@@ -115,7 +115,7 @@ const Wrapper = styled.div`
         align-self: flex-start;
         
         .box{
-          transition-duration: 0.5s;
+          transition-duration: 0.6s;
         }
       }
       
@@ -125,13 +125,15 @@ const Wrapper = styled.div`
 
       .box{
         opacity: 0;
-        transition: all 0.2s ease-in-out;
+        transform: scale(0.9);
+        transition: all 0.3s ease-in-out;
       }
     }
-
+    
     &.on{
       .box{        
         opacity: 1;
+        transform: scale(1);
       }
     }
   }
