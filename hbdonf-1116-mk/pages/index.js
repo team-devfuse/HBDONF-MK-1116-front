@@ -5,6 +5,7 @@ import WorkBtn from '../components/WorkBtn';
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
+import { Sticker } from '../components/Stickers';
 
 
 const Wrapper = styled.div`
@@ -70,9 +71,40 @@ const Wrapper = styled.div`
       background-size: 100%;
     }
 
+    .stickers{
+      position: absolute;
+      width:100%;
+      height: 100%;
+
+      &>div{
+        position: absolute;
+      }
+
+      .white-circle{
+        right:10%;
+        top:-10%;
+        transform: rotate(-15deg);
+      }
+      
+      .soriziller{
+        width:25%;
+        top:20%;
+        left:-2rem;
+      }
+      
+      .text-marquee{
+        bottom:-30%;
+        right: -10%;
+        transform: rotate(-10deg);
+        -webkit-mask-image: linear-gradient(-140deg, #000 30%, transparent 61%);
+        z-index: 1;
+      }
+    }
+
     .inner{
       width:100%;
       height:60vh;
+      z-index: 2;
 
       &>div>div{
         display: flex;
@@ -309,6 +341,11 @@ export default function Home() {
       </section>
       <section className={`section-message ${scrollY > section2Top && scrollY < section3Top ? "on" : ""}`}>
         <h2 className='hide'>메세지 영역</h2>
+        <div className='stickers'>
+          <Sticker.WhiteCircle/>
+          <Sticker.Sorilziller/>
+          <Sticker.TextMarquee/>
+        </div>
         <div className='inner'>
           <Marquee velocity={40} resetAfterTries={100}>
             {times(7, Number).map((id, index) => {
