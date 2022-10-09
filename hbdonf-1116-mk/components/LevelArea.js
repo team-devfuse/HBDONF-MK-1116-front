@@ -30,7 +30,7 @@ export default function LevelArea({level}){
     return (
         <Wrapper level={level}>
             <li><img src="/assets/image/bubble/01_default.svg"/></li>
-            <li><img src="/assets/image/bubble/02_sobbing.svg"/></li>
+            <li><img src="/assets/image/bubble/02_wave.svg"/></li>
             <li><img src="/assets/image/bubble/03_heart.svg"/></li>
             <li><img src="/assets/image/bubble/04_cat.svg"/></li>
             <li><img src="/assets/image/bubble/05_scream.svg"/></li>
