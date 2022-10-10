@@ -11,7 +11,7 @@ export const bubble_info = [
   {
     level:2,
     title:"떨리는 마음 말풍선",
-    image_url:"/assets/image/bubble/02_sobbing.svg",
+    image_url:"/assets/image/bubble/02_wave.svg",
     width:70,
     height:50,
     top:50,

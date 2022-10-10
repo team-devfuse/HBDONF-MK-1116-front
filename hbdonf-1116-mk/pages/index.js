@@ -5,20 +5,24 @@ import WorkBtn from '../components/WorkBtn';
 import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
-import AOS from "aos";
-import "aos/dist/aos.css";
-
+import { Sticker } from '../components/Stickers';
 
 
 const Wrapper = styled.div`
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+
   section{
     min-height: 100vh;
+    scroll-snap-align:start;
 
     .inner{
       width: 90%;
       height: 100%;
     }
   }
+
 
   /** 개별영역 style */
   .section-main-visual{
@@ -45,15 +49,62 @@ const Wrapper = styled.div`
   }
 
   .section-message{
+    scroll-snap-align:center;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url("assets/image/bg_ripped_paper.png") no-repeat center bottom;
+    background-color: #222222;
     background-size: 100%;
+    min-height: unset;
+    position: relative;
+    
+    &:after{
+      content: "";
+      display: block;
+      width: 100%;
+      height: 20rem;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: translateY(100%);
+      background: url("assets/image/bg_ripped_paper_02.png") no-repeat center top;
+      background-size: 100%;
+    }
+
+    .stickers{
+      position: absolute;
+      width:100%;
+      height: 100%;
+
+      &>div{
+        position: absolute;
+      }
+
+      .white-circle{
+        right:10%;
+        top:-10%;
+        transform: rotate(-15deg);
+      }
+      
+      .soriziller{
+        width:25%;
+        top:20%;
+        left:-2rem;
+      }
+      
+      .text-marquee{
+        bottom:-30%;
+        right: -10%;
+        transform: rotate(-10deg);
+        -webkit-mask-image: linear-gradient(-140deg, #000 30%, transparent 61%);
+        z-index: 1;
+      }
+    }
 
     .inner{
       width:100%;
-      height:90vh;
+      height:60vh;
+      z-index: 2;
 
       &>div>div{
         display: flex;
@@ -62,40 +113,92 @@ const Wrapper = styled.div`
 
       &>div>div>div:nth-child(2n){
         align-self: flex-start;
+        
+        .box{
+          transition-duration: 0.6s;
+        }
       }
-
+      
       &>div>div>div:nth-child(3n){
         align-self: flex-end;
+      }
+
+      .box{
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.3s ease-in-out;
+      }
+    }
+    
+    &.on{
+      .box{        
+        opacity: 1;
+        transform: scale(1);
       }
     }
   }
 
   .section-mk-work{
+    scroll-snap-align:center;
     min-height: unset;
-    padding:10rem 0 20rem;
+    padding:30rem 0 20rem;
 
     .inner{
-      outline: 1px solid red;
       display: flex;
       justify-content: space-between;
+      max-width: 1920px;
 
       .img-area{
+        padding-top: 5rem;
         width:40%;
+        opacity: 0;
+        transform: translateY(10%);
+        transition: all 0.5s ease-in-out;
       }
 
       .info-area{
-        outline: 1px solid blue;
         width:55%;
 
         .tab-menu{
-          outline: 1px solid gold;
           width: 100%;
           display: flex;
           justify-content: space-between;
+          gap:2%;
+
+          li{
+            flex-grow: 1;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-10%);
+            transition: all 0.2s ease-in-out;
+            
+            button{
+              display: block;
+              width:100%;
+              height: 4rem;
+              border: 1px solid var(--color-point);
+              color: var(--color-point);
+              border-radius: 5rem;
+              font-weight: 800;
+            }
+
+            &:nth-child(2){
+              transition-delay: 0.1s;
+            }
+
+            &:nth-child(3){
+              transition-delay: 0.2s;
+            }
+
+            &:nth-child(4){
+              transition-delay: 0.3s;
+            }
+          }
 
           .selected{
             button{
-              color:red;
+              color:var(--color-light);
+              border-color:var(--color-light);
             }
           }
         }
@@ -108,6 +211,33 @@ const Wrapper = styled.div`
 
           li{
             width:calc((100% - 3rem) / 4);
+            opacity: 0;
+            transform: translateY(-5%);
+            transition: all 0.2s ease-in-out;
+            
+          }
+        }
+      }
+    }
+
+    &.on{
+      .img-area{
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .info-area{
+        .tab-menu{
+          li{
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .work-list{
+          li{
+            opacity: 1;
+            transform: translateY(0);
           }
         }
       }
@@ -121,8 +251,13 @@ const Wrapper = styled.div`
         flex-direction: column;
         align-items: center;
 
-        .img-area, .info-area{
+        .img-area{
+          width:100vw;
+        }
+
+        .info-area{
           width:100%;
+          padding-top: 2rem;
         }
       }
     }
@@ -134,6 +269,36 @@ export default function Home() {
   const [mkWork, setMkWork] = useState();
   const [mkWorkCate, setMkWorkCate] = useState("composed");
   const [musicData, setMusicData] = useState();
+  const [scrollY, setScrollY] = useState();
+  const [section2Top, setSection2Top] = useState();
+  const [section3Top, setSection3Top] = useState();
+
+  const listener = e => {
+    const wrapper = document.getElementById("wrapper");
+    setScrollY(wrapper.scrollTop);
+  };
+  
+  const getScrollTop = () => {
+    const vh = parseInt(document.querySelector("body").clientHeight / 100);
+    const padding = 200;
+    const section1Height = document.querySelector(".section-main-visual").clientHeight;
+    const section2Height = document.querySelector(".section-message").clientHeight;
+    setSection2Top(section1Height - padding);
+    setSection3Top(section1Height + section2Height - padding);
+  };
+  
+  useEffect(() => {
+    const wrapper = document.getElementById("wrapper");
+    wrapper.addEventListener("scroll", listener);
+
+    getScrollTop();
+    window.addEventListener("resize", getScrollTop);
+    
+    return () => {
+      wrapper.removeEventListener("scroll", listener);
+      window.removeEventListener("resize", getScrollTop);
+    };
+  });
 
   useEffect(() => {
     const getMessage = async () => {
@@ -154,12 +319,10 @@ export default function Home() {
 
     getMessage();
     getMkWork();
-
-    AOS.init();
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper id="wrapper">
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
         <div className='inner'>
@@ -175,17 +338,22 @@ export default function Home() {
               type="video/mp4"
             />
           </video>
-          <img src="assets/image/bg_ripped_paper.png" alt=""/>
+          <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
-      <section className='section-message'>
+      <section className={`section-message ${scrollY > section2Top && scrollY < section3Top ? "on" : ""}`}>
         <h2 className='hide'>메세지 영역</h2>
+        <div className='stickers'>
+          <Sticker.WhiteCircle/>
+          <Sticker.Sorilziller/>
+          <Sticker.TextMarquee/>
+        </div>
         <div className='inner'>
           <Marquee velocity={40} resetAfterTries={100}>
             {times(7, Number).map((id, index) => {
               return (
                 message &&
-                <div data-aos="fade-up" data-aos-duration="1000">
+                <div className='box'>
                   <MessageBubble key={index} level={message[id]?.level} text={message[id]?.text} />
                 </div>
               );
@@ -193,10 +361,10 @@ export default function Home() {
           </Marquee>
         </div>
       </section>
-      <section className='section-mk-work'>
+      <section className={`section-mk-work ${scrollY > section3Top ? "on" : ""}`}>
         <h2 className='hide'>민균이 천재 자랑영역</h2>
         <div className='inner center-content'>
-          <div className='img-area' data-aos="fade-up" data-aos-offset="100" data-aos-duration="1200">
+          <div className='img-area'>
             <picture>
               <source media="(min-width: 1024px)"
               srcSet="assets/image/img_who_is_mk_pc.png 769w,
@@ -210,7 +378,7 @@ export default function Home() {
               src="assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
           </div>
-          <div className='info-area' data-aos="fade-up" data-aos-offset="300" data-aos-duration="1200">
+          <div className='info-area'>
             <ul className='tab-menu'>
               <li className={mkWorkCate === "composed" ? "selected" : ""}>
                 <button onClick={() => {setMkWorkCate("composed");}}>Composed</button>

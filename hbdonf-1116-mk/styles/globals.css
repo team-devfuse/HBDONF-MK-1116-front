@@ -17,16 +17,13 @@
 }
 
 @font-face {
-  font-family: 'PyeongChangPeace';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Light.woff2') format('woff2');
-  font-weight: 300;
+  font-family: 'Michroma';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/michroma/v16/PN_zRfy9qWD8fEagAPg9pTn5_PDb.woff2') format('woff2');
 }
 
-@font-face {
-  font-family: 'PyeongChangPeace';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-02@1.0/PyeongChangPeace-Bold.woff2') format('woff2');
-  font-weight: 700;
-}
 
 :root{
   --color-mk:#008A58;
