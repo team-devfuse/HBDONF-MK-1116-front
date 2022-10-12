@@ -137,7 +137,7 @@ export default function Soriziller() {
           {time}초 동안 소리를 질러 말풍선을 획득해주세요
           <p>remain time : {time} / volume : {volume} / level : {level}</p>
         </div>
-        <AudioProg width={isMobile ? 300 : 400} volume={volume}/>
+        <AudioProg width={isMobile ? 300 : 400} volume={volume} level={level}/>
         <div className='level-area'>
           <LevelArea level={level}/>
         </div>
