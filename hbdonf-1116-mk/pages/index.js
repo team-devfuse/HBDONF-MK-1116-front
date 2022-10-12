@@ -11,6 +11,7 @@ import { Sticker } from '../components/Stickers';
 const Wrapper = styled.div`
   overflow: auto;
   scroll-snap-type: y mandatory;
+  /* scroll-padding: 0rem; */
   height: 100vh;
 
   section{
@@ -103,7 +104,7 @@ const Wrapper = styled.div`
 
     .inner{
       width:100%;
-      height:60vh;
+      height:80vh;
       z-index: 2;
 
       &>div>div{
@@ -139,7 +140,7 @@ const Wrapper = styled.div`
   }
 
   .section-mk-work{
-    scroll-snap-align:center;
+    scroll-snap-align:top;
     min-height: unset;
     padding:30rem 0 20rem;
 
