@@ -6,7 +6,7 @@ import AudioProg from '../../components/AudioProg';
 import LevelArea from '../../components/LevelArea';
 
 const Wrapper = styled.div`
-  padding-top: 6rem;
+  padding-top: var(--page-padding-top);
   text-align: center;
   height: 100%;
   min-height: calc(100vh - 6rem);
@@ -42,8 +42,8 @@ const Wrapper = styled.div`
 export default function Soriziller() {
   const router = useRouter();
   const [volume, setVolume] = useState();
-  const [level, setLevel] = useState(0);
-  const [time, setTime] = useState(100);
+  const [level, setLevel] = useState(1);
+  const [time, setTime] = useState(10);
   const [isMobile, setIsMobile] = useState();
 
   const nextStep = () => {
@@ -101,13 +101,26 @@ export default function Soriziller() {
     };
   }, []);
 
+  /** 시간 만료 시 다음단계로 이동 */
+  useEffect(()=>{
+    if(time===0){
+      nextStep();
+    }
+  },[time]);
+
   /** 볼륨에 따라 레벨 세팅 */
   useEffect(() => {
+    // 테스트용 레벨 하향
+    // if(volume >= 0 && volume <= 50){level<1 && setLevel(1)} // 1
+    // else if(volume >= 51 && volume <= 80){level<2 && setLevel(2)} // 2
+    // else if(volume >= 81 && volume <= 100){level<3 && setLevel(3)} // 3
+    // else if(volume >= 101 && volume <= 110){level<4 && setLevel(4)} // 4
+    // else if(volume >= 111 && volume <= 120){level<5 && setLevel(5)} // 5
     if(volume >= 0 && volume <= 80){level<1 && setLevel(1)} // 1
     else if(volume >= 81 && volume <= 90){level<2 && setLevel(2)} // 2
     else if(volume >= 91 && volume <= 100){level<3 && setLevel(3)} // 3
-    else if(volume >= 141 && volume <= 150){level<4 && setLevel(4)} // 4
-    else if(volume >= 151 && volume <= 160){level<5 && setLevel(5)} // 5
+    else if(volume >= 111 && volume <= 120){level<4 && setLevel(4)} // 4
+    else if(volume >= 121 && volume <= 130){level<5 && setLevel(5)} // 5
   }, [volume]);
   
   /** 모바일 여부에 따라 prog-circle width 설정 */
@@ -137,7 +150,7 @@ export default function Soriziller() {
           {time}초 동안 소리를 질러 말풍선을 획득해주세요
           <p>remain time : {time} / volume : {volume} / level : {level}</p>
         </div>
-        <AudioProg width={isMobile ? 300 : 400} volume={volume}/>
+        <AudioProg width={isMobile ? 300 : 400} volume={volume} level={level}/>
         <div className='level-area'>
           <LevelArea level={level}/>
         </div>

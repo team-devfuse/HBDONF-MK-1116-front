@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 const Wrapper = styled.div`
-  padding-top: 6rem;
+  padding-top: var(--page-padding-top);
   text-align: center;
   height: calc(100vh - 6rem);
 
@@ -64,7 +64,7 @@ export default function Magemessage() {
               소리질러모드
             </a>
           </Link>
-          <Link href="/makemessage/setmessage">
+          <Link href="/makemessage/setmessage?level=1">
               <a className='default-btn sub-btn'>
                 조용모드
               </a>

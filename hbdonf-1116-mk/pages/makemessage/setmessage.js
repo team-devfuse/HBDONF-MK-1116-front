@@ -5,7 +5,7 @@ import MessageNav from '../../components/MessageNav';
 import { bubble_info } from '../../lib/bubble_info';
 
 const Wrapper = styled.div`
-  padding-top: 6rem;
+  padding-top: var(--page-padding-top);
 
   .inner{
     max-width: 720px;
