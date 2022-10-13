@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import MessageBubble from '../../components/MessageBubble';
 import MessageNav from '../../components/MessageNav';
 import { bubble_info } from '../../lib/bubble_info';
+import { Swiper, SwiperSlide} from 'swiper/react';
+import { Pagination, Navigation } from "swiper";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
 
 const Wrapper = styled.div`
   padding-top: var(--page-padding-top);
@@ -27,6 +34,29 @@ const Wrapper = styled.div`
     white-space:nowrap;
     text-overflow: ellipsis;
   }
+
+  .swipe-area{
+    width:100%;
+    
+    .bubble-box{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swiper{
+      padding-bottom: 5rem;
+
+      .swiper-wrapper{
+        align-items: center;
+      }
+
+      .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after,
+      .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after{
+        color:var(--color-point);
+      }
+    }
+  }
 `;
 
 export default function Setmessage() {
@@ -40,20 +70,27 @@ export default function Setmessage() {
           말풍선을 선택해주세요.
         </div>
         <div className='swipe-area'>
-          {level}
-          <ul>
-            {
-              bubble_info?.map((item, index) => {
-                if(item.level <= level){
-                  return (
-                    <li key={index}>
-                      <MessageBubble level={item.level} text={item.title}/>
-                    </li>
-                  );
-                }
-              })
-            }
-          </ul>
+          <Swiper
+            modules={[Pagination, Navigation]}
+            slidesPerView={1}
+            pagination={{clickable:true}}
+            navigation
+            >
+              {
+                bubble_info?.map((item, index) => {
+                  if(item.level <= level){
+                    return (
+                      <SwiperSlide key={index}>
+                        <div className='bubble-box'>
+                          <MessageBubble level={item.level} text={item.title}/>
+                        </div>
+                      </SwiperSlide>
+                    );
+                  }
+                })
+              }
+              
+            </Swiper>
         </div>
       </div>
     </Wrapper>
