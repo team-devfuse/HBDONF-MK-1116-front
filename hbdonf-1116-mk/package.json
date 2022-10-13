@@ -14,7 +14,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-marquee-slider": "^1.1.5",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "swiper": "^8.4.4"
   },
   "devDependencies": {
     "eslint": "8.23.1",
