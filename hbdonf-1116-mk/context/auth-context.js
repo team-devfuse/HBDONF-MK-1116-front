@@ -161,6 +161,20 @@ function AuthProvider (props){
         }
     });
 
+    // 로그인-비로그인 상태 감지해 리디렉
+    if(fbaseInfo){
+        // 로그인 시 막을 페이지
+        if(props.path=="/login"){
+            router.push("/mypage");
+        }
+    } else {
+        // 비로그인 시 막을 페이지
+        if(props.path.includes("makemessage/") || props.path.includes("mypage")){
+            router.push("/login");
+            alert("로그인이 필요합니다");
+        }
+    }
+
     return (
         <AuthContext.Provider value={{
             SocialLogin,

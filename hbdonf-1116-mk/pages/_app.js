@@ -12,17 +12,6 @@ import { GA_TRACKING_ID } from "../lib/gtag";
 export default function App({Component, pageProps}){
   const router = useRouter();
   let [thisPage, setThisPage] = useState();
-  let pathstr="";
-
-  if(router.pathname.indexOf("dashboard") > -1){
-    pathstr = "대시보드";
-  } else if(router.pathname.indexOf("challenge") > -1){
-    pathstr = "챌린지";
-  } else if(router.pathname.indexOf("group_watching") > -1){
-    pathstr = "단관";
-  } else if(router.pathname.indexOf("login") > -1){
-    pathstr = "로그인";
-  }
 
   useEffect(() => {
       const thisLink = document.location.href;
@@ -68,7 +57,7 @@ export default function App({Component, pageProps}){
             }}
           />
       </Head>
-      <AuthProvider>
+      <AuthProvider path={router.pathname}>
         <Layout>
           <Component {...pageProps}/>
         </Layout>
