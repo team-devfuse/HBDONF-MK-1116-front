@@ -7,6 +7,7 @@ import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
 import { Sticker } from '../components/Stickers';
 import Link from 'next/link';
+import { useAuth } from '../context/auth-context';
 
 
 const Wrapper = styled.div`
@@ -285,7 +286,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState();
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
-  const [isMobile, setIsMobile] = useState();
+  const {isMobile, getIsMobile} = useAuth();
 
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
@@ -299,16 +300,6 @@ export default function Home() {
     const section2Height = document.querySelector(".section-message").clientHeight;
     setSection2Top(section1Height - padding);
     setSection3Top(section1Height + section2Height - padding);
-  };
-
-  const getIsMobile = () => {
-    const winW = window.innerWidth;
-
-    if (winW < 1024) {
-        setIsMobile(true);
-    } else {
-        setIsMobile(false);
-    }
   };
   
   useEffect(() => {

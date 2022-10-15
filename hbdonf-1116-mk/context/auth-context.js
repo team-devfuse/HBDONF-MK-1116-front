@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../lib/fbase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -14,6 +14,7 @@ function AuthProvider (props){
     const router = useRouter();
     const [fbaseInfo, setFbaseInfo] = useState();
     const [loginPopupOpend, setLoginPopupOpend] = useState(false);
+    const [isMobile, setIsMobile] = useState();
 
     const SocialLogin = async(event) => {
         const {target:{name}} = event;
@@ -178,17 +179,39 @@ function AuthProvider (props){
         }
     }
 
+    // 모바일 쿼리 체크
+    const getIsMobile = () => {
+        const winW = window.innerWidth;
+    
+        if (winW < 1024) {
+            setIsMobile(true);
+        } else {
+            setIsMobile(false);
+        }
+    };
+
     return (
         <AuthContext.Provider value={{
             SocialLogin,
             Logout,
             getLocalStorage,
             fbaseInfo,
-            loginPopupOpend
+            loginPopupOpend,
+            isMobile,
+            getIsMobile
         }}>
             {props.children}
         </AuthContext.Provider>
     );
+}
+
+export function useAuth() {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+      throw new Error(`\`useAuth\` must be used within a \`<AuthProvider />\``);
+    }
+  
+    return context;
 }
 
 export default AuthProvider;
