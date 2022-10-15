@@ -58,46 +58,49 @@ function AuthProvider (props){
                 "userId": user.reloadUserInfo.screenName
             };
     
-            if(user){
-                fetch(`${API_URL}/user/profile`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(authInfo)
-                }).then((response) => response.json())
-                .then((data) => {      
-                    // 4. 세션은 loggedIn 체크, 단관용타이틀, 프로필 사진 넣어두는 용도!
-                    const userInfo = {
-                        loggedIn: true,
-                        user: {
-                            uid: data.payload.uid,
-                            login_type: user.providerId,
-                            nickname: data.payload.nickName,
-                            profile_pic: userProfileImg,
-                            titlename: data.payload.title
-                        }
-                    };
+            // if(user){
+            //     fetch(`${API_URL}/user/profile`, {
+            //         method: "POST",
+            //         headers: {
+            //             "Content-Type": "application/json",
+            //         },
+            //         body: JSON.stringify(authInfo)
+            //     }).then((response) => response.json())
+            //     .then((data) => {      
+            //         // 4. 세션은 loggedIn 체크, 단관용타이틀, 프로필 사진 넣어두는 용도!
+            //         const userInfo = {
+            //             loggedIn: true,
+            //             user: {
+            //                 uid: data.payload.uid,
+            //                 login_type: user.providerId,
+            //                 nickname: data.payload.nickName,
+            //                 profile_pic: userProfileImg,
+            //                 titlename: data.payload.title
+            //             }
+            //         };
     
-                    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            //         localStorage.setItem("userInfo", JSON.stringify(userInfo));
             
-                    // 5. returnUrl 있으면 해당 위치, 없으면 대시보드로 이동
-                    if(router.query.returnUrl){
-                        router.push(router.query.returnUrl);
-                    } else{
-                        router.push("/dashboard");
-                    }
+            //         // 5. returnUrl 있으면 해당 위치, 없으면 대시보드로 이동
+            //         if(router.query.returnUrl){
+            //             router.push(router.query.returnUrl);
+            //         } else{
+            //             router.push("/dashboard");
+            //         }
 
-                    //6. GA이벤트 날리기
-                    const gaValue = { 
-                        action :"login",
-                        category : "user",
-                        label :"login"
-                    };
+            //         //6. GA이벤트 날리기
+            //         const gaValue = { 
+            //             action :"login",
+            //             category : "user",
+            //             label :"login"
+            //         };
 
-                    gtag.event(gaValue);
-                });
-            }        
+            //         gtag.event(gaValue);
+            //     });
+            // }        
+
+            // to do : 메세지 있다면 대시보드로, 없다면 메세지 작성 확면으로 보낼 것
+            router.push("/makemessage");
     
             }).catch((error) => {
                 // Handle Errors here
@@ -157,6 +160,20 @@ function AuthProvider (props){
             fbaseInfo && setFbaseInfo();
         }
     });
+
+    // 로그인-비로그인 상태 감지해 리디렉
+    if(fbaseInfo){
+        // 로그인 시 막을 페이지
+        if(props.path=="/login"){
+            router.push("/mypage");
+        }
+    } else {
+        // 비로그인 시 막을 페이지
+        if(props.path.includes("makemessage/") || props.path.includes("mypage")){
+            router.push("/login");
+            alert("로그인이 필요합니다");
+        }
+    }
 
     return (
         <AuthContext.Provider value={{
