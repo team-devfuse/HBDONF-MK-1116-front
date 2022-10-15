@@ -133,7 +133,6 @@ export default function NavBar(){
         isOpened ? setIsOpened(false) : setIsOpened(true);
     };
 
-
     return (
         <StyledNav scrollY={scrollY} >
             <MobileNav>
@@ -154,6 +153,7 @@ export default function NavBar(){
                             {
                                 // 로그인시 노출. 조건 수정 필요
                                 // getLocalStorage() &&
+                                fbaseInfo &&
                                 <li>
                                     <Link href="/mypage">
                                         <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
@@ -172,7 +172,7 @@ export default function NavBar(){
                             </li>
                             <li>
                                 {
-                                    getLocalStorage() ?
+                                    fbaseInfo ?
                                     <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
                                     <button onClick={() => {router.push("/login"); toggleNavMenu();}}>로그인</button>
                                 }
