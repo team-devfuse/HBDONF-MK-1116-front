@@ -51,7 +51,7 @@ export default function Allmessage() {
           {
             message?.map((data, index) => (
               <li key={index}>
-                <MessageBubble key={index} level={data.level} text={data.text} />
+                <MessageBubble key={index} size={50} level={data.level} text={data.text} />
               </li>
             ))
           }

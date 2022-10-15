@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 const Wrapper = styled.div`
   overflow: auto;
+  overflow-x: hidden;
   scroll-snap-type: y mandatory;
   /* scroll-padding: 0rem; */
   height: 100vh;
@@ -127,6 +128,7 @@ const Wrapper = styled.div`
       }
 
       .box{
+        padding: 0 2rem;
         opacity: 0;
         transform: scale(0.9);
         transition: all 0.3s ease-in-out;
@@ -376,20 +378,20 @@ export default function Home() {
         <div className='inner'>
           <Marquee velocity={isMobile ? 10 : 40} resetAfterTries={100}>
             {times(7, Number).map((id, index) => {
-              let text;
+              let size;
 
               if(message){
-                if(message[id]?.level < 5 && message[id]?.text.length>50 && !isMobile){
-                  text = `${message[id]?.text.substring(0,50)}...`;
+                if(message[id]?.level < 5){
+                  size=45;
                 } else{
-                  text = message[id]?.text;
+                  size=60;
                 }
               }
 
               return (
                 message &&
                 <div className='box'>
-                  <MessageBubble key={index} level={message[id]?.level} text={text} />
+                  <MessageBubble key={index} size={size} level={message[id]?.level} text={message[id]?.text} />
                 </div>
               );
             })}
