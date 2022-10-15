@@ -6,6 +6,7 @@ import { setPersistence, browserLocalPersistence, signInWithPopup, signInWithRed
 import { API_URL } from "../lib/config";
 import { getUserRegion } from "../lib/util";
 import * as gtag from "../lib/gtag";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 export const AuthContext = createContext(null);
 
@@ -170,8 +171,10 @@ function AuthProvider (props){
     } else {
         // 비로그인 시 막을 페이지
         if(props.path.includes("makemessage/") || props.path.includes("mypage")){
-            router.push("/login");
-            alert("로그인이 필요합니다");
+            if(typeof window != "undefined"){
+                router.push("/login");
+                alert("로그인이 필요합니다");
+            }
         }
     }
 
