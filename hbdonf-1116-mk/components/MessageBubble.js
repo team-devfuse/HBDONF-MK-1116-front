@@ -6,7 +6,7 @@ import {useRouter} from "next/router"
 const Wrapper = styled.div`
     position: relative;
     color:var(--color-dark);
-    ${props => {
+    /* ${props => {
         if(props.for == "main"){
             if(props.level==1){
                 return `
@@ -35,8 +35,22 @@ const Wrapper = styled.div`
                     width: 80%;
                 `;
             }
+        } else if(props.for == "allmessage"){
+            if(props.level==1){
+                return `
+                    max-width: 50rem;
+                    `;
+            } else if(props.level<4){
+                return `
+                    max-width: 60rem;
+                    `;
+            } else if(props.level==4){
+                return `
+                    max-width: 75rem;
+                `;
+            }
         }
-    }}
+    }} */
 
     p{
         position: absolute;
@@ -60,9 +74,11 @@ export default function MessageBubble({level, text}){
         path = "setmessage"
     } else if (router.pathname === "/"){
         path = "main"
+    } else if(router.pathname.includes("allmessage")){
+        path = "allmessage"
     }
 
-    console.log(`path = ${path}`);
+    // console.log(`path = ${path}`);
 
     return (
         <Wrapper level={level} for={path}>
