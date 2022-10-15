@@ -273,6 +273,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState();
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
+  const [isMobile, setIsMobile] = useState();
 
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
@@ -287,17 +288,30 @@ export default function Home() {
     setSection2Top(section1Height - padding);
     setSection3Top(section1Height + section2Height - padding);
   };
+
+  const getIsMobile = () => {
+    const winW = window.innerWidth;
+
+    if (winW < 1024) {
+        setIsMobile(true);
+    } else {
+        setIsMobile(false);
+    }
+  };
   
   useEffect(() => {
     const wrapper = document.getElementById("wrapper");
     wrapper.addEventListener("scroll", listener);
 
     getScrollTop();
+    getIsMobile();
     window.addEventListener("resize", getScrollTop);
+    window.addEventListener('resize', getIsMobile);
     
     return () => {
       wrapper.removeEventListener("scroll", listener);
       window.removeEventListener("resize", getScrollTop);
+      window.removeEventListener('resize', getIsMobile);
     };
   });
 
@@ -350,12 +364,22 @@ export default function Home() {
           <Sticker.TextMarquee/>
         </div>
         <div className='inner'>
-          <Marquee velocity={40} resetAfterTries={100}>
+          <Marquee velocity={isMobile ? 10 : 40} resetAfterTries={100}>
             {times(7, Number).map((id, index) => {
+              let text;
+
+              if(message){
+                if(message[id]?.level < 5 && message[id]?.text.length>50 && !isMobile){
+                  text = `${message[id]?.text.substring(0,50)}...`;
+                } else{
+                  text = message[id]?.text;
+                }
+              }
+
               return (
                 message &&
                 <div className='box'>
-                  <MessageBubble key={index} level={message[id]?.level} text={message[id]?.text} />
+                  <MessageBubble key={index} level={message[id]?.level} text={text} />
                 </div>
               );
             })}

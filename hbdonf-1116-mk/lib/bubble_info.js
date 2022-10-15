@@ -21,8 +21,8 @@ export const bubble_info = [
     level:3,
     title:"하트 말풍선",
     image_url:"/assets/image/bubble/03_heart.svg",
-    width:50,
-    height:60,
+    width:65,
+    height:55,
     top:45,
     left:50
   },
