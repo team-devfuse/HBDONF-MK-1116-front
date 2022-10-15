@@ -13,6 +13,7 @@ const StyledNav = styled.nav`
     position:fixed;
     z-index:11;
     transition: background 0.2s ease-in-out;
+    pointer-events: none;
     ${props => {
         if(props.scrollY>10){
             return(`
@@ -34,6 +35,7 @@ const StyledNav = styled.nav`
         width:6rem;
         font-family: 'PyeongChangPeace', sans-serif;
         cursor: pointer;
+        pointer-events:fill;
     }
 
     h1 a{
@@ -66,6 +68,7 @@ const MobileNav = styled.div`
 
 const MobileNavBtn = styled.div`
     z-index: 11;
+    pointer-events:fill;
 `;
 
 const MobileNavLayer = styled.div`
@@ -85,6 +88,7 @@ const MobileNavLayer = styled.div`
     backdrop-filter: blur(10px);
     transform: translateX(100%);
     transition: transform .4s ease-in-out;
+    pointer-events:fill;
     
     ${props => {
         if(props.opened){

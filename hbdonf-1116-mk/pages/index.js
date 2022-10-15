@@ -6,6 +6,7 @@ import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
 import { Sticker } from '../components/Stickers';
+import Link from 'next/link';
 
 
 const Wrapper = styled.div`
@@ -94,7 +95,7 @@ const Wrapper = styled.div`
       }
       
       .text-marquee{
-        bottom:-30%;
+        bottom:-20%;
         right: -10%;
         transform: rotate(-10deg);
         -webkit-mask-image: linear-gradient(-140deg, #000 30%, transparent 61%);
@@ -104,7 +105,8 @@ const Wrapper = styled.div`
 
     .inner{
       width:100%;
-      height:80vh;
+      /* height:80vh; */
+      padding-top: 5rem;
       z-index: 2;
 
       &>div>div{
@@ -128,6 +130,14 @@ const Wrapper = styled.div`
         opacity: 0;
         transform: scale(0.9);
         transition: all 0.3s ease-in-out;
+      }
+
+      .btn-area{
+        padding-top:5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1.2rem;
       }
     }
     
@@ -384,6 +394,14 @@ export default function Home() {
               );
             })}
           </Marquee>
+          <div className='btn-area'>
+            <Link href="/makemessage">
+              <a className='default-btn'>생일 축하 메시지 남기러가기</a>
+            </Link>
+            <Link href="/allmessage">
+              <a className='txt-btn'>전체 메시지 보러 가기</a>
+            </Link>
+          </div>
         </div>
       </section>
       <section className={`section-mk-work ${scrollY > section3Top ? "on" : ""}`}>
