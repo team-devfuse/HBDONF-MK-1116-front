@@ -6,6 +6,7 @@ import Marquee from "react-marquee-slider";
 import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
 import { Sticker } from '../components/Stickers';
+import Link from 'next/link';
 
 
 const Wrapper = styled.div`
@@ -94,7 +95,7 @@ const Wrapper = styled.div`
       }
       
       .text-marquee{
-        bottom:-30%;
+        bottom:-20%;
         right: -10%;
         transform: rotate(-10deg);
         -webkit-mask-image: linear-gradient(-140deg, #000 30%, transparent 61%);
@@ -104,7 +105,8 @@ const Wrapper = styled.div`
 
     .inner{
       width:100%;
-      height:80vh;
+      /* height:80vh; */
+      padding-top: 5rem;
       z-index: 2;
 
       &>div>div{
@@ -128,6 +130,14 @@ const Wrapper = styled.div`
         opacity: 0;
         transform: scale(0.9);
         transition: all 0.3s ease-in-out;
+      }
+
+      .btn-area{
+        padding-top:5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1.2rem;
       }
     }
     
@@ -273,6 +283,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState();
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
+  const [isMobile, setIsMobile] = useState();
 
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
@@ -287,17 +298,30 @@ export default function Home() {
     setSection2Top(section1Height - padding);
     setSection3Top(section1Height + section2Height - padding);
   };
+
+  const getIsMobile = () => {
+    const winW = window.innerWidth;
+
+    if (winW < 1024) {
+        setIsMobile(true);
+    } else {
+        setIsMobile(false);
+    }
+  };
   
   useEffect(() => {
     const wrapper = document.getElementById("wrapper");
     wrapper.addEventListener("scroll", listener);
 
     getScrollTop();
+    getIsMobile();
     window.addEventListener("resize", getScrollTop);
+    window.addEventListener('resize', getIsMobile);
     
     return () => {
       wrapper.removeEventListener("scroll", listener);
       window.removeEventListener("resize", getScrollTop);
+      window.removeEventListener('resize', getIsMobile);
     };
   });
 
@@ -350,16 +374,34 @@ export default function Home() {
           <Sticker.TextMarquee/>
         </div>
         <div className='inner'>
-          <Marquee velocity={40} resetAfterTries={100}>
+          <Marquee velocity={isMobile ? 10 : 40} resetAfterTries={100}>
             {times(7, Number).map((id, index) => {
+              let text;
+
+              if(message){
+                if(message[id]?.level < 5 && message[id]?.text.length>50 && !isMobile){
+                  text = `${message[id]?.text.substring(0,50)}...`;
+                } else{
+                  text = message[id]?.text;
+                }
+              }
+
               return (
                 message &&
                 <div className='box'>
-                  <MessageBubble key={index} level={message[id]?.level} text={message[id]?.text} />
+                  <MessageBubble key={index} level={message[id]?.level} text={text} />
                 </div>
               );
             })}
           </Marquee>
+          <div className='btn-area'>
+            <Link href="/makemessage">
+              <a className='default-btn'>생일 축하 메시지 남기러가기</a>
+            </Link>
+            <Link href="/allmessage">
+              <a className='txt-btn'>전체 메시지 보러 가기</a>
+            </Link>
+          </div>
         </div>
       </section>
       <section className={`section-mk-work ${scrollY > section3Top ? "on" : ""}`}>

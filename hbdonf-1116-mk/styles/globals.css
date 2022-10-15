@@ -155,9 +155,13 @@ main{
   color: #CFCFCF;
 }
 
+.txt-btn{
+  text-decoration: underline;
+}
+
 .txt-btn:hover, .txt-btn:focus{
   transition: filter 0.2s ease-in-out;
-  filter: invert(55%) sepia(96%) saturate(5050%) hue-rotate(200deg) brightness(105%) contrast(90%);
+  filter: invert(17%) sepia(100%) saturate(6662%) hue-rotate(158deg) brightness(97%) contrast(93%);
 }
 
 .default-btn:hover, .default-btn:focus{
