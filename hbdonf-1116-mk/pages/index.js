@@ -324,7 +324,7 @@ export default function Home() {
         await fetch('/api/message')
       ).json();
   
-      setMessage(result);
+      setMessage(result.message);
     };
 
     const getMkWork = async () => {
