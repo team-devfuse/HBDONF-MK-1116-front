@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MessageBubble from '../components/MessageBubble';
+
 
 const Wrapper = styled.div`
   /* color:red */
@@ -21,20 +22,30 @@ const Wrapper = styled.div`
 
 export default function Allmessage() {
   const [message, setMessage] = useState();
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState();
   
+  const getMessage = useCallback(async () => {
+    setLoading(true);
+    const result = await (
+      await fetch(`/api/message?page=${page}`)
+    ).json();
+
+    setMessage(result.message);
+    setLastPage(result.last);
+    setLoading(false);
+  }, [page]);
+
   useEffect(() => {
-    const getMessage = async () => {
-      const result = await (
-        await fetch('/api/message')
-      ).json();
-  
-      setMessage(result);
-    };
-
     getMessage();
-  }, []);
-
-  console.log(message);
+  }, [getMessage]);
+  
+  const loadMore = () => {
+    if (!loading && page < lastPage) {
+      setPage((prevState) => prevState + 1);
+    }
+  };
 
   return (
     <Wrapper>
@@ -52,9 +63,12 @@ export default function Allmessage() {
             message?.map((data, index) => (
               <li key={index}>
                 <MessageBubble key={index} size={50} level={data.level} text={data.text} />
+                {index}
               </li>
             ))
           }
+          {/* <li ref={ref}>Element {inView.toString()} / {page}/{lastPage}</li> */}
+          <li><button onClick={loadMore}>더보기~~ {page}/{lastPage}</button></li>
         </ul>
       </section>
     </Wrapper>

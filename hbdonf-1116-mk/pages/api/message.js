@@ -33,10 +33,19 @@ const messageList = [
   {
     id:7,
     level:5,
-    text:"민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축 하 어 쩌구민균아생일 축하어쩌구민균 아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축 하 어 쩌구민균아생일 축하어"
+    text:"last 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축 하 어 쩌구민균아생일 축하어쩌구민균 아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축하어쩌구 민균아생일축 하 어 쩌구민균아생일 축하어"
   },
 ];
 
 export default function handler(req, res) {
-  res.status(200).json(messageList)
+  const page = parseInt(req.query.page);
+  const perView = 3;
+
+  const result = {
+    message : messageList.slice(0, page*perView),
+    page:page,
+    last:Math.ceil(messageList.length/perView)
+  };
+
+  res.status(200).json(result);
 }
