@@ -7,10 +7,12 @@ import times from "lodash/times";
 import MessageBubble from '../components/MessageBubble';
 import { Sticker } from '../components/Stickers';
 import Link from 'next/link';
+import { useAuth } from '../context/auth-context';
 
 
 const Wrapper = styled.div`
   overflow: auto;
+  overflow-x: hidden;
   scroll-snap-type: y mandatory;
   /* scroll-padding: 0rem; */
   height: 100vh;
@@ -127,6 +129,7 @@ const Wrapper = styled.div`
       }
 
       .box{
+        padding: 0 2rem;
         opacity: 0;
         transform: scale(0.9);
         transition: all 0.3s ease-in-out;
@@ -283,7 +286,7 @@ export default function Home() {
   const [scrollY, setScrollY] = useState();
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
-  const [isMobile, setIsMobile] = useState();
+  const {isMobile, getIsMobile} = useAuth();
 
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
@@ -297,16 +300,6 @@ export default function Home() {
     const section2Height = document.querySelector(".section-message").clientHeight;
     setSection2Top(section1Height - padding);
     setSection3Top(section1Height + section2Height - padding);
-  };
-
-  const getIsMobile = () => {
-    const winW = window.innerWidth;
-
-    if (winW < 1024) {
-        setIsMobile(true);
-    } else {
-        setIsMobile(false);
-    }
   };
   
   useEffect(() => {
@@ -376,20 +369,20 @@ export default function Home() {
         <div className='inner'>
           <Marquee velocity={isMobile ? 10 : 40} resetAfterTries={100}>
             {times(7, Number).map((id, index) => {
-              let text;
+              let size;
 
               if(message){
-                if(message[id]?.level < 5 && message[id]?.text.length>50 && !isMobile){
-                  text = `${message[id]?.text.substring(0,50)}...`;
+                if(message[id]?.level < 5){
+                  size=45;
                 } else{
-                  text = message[id]?.text;
+                  size=60;
                 }
               }
 
               return (
                 message &&
                 <div className='box'>
-                  <MessageBubble key={index} level={message[id]?.level} text={text} />
+                  <MessageBubble key={index} size={size} level={message[id]?.level} text={message[id]?.text} />
                 </div>
               );
             })}

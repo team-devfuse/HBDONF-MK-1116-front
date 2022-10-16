@@ -42,6 +42,8 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: var(--font-size-big);
+      font-weight: 600;
     }
 
     .swiper{
@@ -82,7 +84,7 @@ export default function Setmessage() {
                     return (
                       <SwiperSlide key={index}>
                         <div className='bubble-box'>
-                          <MessageBubble level={item.level} text={item.title}/>
+                          <MessageBubble size={45} level={item.level} text={item.title}/>
                         </div>
                       </SwiperSlide>
                     );

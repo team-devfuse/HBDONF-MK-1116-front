@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import MessageNav from '../../components/MessageNav';
 import AudioProg from '../../components/AudioProg';
 import LevelArea from '../../components/LevelArea';
+import { useAuth } from '../../context/auth-context';
 
 const Wrapper = styled.div`
   padding-top: var(--page-padding-top);
@@ -44,7 +45,7 @@ export default function Soriziller() {
   const [volume, setVolume] = useState();
   const [level, setLevel] = useState(1);
   const [time, setTime] = useState(10);
-  const [isMobile, setIsMobile] = useState();
+  const {isMobile, getIsMobile} = useAuth();
 
   const nextStep = () => {
     router.push({
@@ -131,16 +132,6 @@ export default function Soriziller() {
         getIsMobile();
     };
   });
-
-  const getIsMobile = () => {
-    const winW = window.innerWidth;
-    
-    if(winW<1024){
-        setIsMobile(true);
-    } else{
-        setIsMobile(false);
-    }
-  };
   
   return (
     <Wrapper>

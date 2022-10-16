@@ -6,68 +6,53 @@ import {useRouter} from "next/router"
 const Wrapper = styled.div`
     position: relative;
     color:var(--color-dark);
-    ${props => {
-        if(props.for == "main"){
-            if(props.level==1){
-                return `
-                    width: 70%;
-                `;
-            } else if(props.level<4){
-                return `
-                    width: 100%;
-                `;
-            } else if(props.level==4){
-                return `
-                    width: 80%;
-                `;
-            }
-        } else if(props.for == "setmessage"){
-            if(props.level==1){
-                return `
-                    width: 50%;
-                `;
-            } else if(props.level<4){
-                return `
-                    width: 60%;
-                `;
-            } else if(props.level==4){
-                return `
-                    width: 80%;
-                `;
-            }
-        }
-    }}
+    width:auto;
+    display: inline-block;
 
     p{
-        position: absolute;
-        transform: translate(-50%, -50%);
+        box-sizing:border-box;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+    }
+
+    img{
+        position:absolute;
+        left:0;
+        top:0;
         width:100%;
-        height: 100%;
-        text-align: center;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        height:100%;
+        z-index:-1;
     }
 `;
 
-export default function MessageBubble({level, text}){
+export default function MessageBubble({size, level, text}){
     const router = useRouter();
     const data = bubble_info.find(item => item.level == level);
     let path;
+    let width;
 
     if(router.pathname.includes("setmessage")){
         path = "setmessage"
     } else if (router.pathname === "/"){
         path = "main"
+    } else if(router.pathname.includes("allmessage")){
+        path = "allmessage"
     }
 
-    console.log(`path = ${path}`);
+    // console.log(`path = ${path}`);
+
+    if(level===5){
+        width = size*1.5;
+    } else {
+        width = size;
+    }
 
     return (
         <Wrapper level={level} for={path}>
             <img src={data.image_url} alt={data.title}/>
-            <p style={{"width":`${data.width}%`,"left":`${data.left}%`,"top":`${data.top}%`}}>
+            <p style={{"width":`${width}rem`, "aspectRatio":data.ratio, "padding" : data.padding}}>
                 {text}
             </p>
         </Wrapper>
