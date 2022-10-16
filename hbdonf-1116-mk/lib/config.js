@@ -21,4 +21,4 @@ switch (setEnv ()){
     default : API_URL = 'https://vmgo-test-api.team-devfuse.com/vmgo'; break;
 }
 
-export const S3_BASE_URL = 'https://d2i89otpv3ar41.cloudfront.net';
+export const S3_BASE_URL = 'https://d3bjhg9thms238.cloudfront.net';
