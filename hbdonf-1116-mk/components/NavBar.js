@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/auth-context";
 import NavToggleBtn from "./NavToggleBtn";
 import { Icon } from "./Icons";
+import { Sticker } from "./Stickers";
 
 
 const StyledNav = styled.nav`
@@ -41,19 +42,6 @@ const StyledNav = styled.nav`
     h1 a{
         display: block;
     }
-    
-    li{
-        display: flex;
-        align-items: center;
-    }
-
-    a{
-        color:var(--color-light);
-    }
-    
-    .active{
-        color:var(--color-point);
-    }
 `;
 
 const MobileNav = styled.div`
@@ -75,20 +63,17 @@ const MobileNavLayer = styled.div`
     position: fixed;
     right:0;
     top:0;
-    width:60%;
-    max-width:50rem;
+    width:100%;
     height:100%;
-    padding: 5rem 5%;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    text-align: center;
     z-index: 10;
-    background-color: rgba(44,44,44,0.95);
-    backdrop-filter: blur(10px);
     transform: translateX(100%);
     transition: transform .4s ease-in-out;
     pointer-events:fill;
+    background: url("/assets/image/bg_default_m.png") no-repeat center center fixed, #222222;
+    background-size: cover;
+    overflow: hidden;
     
     ${props => {
         if(props.opened){
@@ -98,14 +83,118 @@ const MobileNavLayer = styled.div`
         }
     }};
 
-    .main-menu li{
-        padding-bottom: 2rem;
+    .stickers{
+        position:absolute;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        z-index:-1;
+
+        .white-circle{
+            position:absolute;
+            left:-7rem;
+            top:10%;
+            width:25rem;
+            transform:rotate(-15deg);
+        }
+
+        .soriziller-yoyo{
+            position:absolute;
+            right:-3rem;
+            bottom:10%;
+        }
     }
 
-    .main-menu li a,
-    .main-menu li button{
-        font-size: var(--font-size-big);
-        font-weight: 600;
+    .menu-area{
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        position:relative;
+
+        li{
+            display:block;
+        }
+
+        .top-menu{
+            padding-top:6rem;
+    
+            a{
+                display:inline-block;
+            }
+    
+            svg{
+                width:19rem;
+            }
+    
+            .lang{
+                padding-top:1rem;
+                font-weight:600;
+            }
+    
+            a{
+                color:var(--color-light);
+            }
+            
+            .active{
+                color:var(--color-point);
+            }
+        }
+    
+        .main-menu{
+            padding: 3rem 5% 0;
+    
+            li{
+                padding-bottom: 2rem;
+            }
+        
+            li a,
+            li button{
+                font-size: 5rem;
+                font-weight: 800;
+                transition:all .2s ease-in-out;
+                
+                &:not(.active){
+                    color:rgba(43,43,43,0.5);
+                    -webkit-text-stroke: 1px var(--color-point);
+                    
+                    &:hover{
+                        color:var(--color-light-50);
+                        -webkit-text-stroke: 1px transparent;
+                    }
+                }
+                
+                &.active{
+                    color:var(--color-light-70);
+                }
+                
+            }
+            
+        }
+
+        .bottom-menu{
+            position:absolute;
+            bottom:0;
+            left:0;
+            width:100%;
+            display:flex;
+            align-items:flex-end;
+
+            img{
+                height:20rem;
+                object-fit:cover;
+            }
+
+            p{
+                position:absolute;
+                left:50%;
+                bottom:2rem;
+                transform:translateX(-50%);
+                font-weight:600;
+                color:var(--color-point);
+            }
+        }
     }
 `;
 
@@ -148,42 +237,56 @@ export default function NavBar(){
                             <NavToggleBtn isOpened={isOpened}/>
                         </button>
                     </MobileNavBtn>
-                    <MobileNavLayer opened={isOpened}>
-                        <ul className="main-menu">
-                            {
-                                // 로그인시 노출. 조건 수정 필요
-                                // getLocalStorage() &&
-                                fbaseInfo &&
-                                <li>
-                                    <Link href="/mypage">
-                                        <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
+                        <MobileNavLayer opened={isOpened}>
+                        <div className='stickers'>
+                            <Sticker.WhiteCircle/>
+                            <Sticker.SorilzillerYoyo/>
+                        </div>
+                        <div className="menu-area">
+                            <ul className="top-menu">
+                                <li className="home">
+                                    <Link href="/">
+                                        <a title="HOME"><Icon.LogoCenter/></a>
                                     </Link>
                                 </li>
-                            }
-                            <li>
-                                <Link href="/makemessage">
-                                    <a onClick={toggleNavMenu} className={router.pathname === "/makemessage" ? "active" : ""}>메세지 생성(삭제메뉴)</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/allmessage">
-                                    <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>모든 메세지 보러가기</a>
-                                </Link>
-                            </li>
-                            <li>
+                                <li className="lang">한글/ENG/일본어</li>
+                            </ul>
+                            <ul className="main-menu">
                                 {
-                                    fbaseInfo ?
-                                    <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
-                                    <button onClick={() => {router.push("/login"); toggleNavMenu();}}>로그인</button>
+                                    // 로그인시 노출. 조건 수정 필요
+                                    // getLocalStorage() &&
+                                    fbaseInfo &&
+                                    <li>
+                                        <Link href="/mypage">
+                                            <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
+                                        </Link>
+                                    </li>
                                 }
-                            </li>
-                        </ul>
-                        <ul className="user-menu">
-                            <li>
-                                언어세팅 한글 / ENG / 일본어
-                            </li>
-                            <li>contact dev7fuse@gmail.com</li>
-                        </ul>                  
+                                <li>
+                                    <Link href="/makemessage">
+                                        <a onClick={toggleNavMenu} className={router.pathname === "/makemessage" ? "active" : ""}>메세지 생성(삭제메뉴)</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/allmessage">
+                                        <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>모든 메세지 보러가기</a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    {
+                                        fbaseInfo ?
+                                        <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
+                                        <Link href="/login">
+                                            <a onClick={toggleNavMenu} className={router.pathname === "/login" ? "active" : ""}>로그인</a>
+                                        </Link>
+                                    }
+                                </li>
+                            </ul>
+                            <div className="bottom-menu">
+                                <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
+                                <p>contact dev7fuse@gmail.com</p>
+                            </div>   
+                        </div>
                     </MobileNavLayer>
             </MobileNav>
         </StyledNav>

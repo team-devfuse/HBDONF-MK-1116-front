@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { S3_BASE_URL } from "../lib/config";
 import { Icon } from "./Icons";
 
 const Wrapper = styled.div`
@@ -98,7 +99,7 @@ export default function MusicBar({data, onclick}){
                 data.type === "cdonly" && 
                 <div className="cd-only">
                     <p className="thumbnail">
-                        <img src={data.thumbnail}/>
+                        <img src={`${S3_BASE_URL}/mk_1116/work_thumbnail/${data.id}.png`}/>
                         <span>{data.title.ko}은 CD에서만 들을 수 있습니다.</span>
                     </p>
                 </div>

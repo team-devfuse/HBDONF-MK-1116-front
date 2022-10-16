@@ -38,7 +38,7 @@ const messageList = [
 ];
 
 export default function handler(req, res) {
-  const page = parseInt(req.query.page);
+  const page = req.query.page ? parseInt(req.query.page) : 3;
   const perView = 3;
 
   const result = {

@@ -104,6 +104,14 @@ const Sorilziller = () => {
     )
 };
 
+const SorilzillerYoyo = () => {
+    return (
+        <StyledSticker className="soriziller-yoyo">
+            <img src="assets/image/sticker/soriziller_type_yoyo_fill.png" alt=""/>
+        </StyledSticker>
+    )
+};
+
 const TextMarquee = () => {
     return (
         <StyledSticker className="text-marquee">
@@ -145,5 +153,6 @@ const TextMarquee = () => {
 export const Sticker = {
     WhiteCircle,
     Sorilziller,
+    SorilzillerYoyo,
     TextMarquee
 };

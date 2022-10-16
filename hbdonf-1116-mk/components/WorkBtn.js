@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { S3_BASE_URL } from "../lib/config";
 
 const StyledBtn = styled.button`
     width: 100%;
@@ -17,8 +18,7 @@ const StyledBtn = styled.button`
 
 export default function WorkBtn({data, onclick}){
     return (
-        <StyledBtn backgroundImage={data.thumbnail} onClick={() => {onclick(data);}}>
-            {/* <img src={data.thumbnail} alt={data.title.ko}/> */}
+        <StyledBtn backgroundImage={`${S3_BASE_URL}/mk_1116/work_thumbnail/${data.id}.png`} onClick={() => {onclick(data);}}>
             <p>{data.title.ko}</p>
         </StyledBtn>
     );
