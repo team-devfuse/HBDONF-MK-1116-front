@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Loading from '../components/Loading';
 import MessageBubble from '../components/MessageBubble';
 
 
@@ -22,12 +23,11 @@ const Wrapper = styled.div`
 
 export default function Allmessage() {
   const [message, setMessage] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState();
   
   const getMessage = useCallback(async () => {
-    setLoading(true);
     const result = await (
       await fetch(`/api/message?page=${page}`)
     ).json();
@@ -48,6 +48,7 @@ export default function Allmessage() {
   };
 
   return (
+    loading ? <Loading/> :
     <Wrapper>
       <section className='section-main-visial'>
         <h2 className='hide'>모든 메세지</h2>

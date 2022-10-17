@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Loading from '../components/Loading';
 import MusicBar from '../components/MusicBar';
 import WorkBtn from '../components/WorkBtn';
 import Marquee from "react-marquee-slider";
@@ -279,6 +280,7 @@ const Wrapper = styled.div`
 `;
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState();
   const [mkWork, setMkWork] = useState();
   const [mkWorkCate, setMkWorkCate] = useState("composed");
@@ -303,19 +305,21 @@ export default function Home() {
   };
   
   useEffect(() => {
-    const wrapper = document.getElementById("wrapper");
-    wrapper.addEventListener("scroll", listener);
-
-    getScrollTop();
-    getIsMobile();
-    window.addEventListener("resize", getScrollTop);
-    window.addEventListener('resize', getIsMobile);
-    
-    return () => {
-      wrapper.removeEventListener("scroll", listener);
-      window.removeEventListener("resize", getScrollTop);
-      window.removeEventListener('resize', getIsMobile);
-    };
+    if(!loading){
+      const wrapper = document.getElementById("wrapper");
+      wrapper.addEventListener("scroll", listener);
+  
+      getScrollTop();
+      getIsMobile();
+      window.addEventListener("resize", getScrollTop);
+      window.addEventListener('resize', getIsMobile);
+      
+      return () => {
+        wrapper.removeEventListener("scroll", listener);
+        window.removeEventListener("resize", getScrollTop);
+        window.removeEventListener('resize', getIsMobile);
+      };
+    }
   });
 
   useEffect(() => {
@@ -337,9 +341,11 @@ export default function Home() {
 
     getMessage();
     getMkWork();
+    setLoading(false);
   }, []);
 
   return (
+    loading ? <Loading/> :
     <Wrapper id="wrapper">
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
