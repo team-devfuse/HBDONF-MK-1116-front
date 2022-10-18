@@ -134,7 +134,7 @@ export default function AudioProg({width, volume, level}){
 
     return (
         <Wrapper>
-            <svg class="prog-area" xmlns="http://www.w3.org/2000/svg" width={width} height={width} viewBox={`0 0 ${width} ${width}`} fill="none">
+            <svg className="prog-area" xmlns="http://www.w3.org/2000/svg" width={width} height={width} viewBox={`0 0 ${width} ${width}`} fill="none">
                 <defs>
                     <mask id="mask1">
                         <rect width={width} height={width} fill="#000"/>

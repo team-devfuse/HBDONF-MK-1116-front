@@ -115,7 +115,7 @@ const SorilzillerYoyo = () => {
 const TextMarquee = () => {
     return (
         <StyledSticker className="text-marquee">
-            <div class="marquee-inner" aria-hidden="true">
+            <div className="marquee-inner" aria-hidden="true">
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
@@ -125,7 +125,7 @@ const TextMarquee = () => {
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
             </div>
-            <div class="marquee-inner" aria-hidden="true">
+            <div className="marquee-inner" aria-hidden="true">
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
@@ -135,7 +135,7 @@ const TextMarquee = () => {
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
             </div>
-            <div class="marquee-inner" aria-hidden="true">
+            <div className="marquee-inner" aria-hidden="true">
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
                 <span>My Cat Is Rockstar</span>
