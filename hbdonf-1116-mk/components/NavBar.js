@@ -168,9 +168,29 @@ const MobileNavLayer = styled.div`
                 &.active{
                     color:var(--color-light-70);
                 }
-                
             }
             
+            .lang{
+                padding-top:5rem;
+
+                button{
+                    max-width:10rem;
+                    height: 4rem;
+                    border:1px solid var(--color-point);
+                    background-color:#3F3F3F;
+                    transition:all 0.2s ease-in-out;
+                    font-weight:800;
+                    margin-right:1.5rem;
+
+                    &.on{
+                        background-color:var(--color-point);
+                    }
+
+                    &:last-child{
+                        margin-right:0;
+                    }
+                }
+            }
         }
 
         .bottom-menu{
@@ -180,6 +200,7 @@ const MobileNavLayer = styled.div`
             width:100%;
             display:flex;
             align-items:flex-end;
+            z-index:-1;
 
             img{
                 height:20rem;
@@ -249,39 +270,60 @@ export default function NavBar(){
                                         <a title="HOME"><Icon.LogoCenter/></a>
                                     </Link>
                                 </li>
-                                <li className="lang">한글/ENG/일본어</li>
                             </ul>
-                            <ul className="main-menu">
-                                {
-                                    // 로그인시 노출. 조건 수정 필요
-                                    // getLocalStorage() &&
-                                    fbaseInfo &&
+                            <div className="main-menu">
+                                <ul>
+                                    {
+                                        // 로그인시 노출. 조건 수정 필요
+                                        // getLocalStorage() &&
+                                        fbaseInfo &&
+                                        <li>
+                                            <Link href="/mypage">
+                                                <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
+                                            </Link>
+                                        </li>
+                                    }
                                     <li>
-                                        <Link href="/mypage">
-                                            <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
+                                        <Link href="/makemessage">
+                                            <a onClick={toggleNavMenu} className={router.pathname === "/makemessage" ? "active" : ""}>메세지 생성(삭제메뉴)</a>
                                         </Link>
                                     </li>
-                                }
-                                <li>
-                                    <Link href="/makemessage">
-                                        <a onClick={toggleNavMenu} className={router.pathname === "/makemessage" ? "active" : ""}>메세지 생성(삭제메뉴)</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="/allmessage">
-                                        <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>모든 메세지 보러가기</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    {
-                                        fbaseInfo ?
-                                        <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
-                                        <Link href="/login">
-                                            <a onClick={toggleNavMenu} className={router.pathname === "/login" ? "active" : ""}>로그인</a>
+                                    <li>
+                                        <Link href="/allmessage">
+                                            <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>모든 메세지 보러가기</a>
                                         </Link>
-                                    }
-                                </li>
-                            </ul>
+                                    </li>
+                                    <li>
+                                        {
+                                            fbaseInfo ?
+                                            <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
+                                            <Link href="/login">
+                                                <a onClick={toggleNavMenu} className={router.pathname === "/login" ? "active" : ""}>로그인</a>
+                                            </Link>
+                                        }
+                                    </li>
+                                </ul>
+                                <div className="lang">
+                                    <button
+                                        type="button"
+                                        className="on default-btn"
+                                        >
+                                        한글
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="default-btn"
+                                    >
+                                        ENG
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="default-btn"
+                                    >
+                                        日本語
+                                    </button>
+                                </div>
+                            </div>
                             <div className="bottom-menu">
                                 <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
                                 <p>contact dev7fuse@gmail.com</p>
