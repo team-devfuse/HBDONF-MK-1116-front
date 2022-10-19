@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import * as gtag from "../lib/gtag";
 import { GA_TRACKING_ID } from "../lib/gtag";
+import { appWithTranslation } from "next-i18next";
 
 
-export default function App({Component, pageProps}){
+function App({Component, pageProps}){
   const router = useRouter();
   let [thisPage, setThisPage] = useState();
 
@@ -65,3 +66,5 @@ export default function App({Component, pageProps}){
     </>
   );
 }
+
+export default appWithTranslation(App);

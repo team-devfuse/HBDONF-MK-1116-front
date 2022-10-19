@@ -9,6 +9,9 @@ import MessageBubble from '../components/MessageBubble';
 import { Sticker } from '../components/Stickers';
 import Link from 'next/link';
 import { useAuth } from '../context/auth-context';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router';
 
 
 const Wrapper = styled.div`
@@ -289,6 +292,10 @@ export default function Home() {
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
   const {isMobile, getIsMobile} = useAuth();
+  const router = useRouter();
+  const { t } = useTranslation('common');
+
+  console.log(useTranslation('common'));
 
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
@@ -349,6 +356,7 @@ export default function Home() {
     <Wrapper id="wrapper">
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
+        <h1>{t('h1')}</h1>
         <div className='inner'>
           <video
             autoPlay
@@ -459,3 +467,14 @@ export default function Home() {
     </Wrapper>
   )
 }
+
+export const getStaticProps = async ({ locale }) => {
+  const props = {};
+  Object.assign(props, {
+    ...(await serverSideTranslations(locale ['common'])),
+  });
+
+  console.log("locale");
+  console.log(locale);
+  return { props };
+};

@@ -306,19 +306,28 @@ export default function NavBar(){
                                 <div className="lang">
                                     <button
                                         type="button"
-                                        className="on default-btn"
+                                        className={`default-btn ${router.locale=="ko" ? "on" : ""}`}
+                                        onClick={()=>{
+                                            router.push(router.pathname, router.pathname, {locale:"ko"});
+                                        }}
                                         >
                                         한글
                                     </button>
                                     <button
                                         type="button"
-                                        className="default-btn"
+                                        className={`default-btn ${router.locale=="en" ? "on" : ""}`}
+                                        onClick={()=>{
+                                            router.push(router.pathname, router.pathname, {locale:"en"});
+                                        }}
                                     >
                                         ENG
                                     </button>
                                     <button
                                         type="button"
-                                        className="default-btn"
+                                        className={`default-btn ${router.locale=="jp" ? "on" : ""}`}
+                                        onClick={()=>{
+                                            router.push(router.pathname, router.pathname, {locale:"jp"});
+                                        }}
                                     >
                                         日本語
                                     </button>
