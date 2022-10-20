@@ -1,4 +1,9 @@
 {
-    "h1": "test h1",
-    "description": "test desc"
+    "test":"eng test",
+    "nav":{
+        "내 메세지 보러가기" : "Check my Message",
+        "모든 메세지 보러가기" : "Check all Messages",
+        "로그인" : "Login",
+        "로그아웃" : "Logout"
+    }
 }

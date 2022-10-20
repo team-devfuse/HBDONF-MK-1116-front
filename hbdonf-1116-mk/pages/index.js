@@ -292,7 +292,6 @@ export default function Home() {
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
   const {isMobile, getIsMobile} = useAuth();
-  const router = useRouter();
   const { t } = useTranslation('common');
 
   console.log(useTranslation('common'));
@@ -356,7 +355,7 @@ export default function Home() {
     <Wrapper id="wrapper">
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
-        <h1>{t('h1')}</h1>
+        {/* <h1>{t('test')}</h1> */}
         <div className='inner'>
           <video
             autoPlay

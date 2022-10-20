@@ -103,6 +103,10 @@ body::after{
   z-index: -1;
 }
 
+.jp{
+  word-break: break-all;
+}
+
 li{
   list-style: none;
 }
