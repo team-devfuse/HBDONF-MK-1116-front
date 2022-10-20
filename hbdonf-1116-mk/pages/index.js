@@ -468,13 +468,10 @@ export default function Home() {
   )
 }
 
-export const getStaticProps = async ({ locale }) => {
-  const props = {};
-  Object.assign(props, {
-    ...(await serverSideTranslations(locale ['common'])),
-  });
-
-  console.log("locale");
-  console.log(locale);
-  return { props };
-};
+export async function getServerSideProps({locale}) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
+}
