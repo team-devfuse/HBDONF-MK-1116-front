@@ -52,11 +52,11 @@ export default function Magemessage() {
         <div className='img-area'>
           <img
             srcSet={`
-              assets/image/img_makemessage.png 420w,
-              assets/image/img_makemessage@2x.png 840w,
-              assets/image/img_makemessage@3x.png 1259w
+              /assets/image/img_makemessage.png 420w,
+              /assets/image/img_makemessage@2x.png 840w,
+              /assets/image/img_makemessage@3x.png 1259w
             `}
-            src={`assets/image/img_makemessage.png`}
+            src={`/assets/image/img_makemessage.png`}
             alt=""
           />
         </div>

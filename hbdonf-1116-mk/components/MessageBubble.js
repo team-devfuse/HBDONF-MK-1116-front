@@ -33,6 +33,8 @@ export default function MessageBubble({size, level, text}){
     let path;
     let width;
 
+    // console.log(data.image_url);
+
     if(router.pathname.includes("setmessage")){
         path = "setmessage"
     } else if (router.pathname === "/"){
@@ -51,8 +53,8 @@ export default function MessageBubble({size, level, text}){
 
     return (
         <Wrapper level={level} for={path}>
-            <img src={data.image_url} alt={data.title}/>
-            <p style={{"width":`${width}rem`, "aspectRatio":data.ratio, "padding" : data.padding}}>
+            <img src={data?.image_url} alt={data?.title}/>
+            <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
                 {text}
             </p>
         </Wrapper>
