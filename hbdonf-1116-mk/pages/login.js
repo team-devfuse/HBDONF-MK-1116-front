@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth-context";
 import styled from "styled-components";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Wrapper = styled.div`
   height:100vh;
@@ -46,4 +47,12 @@ export default function loginPage(){
       }
     </Wrapper>
   );
+}
+
+export async function getServerSideProps({locale}) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

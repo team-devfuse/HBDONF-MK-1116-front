@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Footer from "./Footer";
 import NavBar from "./NavBar";
 import Seo from "./Seo";
 

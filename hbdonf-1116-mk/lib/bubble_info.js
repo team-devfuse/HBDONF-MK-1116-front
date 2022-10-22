@@ -15,14 +15,14 @@ export const bubble_info = [
   },
   {
     level:3,
-    title:"하트 말풍선",
+    title:"사랑 가득 말풍선",
     image_url:"/assets/image/bubble/03_heart.svg",
     ratio:"210 / 148",
     padding:"10% 20% 20% 20%"
   },
   {
     level:4,
-    title:"고양이 말풍선",
+    title:"내 친구 야옹이 말풍선",
     image_url:"/assets/image/bubble/04_cat.svg",
     ratio:"210 / 133",
     padding:"15% 32% 11% 15%"

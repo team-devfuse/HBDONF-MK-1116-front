@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Loading from '../components/Loading';
 import MessageBubble from '../components/MessageBubble';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 
 const Wrapper = styled.div`
@@ -22,6 +24,7 @@ const Wrapper = styled.div`
 `;
 
 export default function Allmessage() {
+  const { t } = useTranslation('common');
   const [message, setMessage] = useState();
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -54,11 +57,11 @@ export default function Allmessage() {
         <h2 className='hide'>모든 메세지</h2>
         <div className='inner center-content'>
           yoyo<br/>
-          MK에게 총 nnn개의 메세지가 도착했어요!
+          {t("all_messages.메세지안내1")} nnn{t("all_messages.메세지안내2")}
         </div>
       </section>
       <section className='section-message-list'>
-        <h2>메세지 리스트</h2>
+        <h2 className='hide'>메세지 리스트</h2>
         <ul className='center-content'>
           {
             message?.map((data, index) => (
@@ -69,9 +72,17 @@ export default function Allmessage() {
             ))
           }
           {/* <li ref={ref}>Element {inView.toString()} / {page}/{lastPage}</li> */}
-          <li><button onClick={loadMore}>더보기~~ {page}/{lastPage}</button></li>
+          <li><button onClick={loadMore}>{t("all_messages.더 보기")} {page}/{lastPage}</button></li>
         </ul>
       </section>
     </Wrapper>
   )
+}
+
+export async function getServerSideProps({locale}) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

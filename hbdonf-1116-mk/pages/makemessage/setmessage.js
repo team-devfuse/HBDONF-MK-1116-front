@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 import MessageBubble from '../../components/MessageBubble';
 import MessageNav from '../../components/MessageNav';
 import { bubble_info } from '../../lib/bubble_info';
@@ -63,13 +65,14 @@ const Wrapper = styled.div`
 
 export default function Setmessage() {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const { level } = router.query;
   return (
     <Wrapper>
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage/soriziller" step={2}/>
         <div className='txt-area'>
-          말풍선을 선택해주세요.
+          {t("set_messagebubble.말풍선을 선택해주세요.")}
         </div>
         <div className='swipe-area'>
           <Swiper
@@ -84,7 +87,7 @@ export default function Setmessage() {
                     return (
                       <SwiperSlide key={index}>
                         <div className='bubble-box'>
-                          <MessageBubble size={45} level={item.level} text={item.title}/>
+                          <MessageBubble size={45} level={item.level} text={t(`set_messagebubble.${item.title}`)}/>
                         </div>
                       </SwiperSlide>
                     );
@@ -97,4 +100,13 @@ export default function Setmessage() {
       </div>
     </Wrapper>
   )
+}
+
+export async function getServerSideProps({locale}) {
+  console.log(locale);
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

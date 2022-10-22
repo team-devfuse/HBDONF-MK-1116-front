@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { useAuth } from '../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router';
 
 
 const Wrapper = styled.div`
@@ -294,8 +293,6 @@ export default function Home() {
   const {isMobile, getIsMobile} = useAuth();
   const { t } = useTranslation('common');
 
-  console.log(useTranslation('common'));
-
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
     setScrollY(wrapper.scrollTop);
@@ -355,7 +352,6 @@ export default function Home() {
     <Wrapper id="wrapper">
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
-        {/* <h1>{t('test')}</h1> */}
         <div className='inner'>
           <video
             autoPlay
@@ -402,10 +398,10 @@ export default function Home() {
           </Marquee>
           <div className='btn-area'>
             <Link href="/makemessage">
-              <a className='default-btn'>생일 축하 메시지 남기러가기</a>
+              <a className='default-btn'>{t('message.생일 축하 메세지 남기러 가기')}</a>
             </Link>
             <Link href="/allmessage">
-              <a className='txt-btn'>전체 메시지 보러 가기</a>
+              <a className='txt-btn'>{t('message.모든 메세지 보러가기')}</a>
             </Link>
           </div>
         </div>
@@ -468,6 +464,7 @@ export default function Home() {
 }
 
 export async function getServerSideProps({locale}) {
+  console.log(locale);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
