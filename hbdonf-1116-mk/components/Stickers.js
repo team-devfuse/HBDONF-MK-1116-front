@@ -90,8 +90,8 @@ const StyledSticker = styled.div`
 const WhiteCircle = () => {
     return (
         <StyledSticker className="white-circle">
-            <img className="center" src="assets/image/sticker/white_circle_center.png" alt=""/>
-            <img className="line" src="assets/image/sticker/white_circle_line.png" alt=""/>
+            <img className="center" src="/assets/image/sticker/white_circle_center.png" alt=""/>
+            <img className="line" src="/assets/image/sticker/white_circle_line.png" alt=""/>
         </StyledSticker>
     )
 };
@@ -99,7 +99,7 @@ const WhiteCircle = () => {
 const Sorilziller = () => {
     return (
         <StyledSticker className="soriziller">
-            <img src="assets/image/sticker/soriziller_type_line.png" alt=""/>
+            <img src="/assets/image/sticker/soriziller_type_line.png" alt=""/>
         </StyledSticker>
     )
 };
@@ -107,7 +107,7 @@ const Sorilziller = () => {
 const SorilzillerYoyo = () => {
     return (
         <StyledSticker className="soriziller-yoyo">
-            <img src="assets/image/sticker/soriziller_type_yoyo_fill.png" alt=""/>
+            <img src="/assets/image/sticker/soriziller_type_yoyo_fill.png" alt=""/>
         </StyledSticker>
     )
 };

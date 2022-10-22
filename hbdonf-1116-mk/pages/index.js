@@ -74,7 +74,7 @@ const Wrapper = styled.div`
       left: 0;
       bottom: 0;
       transform: translateY(100%);
-      background: url("assets/image/bg_ripped_paper_02.png") no-repeat center top;
+      background: url("/assets/image/bg_ripped_paper_02.png") no-repeat center top;
       background-size: 100%;
     }
 
@@ -358,14 +358,14 @@ export default function Home() {
             muted
             loop
             playsInline
-            poster="assets/image/bg_main_visual_poster.png"
+            poster="/assets/image/bg_main_visual_poster.png"
           >
             <source
-              src="assets/video/vid_main_visual.mp4"
+              src="/assets/video/vid_main_visual.mp4"
               type="video/mp4"
             />
           </video>
-          <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
+          <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
       <section className={`section-message ${scrollY > section2Top && scrollY < section3Top ? "on" : ""}`}>
@@ -412,15 +412,15 @@ export default function Home() {
           <div className='img-area'>
             <picture>
               <source media="(min-width: 1024px)"
-              srcSet="assets/image/img_who_is_mk_pc.png 769w,
+              srcSet="/assets/image/img_who_is_mk_pc.png 769w,
               assets/image/img_who_is_mk_pc@2x.png 1538w,
               assets/image/img_who_is_mk_pc@3x.png 2307w"/>
               <source media="(max-width: 1023px)"
-              srcSet="assets/image/img_who_is_mk_m.png 360w,
+              srcSet="/assets/image/img_who_is_mk_m.png 360w,
               assets/image/img_who_is_mk_m@2x.png 720w,
               assets/image/img_who_is_mk_m@3x.png 1080w"/>
               <img 
-              src="assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
+              src="/assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
           </div>
           <div className='info-area'>

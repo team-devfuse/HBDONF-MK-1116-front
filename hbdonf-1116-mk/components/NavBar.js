@@ -337,7 +337,7 @@ export default function NavBar(){
                                 </div>
                             </div>
                             <div className="bottom-menu">
-                                <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
+                                <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
                                 <p>contact dev7fuse@gmail.com</p>
                             </div>   
                         </div>

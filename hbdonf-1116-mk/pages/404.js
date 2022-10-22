@@ -41,7 +41,7 @@ export default function Custom404() {
         <Wrapper>
             <div className="inner center-content">
                 <p className="img">
-                    <img src="assets/image/bg_level_3.png" alt=""/>
+                    <img src="/assets/image/bg_level_3.png" alt=""/>
                 </p>
                 <p className="txt">
                     <b>404 ERROR</b>
