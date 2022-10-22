@@ -66,7 +66,7 @@ export default function Magemessage() {
               {t("make_message.소리질러 모드")}
             </a>
           </Link>
-          <Link href="/makemessage/setmessage?level=1">
+          <Link href="/makemessage/set_bubble?level=1">
               <a className='default-btn sub-btn'>
                 {t("make_message.쉿! 조용히 모드")}
               </a>

@@ -11,6 +11,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { useState } from 'react';
 
 
 const Wrapper = styled.div`
@@ -24,49 +25,67 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-  }
 
-  .txt-area{
-    width: 100%;
-    padding: 4rem 0;
-    text-align: left;
-    font-size: var(--font-size-big);
-    font-weight: 600;
-    overflow: hidden;
-    white-space:nowrap;
-    text-overflow: ellipsis;
-  }
 
-  .swipe-area{
-    width:100%;
-    
-    .bubble-box{
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .txt-area{
+      width: 100%;
+      padding: 4rem 0;
+      text-align: left;
       font-size: var(--font-size-big);
       font-weight: 600;
+      overflow: hidden;
+      white-space:nowrap;
+      text-overflow: ellipsis;
     }
-
-    .swiper{
-      padding-bottom: 5rem;
-
-      .swiper-wrapper{
+  
+    .swipe-area{
+      width:100%;
+      
+      .bubble-box{
+        display: flex;
         align-items: center;
+        justify-content: center;
+        font-size: var(--font-size-big);
+        font-weight: 600;
       }
-
-      .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after,
-      .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after{
-        color:var(--color-point);
+  
+      .swiper{
+        padding-bottom: 5rem;
+  
+        .swiper-wrapper{
+          align-items: center;
+        }
+  
+        .swiper-button-next:after, .swiper-rtl .swiper-button-prev:after,
+        .swiper-button-prev:after, .swiper-rtl .swiper-button-next:after{
+          color:var(--color-point);
+        }
       }
+    }
+  
+    &>.btn-area{
+      width:100%;
+      padding: 4rem 0;
+      text-align: center;
     }
   }
+
 `;
 
-export default function Setmessage() {
-  const router = useRouter();
+export default function SetBubble() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const { level } = router.query;
+  const [bubbleLevel, setBubbleLevel] = useState();
+
+  const nextStep = () => {
+    router.push({
+      pathname: '/makemessage/write_message',
+      query: { bubbleLevel: bubbleLevel },
+    })
+  };
+
+
   return (
     <Wrapper>
       <div className='inner center-content'>
@@ -96,6 +115,11 @@ export default function Setmessage() {
               }
               
             </Swiper>
+        </div>
+        <div className='btn-area'>
+          <button className='default-btn' onClick={nextStep}>
+            {t("soriziller.다음 단계로")}
+          </button>
         </div>
       </div>
     </Wrapper>

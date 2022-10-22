@@ -15,6 +15,14 @@ const Wrapper = styled.div`
         align-items:center;
         justify-content:center;
         text-align:center;
+
+        textarea{
+            width:100%;
+            height:100%;
+            outline: none;
+            border: none;
+            resize: none;
+        }
     }
 
     img{
@@ -27,23 +35,10 @@ const Wrapper = styled.div`
     }
 `;
 
-export default function MessageBubble({size, level, text}){
+export default function MessageBubble({writemode, size, level, text}){
     const router = useRouter();
     const data = bubble_info.find(item => item.level == level);
-    let path;
     let width;
-
-    // console.log(data.image_url);
-
-    if(router.pathname.includes("setmessage")){
-        path = "setmessage"
-    } else if (router.pathname === "/"){
-        path = "main"
-    } else if(router.pathname.includes("allmessage")){
-        path = "allmessage"
-    }
-
-    // console.log(`path = ${path}`);
 
     if(level===5){
         width = size*1.5;
@@ -51,12 +46,21 @@ export default function MessageBubble({size, level, text}){
         width = size;
     }
 
+    // TO DO : write mode 정규식 써서 br 못하게 막기
+    // TO DO : textarea 높이 scrollHeight 써서 유동화
+
     return (
-        <Wrapper level={level} for={path}>
+        <Wrapper level={level}>
             <img src={data?.image_url} alt={data?.title}/>
-            <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
-                {text}
-            </p>
+            {
+                writemode ?
+                <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
+                    <textarea placeholder="140자 이내 메세지를~~" maxLength={140}/>
+                </p> :
+                <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
+                    {text}
+                </p>
+            }
         </Wrapper>
     );
 }

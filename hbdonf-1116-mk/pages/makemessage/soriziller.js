@@ -52,7 +52,7 @@ export default function Soriziller() {
 
   const nextStep = () => {
     router.push({
-      pathname: '/makemessage/setmessage',
+      pathname: '/makemessage/set_bubble',
       query: { level: level },
     })
   };
