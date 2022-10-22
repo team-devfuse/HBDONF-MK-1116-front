@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { AuthContext } from "../context/auth-context";
 import styled from "styled-components";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const Wrapper = styled.div`
   height:100vh;
@@ -30,20 +31,21 @@ const Wrapper = styled.div`
 `;
 
 export default function loginPage(){
+  const { t } = useTranslation('common');
   const {SocialLogin, loginPopupOpend} = useContext(AuthContext);
 
   return (
     <Wrapper className="center-content">
-      <h2>로그인 / 회원가입</h2>
+      <h2>{t("login.로그인 / 회원가입")}</h2>
       <button
         className="default-btn"
         onClick={SocialLogin}
         name="twitter"
       >
-        트위터로 로그인 / 회원가입
+        {t("login.트위터로 로그인 / 회원가입")}
       </button>
       {
-        loginPopupOpend && <p className="login-overlay">팝업 로그인 중입니다.</p>
+        loginPopupOpend && <p className="login-overlay">{t("login.팝업 로그인 중입니다.")}</p>
       }
     </Wrapper>
   );
