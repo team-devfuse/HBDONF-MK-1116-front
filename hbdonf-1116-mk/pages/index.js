@@ -275,6 +275,12 @@ const Wrapper = styled.div`
         .info-area{
           width:100%;
           padding-top: 2rem;
+
+          .work-list{
+            li{
+              width:calc((100% - 3rem) / 3);   
+            }
+          }
         }
       }
     }
