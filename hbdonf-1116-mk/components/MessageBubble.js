@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     color:var(--color-dark);
     width:auto;
     display: inline-block;
+    isolation: isolate;
 
     p{
         box-sizing:border-box;
@@ -53,8 +54,6 @@ export default function MessageBubble({writemode, size, level, text}){
     } else {
         width = size;
     }
-    console.log("width");
-    console.log(width);
 
     const updateTextarea = () => {
         const textarea = inputRef.current;
