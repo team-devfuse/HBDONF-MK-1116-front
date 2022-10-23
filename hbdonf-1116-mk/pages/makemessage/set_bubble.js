@@ -76,7 +76,7 @@ export default function SetBubble() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { level } = router.query;
-  const [bubbleLevel, setBubbleLevel] = useState();
+  const [bubbleLevel, setBubbleLevel] = useState(1);
 
   const nextStep = () => {
     router.push({
@@ -99,6 +99,7 @@ export default function SetBubble() {
             slidesPerView={1}
             pagination={{clickable:true}}
             navigation
+            onSlideChange={(e) => setBubbleLevel(e.activeIndex+1)}
             >
               {
                 bubble_info?.map((item, index) => {

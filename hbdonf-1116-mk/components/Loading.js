@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 
 const StyledLoading = styled.div`
   position: fixed;
@@ -118,4 +120,12 @@ export default function Loading(){
           </div>
         </StyledLoading>
     );
+}
+
+export async function getServerSideProps({locale}) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

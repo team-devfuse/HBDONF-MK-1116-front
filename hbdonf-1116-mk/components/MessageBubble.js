@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { bubble_info } from '../lib/bubble_info';
-import {useRouter} from "next/router"
+import { useEffect, useRef } from "react";
+import { useTranslation } from 'next-i18next'
 
 
 const Wrapper = styled.div`
@@ -18,10 +19,16 @@ const Wrapper = styled.div`
 
         textarea{
             width:100%;
-            height:100%;
+            height: 10rem;
+            max-height:100%;
             outline: none;
             border: none;
             resize: none;
+            text-align: center;
+
+            &::placeholder{
+                color:#999;
+            }
         }
     }
 
@@ -36,18 +43,37 @@ const Wrapper = styled.div`
 `;
 
 export default function MessageBubble({writemode, size, level, text}){
-    const router = useRouter();
+    const { t } = useTranslation('common');
+    const inputRef = useRef();
     const data = bubble_info.find(item => item.level == level);
     let width;
-
-    if(level===5){
+    
+    if(level==5){
         width = size*1.5;
     } else {
         width = size;
     }
+    console.log("width");
+    console.log(width);
 
-    // TO DO : write mode 정규식 써서 br 못하게 막기
-    // TO DO : textarea 높이 scrollHeight 써서 유동화
+    const updateTextarea = () => {
+        const textarea = inputRef.current;
+    
+        // 높이 자동화
+        textarea.style.height = 'auto';
+        const height = textarea.scrollHeight;
+        textarea.style.height = `${height}px`;
+
+        // br, 스페이스 2회 막기
+        const test = textarea.value.replace(/\n/g, " ").replace("  ", " ");
+        textarea.value = test;
+    };
+
+    useEffect(()=>{
+        const textarea = inputRef.current;
+
+        textarea && textarea.focus();
+    },[]);
 
     return (
         <Wrapper level={level}>
@@ -55,7 +81,7 @@ export default function MessageBubble({writemode, size, level, text}){
             {
                 writemode ?
                 <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
-                    <textarea placeholder="140자 이내 메세지를~~" maxLength={140}/>
+                    <textarea ref={inputRef} placeholder={t("set_messagebubble.작성안내")} maxLength={120} onChange={updateTextarea}/>
                 </p> :
                 <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
                     {text}

@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
+
+
 const Wrapper = styled.div`
     width:100%;
     height:100vh;
@@ -33,6 +37,7 @@ const Wrapper = styled.div`
 `;
 
 export default function Custom404() {
+    const { t } = useTranslation('common');
     // TO DO : 랜덤이미지 추가 필요
     const randomNumber = Math.floor((Math.random() * 32) + 1);
     const imagePath = `/images/404/${randomNumber}.webp`;
@@ -45,9 +50,25 @@ export default function Custom404() {
                 </p>
                 <p className="txt">
                     <b>404 ERROR</b>
-                    <span>여기는 아무것도 없어요옹~</span>
+                    <span>{t("error")}</span>
                 </p>
             </div>
         </Wrapper>
     );
 }
+
+// export async function getServerSideProps({locale}) {
+//     return {
+//       props: {
+//         ...(await serverSideTranslations(locale, ["common"]))
+//       },
+//     };
+// }
+
+export const getStaticProps = async ({ locale }) => {
+    return {
+      props: {
+        ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+      },
+    }
+  }

@@ -4,14 +4,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import MessageBubble from '../../components/MessageBubble';
 import MessageNav from '../../components/MessageNav';
-import { bubble_info } from '../../lib/bubble_info';
-import { Swiper, SwiperSlide} from 'swiper/react';
-import { Pagination, Navigation } from "swiper";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { useState } from 'react';
 
 
 const Wrapper = styled.div`
@@ -75,11 +71,12 @@ const Wrapper = styled.div`
 export default function SetBubble() {
   const { t } = useTranslation('common');
   const router = useRouter();
-  // const { bubbleLevel } = router.query;
-  const bubbleLevel = 4;
+  const { bubbleLevel } = router.query;
 
   const complete = () => {
-    alert("complete");
+    // alert("complete");
+    const textarea = document.getElementsByTagName("textarea");
+    alert(textarea[0].value);
   };
 
 
