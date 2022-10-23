@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
+import { useTranslation } from 'next-i18next'
+
 
 const Wrapper = styled.div`
     position: relative;
@@ -31,7 +33,7 @@ const Wrapper = styled.div`
         &::after{
             width:80%;
             padding-top: 30%;
-            content: "함성은 꺄악으로 통일할 수 있도록 합니다.";
+            content: ${props => `"${props.messages.default}"`};
         }
 
         .level-message{
@@ -59,7 +61,7 @@ const Wrapper = styled.div`
             animation: level2 2s ease-in-out;
             
             &::after{
-                content: "떨리는 마음 말풍선을 획득했어요!";
+                content: ${props => `"${props.messages.level2}"`};
             }
         }
         
@@ -68,7 +70,7 @@ const Wrapper = styled.div`
             animation: level3 2s ease-in-out;
             
             &::after{
-                content: "사랑 가득 말풍선을 획득했어요!";
+                content: ${props => `"${props.messages.level3}"`};
             }
         }
         
@@ -77,7 +79,7 @@ const Wrapper = styled.div`
             animation: level4 2s ease-in-out;
             
             &::after{
-                content: "내 친구 야옹이 말풍선을 획득했어요!";
+                content: ${props => `"${props.messages.level4}"`};
             }
         }
         
@@ -87,9 +89,7 @@ const Wrapper = styled.div`
             opacity: 1;
             
             &::after{
-                content: "1116db 말풍선을 획득했어요!";
-                /* opacity: 0; */
-                /* animation: level5 2s ease-in-out; */
+                content: ${props => `"${props.messages.level5}"`};
             }
         }
 
@@ -122,6 +122,7 @@ const Wrapper = styled.div`
 `;
 
 export default function AudioProg({width, volume, level}){
+    const { t } = useTranslation('common');
     const maxVolume = 150;
     const percent = parseInt((volume / maxVolume) * 100);
     const strokeWidth= 35;
@@ -129,11 +130,17 @@ export default function AudioProg({width, volume, level}){
     var progress = percent / 100;
     var dashoffset = CIRCUMFERENCE * (1 - progress);
 
-    // 레벨 메세지 mount 뒤 사라지기
-    useEffect(()=>{},[]);
+    const messages = {
+        default : t("soriziller.함성통일"),
+        level2 : t("soriziller.떨리는 마음"),
+        level3 : t("soriziller.사랑 가득"),
+        level4 : t("soriziller.내 친구 야옹이"),
+        level5 : t("soriziller.1116db"),
+    };
+
 
     return (
-        <Wrapper>
+        <Wrapper messages={messages}>
             <svg className="prog-area" xmlns="http://www.w3.org/2000/svg" width={width} height={width} viewBox={`0 0 ${width} ${width}`} fill="none">
                 <defs>
                     <mask id="mask1">

@@ -9,6 +9,8 @@ import MessageBubble from '../components/MessageBubble';
 import { Sticker } from '../components/Stickers';
 import Link from 'next/link';
 import { useAuth } from '../context/auth-context';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 
 const Wrapper = styled.div`
@@ -72,7 +74,7 @@ const Wrapper = styled.div`
       left: 0;
       bottom: 0;
       transform: translateY(100%);
-      background: url("assets/image/bg_ripped_paper_02.png") no-repeat center top;
+      background: url("/assets/image/bg_ripped_paper_02.png") no-repeat center top;
       background-size: 100%;
     }
 
@@ -273,6 +275,12 @@ const Wrapper = styled.div`
         .info-area{
           width:100%;
           padding-top: 2rem;
+
+          .work-list{
+            li{
+              width:calc((100% - 3rem) / 3);   
+            }
+          }
         }
       }
     }
@@ -289,6 +297,7 @@ export default function Home() {
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
   const {isMobile, getIsMobile} = useAuth();
+  const { t } = useTranslation('common');
 
   const listener = e => {
     const wrapper = document.getElementById("wrapper");
@@ -355,14 +364,14 @@ export default function Home() {
             muted
             loop
             playsInline
-            poster="assets/image/bg_main_visual_poster.png"
+            poster="/assets/image/bg_main_visual_poster.png"
           >
             <source
-              src="assets/video/vid_main_visual.mp4"
+              src="/assets/video/vid_main_visual.mp4"
               type="video/mp4"
             />
           </video>
-          <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
+          <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
       <section className={`section-message ${scrollY > section2Top && scrollY < section3Top ? "on" : ""}`}>
@@ -395,10 +404,10 @@ export default function Home() {
           </Marquee>
           <div className='btn-area'>
             <Link href="/makemessage">
-              <a className='default-btn'>생일 축하 메시지 남기러가기</a>
+              <a className='default-btn'>{t('message.생일 축하 메세지 남기러 가기')}</a>
             </Link>
             <Link href="/allmessage">
-              <a className='txt-btn'>전체 메시지 보러 가기</a>
+              <a className='txt-btn'>{t('message.모든 메세지 보러가기')}</a>
             </Link>
           </div>
         </div>
@@ -409,15 +418,15 @@ export default function Home() {
           <div className='img-area'>
             <picture>
               <source media="(min-width: 1024px)"
-              srcSet="assets/image/img_who_is_mk_pc.png 769w,
+              srcSet="/assets/image/img_who_is_mk_pc.png 769w,
               assets/image/img_who_is_mk_pc@2x.png 1538w,
               assets/image/img_who_is_mk_pc@3x.png 2307w"/>
               <source media="(max-width: 1023px)"
-              srcSet="assets/image/img_who_is_mk_m.png 360w,
+              srcSet="/assets/image/img_who_is_mk_m.png 360w,
               assets/image/img_who_is_mk_m@2x.png 720w,
               assets/image/img_who_is_mk_m@3x.png 1080w"/>
               <img 
-              src="assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
+              src="/assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
           </div>
           <div className='info-area'>
@@ -458,4 +467,13 @@ export default function Home() {
       }
     </Wrapper>
   )
+}
+
+export async function getServerSideProps({locale}) {
+  console.log(locale);
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

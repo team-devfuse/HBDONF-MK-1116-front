@@ -6,6 +6,8 @@ import { AuthContext } from "../context/auth-context";
 import NavToggleBtn from "./NavToggleBtn";
 import { Icon } from "./Icons";
 import { Sticker } from "./Stickers";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 
 const StyledNav = styled.nav`
@@ -222,6 +224,7 @@ const MobileNavLayer = styled.div`
 
 export default function NavBar(){
     const router = useRouter();
+    const { t } = useTranslation('common');
     const {fbaseInfo, Logout, getLocalStorage} = useContext(AuthContext);
     let [scrollY, setScrollY] = useState();
     let [isOpened, setIsOpened] = useState(false);
@@ -244,7 +247,7 @@ export default function NavBar(){
     };
 
     return (
-        <StyledNav scrollY={scrollY} >
+        <StyledNav scrollY={scrollY} className={router.locale}>
             <MobileNav>
                     <h1>
                         <Link href="/">
@@ -276,10 +279,10 @@ export default function NavBar(){
                                     {
                                         // 로그인시 노출. 조건 수정 필요
                                         // getLocalStorage() &&
-                                        fbaseInfo &&
+                                        // fbaseInfo &&
                                         <li>
                                             <Link href="/mypage">
-                                                <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>내 메세지 보러가기(로그인시에만 노출)</a>
+                                                <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>{t('nav.내 메세지 보러가기')}</a>
                                             </Link>
                                         </li>
                                     }
@@ -290,15 +293,15 @@ export default function NavBar(){
                                     </li>
                                     <li>
                                         <Link href="/allmessage">
-                                            <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>모든 메세지 보러가기</a>
+                                            <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>{t('nav.모든 메세지 보러가기')}</a>
                                         </Link>
                                     </li>
                                     <li>
                                         {
                                             fbaseInfo ?
-                                            <button onClick={() => {Logout(); toggleNavMenu();}}>로그아웃</button> :
+                                            <button onClick={() => {Logout(); toggleNavMenu();}}>{t('nav.로그아웃')}</button> :
                                             <Link href="/login">
-                                                <a onClick={toggleNavMenu} className={router.pathname === "/login" ? "active" : ""}>로그인</a>
+                                                <a onClick={toggleNavMenu} className={router.pathname === "/login" ? "active" : ""}>{t('nav.로그인')}</a>
                                             </Link>
                                         }
                                     </li>
@@ -306,26 +309,35 @@ export default function NavBar(){
                                 <div className="lang">
                                     <button
                                         type="button"
-                                        className="on default-btn"
+                                        className={`default-btn ${router.locale=="ko" ? "on" : ""}`}
+                                        onClick={()=>{
+                                            router.push(router.pathname, router.pathname, {locale:"ko"});
+                                        }}
                                         >
                                         한글
                                     </button>
                                     <button
                                         type="button"
-                                        className="default-btn"
+                                        className={`default-btn ${router.locale=="en" ? "on" : ""}`}
+                                        onClick={()=>{
+                                            router.push(router.pathname, router.pathname, {locale:"en"});
+                                        }}
                                     >
                                         ENG
                                     </button>
                                     <button
                                         type="button"
-                                        className="default-btn"
+                                        className={`default-btn ${router.locale=="jp" ? "on" : ""}`}
+                                        onClick={()=>{
+                                            router.push(router.pathname, router.pathname, {locale:"jp"});
+                                        }}
                                     >
                                         日本語
                                     </button>
                                 </div>
                             </div>
                             <div className="bottom-menu">
-                                <img src="assets/image/bg_ripped_paper_01.png" alt=""/>
+                                <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
                                 <p>contact dev7fuse@gmail.com</p>
                             </div>   
                         </div>
@@ -334,3 +346,12 @@ export default function NavBar(){
         </StyledNav>
     );
 }
+
+
+export async function getServerSideProps({locale}) {
+    return {
+      props: {
+        ...(await serverSideTranslations(locale, ["common"]))
+      },
+    };
+  }

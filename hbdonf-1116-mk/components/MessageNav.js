@@ -1,5 +1,8 @@
 import Link from "next/link";
 import styled from "styled-components";
+import { useTranslation } from 'next-i18next'
+import { useRouter } from "next/router";
+
 
 const Wrapper = styled.div`
     width: 100%;
@@ -22,15 +25,15 @@ const Wrapper = styled.div`
 `;
 
 export default function MessageNav({step, backPath}){
-    const allStep = 3;
+    const router = useRouter();
+    const { t } = useTranslation('common');
+    const allStep = 4;
     const progPercent = (step / allStep) * 100;
 
     return (
         <Wrapper>
             <div className="btn-area">
-                <Link href={backPath}>
-                    &lt; 이전단계로
-                </Link>
+                <button onClick={()=>{router.back()}}>&lt; {t("soriziller.이전 단계로")}</button>
             </div>
             <div className="prog-area">
                 <p style={{"width":`${progPercent}%`}}></p>

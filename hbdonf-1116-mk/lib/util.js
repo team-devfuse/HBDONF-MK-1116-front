@@ -41,10 +41,10 @@ export function transDateKo(date){
 
 // sns 공유
 
-export function shareTwitter(gWInfo, url){
-    const sendText = `${transDateKo(gWInfo.startDate)} <${gWInfo.title}> 단관 함께 달려요~!!`;
+export function shareTwitter(text, url){
+    const sendText = text;
 
-    window.open(`https://twitter.com/intent/tweet?text=${sendText}&hashtags=VMGO_for_ONF&url=${url}`);
+    window.open(`https://twitter.com/intent/tweet?text=${sendText}&hashtags=HBD_to_MK&url=${url}`);
 
     //6. GA이벤트 날리기
     const gaValue = { 
@@ -69,42 +69,21 @@ export function shareFacebook(url){
     gtag.event(gaValue);
 }
 
-export function shareLink(url){
-    let text = document.createElement("textarea");
-    document.body.appendChild(text);
-    text.value = url;
-    text.select();
+export function shareLink(text, url){
+    let textarea = document.createElement("textarea");
+    document.body.appendChild(textarea);
+    textarea.value = url;
+    textarea.select();
     document.execCommand('copy');
-    document.body.removeChild(text);
+    document.body.removeChild(textarea);
 
-    alert("클립보드에 복사되었습니다.");
+    alert(text);
 
     //6. GA이벤트 날리기
     const gaValue = { 
         action :"share",
         category : "group_watching",
         label :"link"
-    };
-    
-    gtag.event(gaValue);
-};
-
-export function getGooleCalendar(gWInfo, link){
-    // console.log(gWInfo);
-    const title = `[VMGO] ${gWInfo.title}`;
-    const desc = `온앤오프 라이브 복습 단관 함께 달려요~!! ${link}`;
-    const date_start = new Date(gWInfo.startDate);
-    const date_end = new Date(gWInfo.endDate);
-    const datez_start = date_start.toISOString().replace(/[-:.]/gi,'');
-    const datez_end = date_end.toISOString().replace(/[-:.]/gi,'');
-
-    const google_calendar = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${datez_start}/${datez_end}&details=${encodeURIComponent(desc)}&sprop=&sprop=name:`;
-    window.open(google_calendar);
-    //6. GA이벤트 날리기
-    const gaValue = { 
-        action :"schedule",
-        category : "group_watching",
-        label :"google_calendar"
     };
     
     gtag.event(gaValue);

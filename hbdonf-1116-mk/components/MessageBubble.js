@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { bubble_info } from '../lib/bubble_info';
-import {useRouter} from "next/router"
+import { useEffect, useRef } from "react";
+import { useTranslation } from 'next-i18next'
 
 
 const Wrapper = styled.div`
@@ -8,6 +9,7 @@ const Wrapper = styled.div`
     color:var(--color-dark);
     width:auto;
     display: inline-block;
+    isolation: isolate;
 
     p{
         box-sizing:border-box;
@@ -15,6 +17,20 @@ const Wrapper = styled.div`
         align-items:center;
         justify-content:center;
         text-align:center;
+
+        textarea{
+            width:100%;
+            height: 10rem;
+            max-height:100%;
+            outline: none;
+            border: none;
+            resize: none;
+            text-align: center;
+
+            &::placeholder{
+                color:#999;
+            }
+        }
     }
 
     img{
@@ -27,34 +43,49 @@ const Wrapper = styled.div`
     }
 `;
 
-export default function MessageBubble({size, level, text}){
-    const router = useRouter();
+export default function MessageBubble({writemode, size, level, text}){
+    const { t } = useTranslation('common');
+    const inputRef = useRef();
     const data = bubble_info.find(item => item.level == level);
-    let path;
     let width;
-
-    if(router.pathname.includes("setmessage")){
-        path = "setmessage"
-    } else if (router.pathname === "/"){
-        path = "main"
-    } else if(router.pathname.includes("allmessage")){
-        path = "allmessage"
-    }
-
-    // console.log(`path = ${path}`);
-
-    if(level===5){
+    
+    if(level==5){
         width = size*1.5;
     } else {
         width = size;
     }
 
+    const updateTextarea = () => {
+        const textarea = inputRef.current;
+    
+        // 높이 자동화
+        textarea.style.height = 'auto';
+        const height = textarea.scrollHeight;
+        textarea.style.height = `${height}px`;
+
+        // br, 스페이스 2회 막기
+        const test = textarea.value.replace(/\n/g, " ").replace("  ", " ");
+        textarea.value = test;
+    };
+
+    useEffect(()=>{
+        const textarea = inputRef.current;
+
+        textarea && textarea.focus();
+    },[]);
+
     return (
-        <Wrapper level={level} for={path}>
-            <img src={data.image_url} alt={data.title}/>
-            <p style={{"width":`${width}rem`, "aspectRatio":data.ratio, "padding" : data.padding}}>
-                {text}
-            </p>
+        <Wrapper level={level}>
+            <img src={data?.image_url} alt={data?.title}/>
+            {
+                writemode ?
+                <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
+                    <textarea ref={inputRef} placeholder={t("set_messagebubble.작성안내")} maxLength={120} onChange={updateTextarea}/>
+                </p> :
+                <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
+                    {text}
+                </p>
+            }
         </Wrapper>
     );
 }

@@ -5,6 +5,8 @@ import MessageNav from '../../components/MessageNav';
 import AudioProg from '../../components/AudioProg';
 import LevelArea from '../../components/LevelArea';
 import { useAuth } from '../../context/auth-context';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 const Wrapper = styled.div`
   padding-top: var(--page-padding-top);
@@ -42,6 +44,7 @@ const Wrapper = styled.div`
 
 export default function Soriziller() {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [volume, setVolume] = useState();
   const [level, setLevel] = useState(1);
   const [time, setTime] = useState(10);
@@ -49,7 +52,7 @@ export default function Soriziller() {
 
   const nextStep = () => {
     router.push({
-      pathname: '/makemessage/setmessage',
+      pathname: '/makemessage/set_bubble',
       query: { level: level },
     })
   };
@@ -85,7 +88,7 @@ export default function Soriziller() {
       })
       .catch(function(err) {
         /* handle the error */
-        const mic_confirm = confirm("마이크를 사용할 수 없습니다. 일반 모드로 이동하시겠습니까?");
+        const mic_confirm = confirm(t("soriziller.마이크 사용불가"));
 
         if(mic_confirm){
           nextStep();
@@ -138,8 +141,7 @@ export default function Soriziller() {
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage" step={1}/>
         <div className='txt-area'>
-          {time}초 동안 소리를 질러 말풍선을 획득해주세요
-          <p>remain time : {time} / volume : {volume} / level : {level}</p>
+          {time}{t("soriziller.말풍선획득안내")}
         </div>
         <AudioProg width={isMobile ? 300 : 400} volume={volume} level={level}/>
         <div className='level-area'>
@@ -147,10 +149,19 @@ export default function Soriziller() {
         </div>
         <div className='btn-area'>
           <button className='default-btn' onClick={nextStep}>
-            다음
+            {t("soriziller.다음 단계로")}
           </button>
         </div>
       </div>
     </Wrapper>
   )
+}
+
+export async function getServerSideProps({locale}) {
+  console.log(locale);
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

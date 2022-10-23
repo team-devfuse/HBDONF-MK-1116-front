@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
+
 
 const Wrapper = styled.div`
   padding-top: var(--page-padding-top);
@@ -39,38 +42,45 @@ const Wrapper = styled.div`
 `;
 
 export default function Magemessage() {
+  const { t } = useTranslation('common');
 
   return (
     <Wrapper>
       <div className='inner center-content'>
-        <div className='txt-top'>
-          소리질러 모드로 진행하시겠어요?<br/>
-          다양한 말풍선을 얻을 수 있습니다.
+        <div className='txt-top' dangerouslySetInnerHTML={{__html:t("make_message.소리질러 모드로 진행하시겠어요?")}}>
         </div>
         <div className='img-area'>
           <img
             srcSet={`
-              assets/image/img_makemessage.png 420w,
-              assets/image/img_makemessage@2x.png 840w,
-              assets/image/img_makemessage@3x.png 1259w
+              /assets/image/img_makemessage.png 420w,
+              /assets/image/img_makemessage@2x.png 840w,
+              /assets/image/img_makemessage@3x.png 1259w
             `}
-            src={`assets/image/img_makemessage.png`}
+            src={`/assets/image/img_makemessage.png`}
             alt=""
           />
         </div>
         <div className='btn-area'>
           <Link href="/makemessage/soriziller">
             <a className='default-btn'>
-              소리질러모드
+              {t("make_message.소리질러 모드")}
             </a>
           </Link>
-          <Link href="/makemessage/setmessage?level=1">
+          <Link href="/makemessage/set_bubble?level=1">
               <a className='default-btn sub-btn'>
-                조용모드
+                {t("make_message.쉿! 조용히 모드")}
               </a>
           </Link>
         </div>
       </div>
     </Wrapper>
   )
+}
+
+export async function getServerSideProps({locale}) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }

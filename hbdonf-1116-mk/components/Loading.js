@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 
 const StyledLoading = styled.div`
   position: fixed;
@@ -99,23 +101,31 @@ export default function Loading(){
           <div className="inner">
             <div className="sticker">
               <p>
-                <img src="assets/image/sticker/skrr_off.png" alt=""/>
-                <img src="assets/image/sticker/skrr_on.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_off.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_on.png" alt=""/>
               </p>
               <p>
-                <img src="assets/image/sticker/skrr_off.png" alt=""/>
-                <img src="assets/image/sticker/skrr_on.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_off.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_on.png" alt=""/>
               </p>
               <p>
-                <img src="assets/image/sticker/skrr_off.png" alt=""/>
-                <img src="assets/image/sticker/skrr_on.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_off.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_on.png" alt=""/>
               </p>
             </div>
             <div className="img">
-              <img src="assets/image/bg_level_3.png" alt=""/>
+              <img src="/assets/image/bg_level_3.png" alt=""/>
             </div>
             <p className="txt">Loading</p>
           </div>
         </StyledLoading>
     );
+}
+
+export async function getServerSideProps({locale}) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"]))
+    },
+  };
 }
