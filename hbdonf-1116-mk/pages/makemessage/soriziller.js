@@ -108,7 +108,7 @@ export default function Soriziller() {
   /** 시간 만료 시 다음단계로 이동 */
   useEffect(()=>{
     if(time===0){
-      // nextStep();
+      nextStep();
     }
   },[time]);
 
