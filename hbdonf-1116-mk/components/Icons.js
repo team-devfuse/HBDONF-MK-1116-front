@@ -187,6 +187,21 @@ const ArrowRight = (props) => {
     )
 };
 
+const DoubleArrowBottom = (props) => {
+    const color = props.color ? props.color : "#f4f6f9";
+    const size  = props.size ? props.size : "1.5rem";
+    const margin = props.margin ? props.margin : "";
+    
+    return (
+        <StyledIcon size={size} margin={margin}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 20 15" fill="none">
+                <path d="M10 13L9.4453 13.8321L10 14.2019L10.5547 13.8321L10 13ZM0.4453 7.83205L9.4453 13.8321L10.5547 12.168L1.5547 6.16795L0.4453 7.83205ZM10.5547 13.8321L19.5547 7.83205L18.4453 6.16795L9.4453 12.1679L10.5547 13.8321Z" fill={color}/>
+                <path d="M10 7L9.4453 7.83205L10 8.20185L10.5547 7.83205L10 7ZM0.4453 1.83205L9.4453 7.83205L10.5547 6.16795L1.5547 0.167949L0.4453 1.83205ZM10.5547 7.83205L19.5547 1.83205L18.4453 0.167949L9.4453 6.16795L10.5547 7.83205Z" fill={color}/>
+            </svg>
+        </StyledIcon>
+    )
+};
+
 const Play = (props) => {
     const color = props.color ? props.color : "#ffffff";
     const size  = props.size ? props.size : "1.5rem";
@@ -284,6 +299,7 @@ export const Icon = {
     ArrowTop,
     ArrowRight,
     ArrowBottom,
+    DoubleArrowBottom,
     Play,
     Refresh,
     TwitterLogo,

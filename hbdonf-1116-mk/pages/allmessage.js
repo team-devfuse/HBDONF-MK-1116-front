@@ -7,6 +7,7 @@ import { useTranslation } from 'next-i18next'
 import { gsap } from "gsap/dist/gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useAuth } from '../context/auth-context';
+import { Icon } from '../components/Icons';
 
 
 const Wrapper = styled.div`
@@ -26,6 +27,7 @@ const Wrapper = styled.div`
       width:100%;
       height:100%;
       z-index: -1;
+      overflow: hidden;
 
       img{
         position: absolute;
@@ -37,34 +39,39 @@ const Wrapper = styled.div`
         }
 
         &.mk{
-          width:50rem;
-          right:-10%;
-          bottom:0%;
+          width:50%;
+          min-width:50rem;
+          right:-10rem;
+          top:10%;
         }
 
         &.lemon-boy{
-          width:20rem;
+          width:20%;
+          min-width:20rem;
+          max-width:40rem;
           top:30%;
-          left:-10%;
+          left:-5rem;
         }
 
         &.skrr2{
-          width:30rem;
+          width:40%;
+          max-width:30rem;
           top:50%;
-          right:-10%;
+          right:10%;
         }
 
         &.barcode{
-          width:20rem;
+          width:30rem;
           top:60%;
-          right:0;
+          left:50%;
         }
 
         &.shout{
           width:30rem;
           bottom:0;
-          right:-10%;
+          right:-5rem;
           z-index: 1;
+          transform: rotate(-15deg);
         }
       }
 
@@ -91,6 +98,20 @@ const Wrapper = styled.div`
       width:100%;
       z-index: -1;
     }
+
+    .scroll-toast{
+      position: absolute;
+      bottom:0;
+      left:50%;
+      transform: translateX(-50%);
+      animation: scrollAttention 1s ease-in-out alternate infinite;
+      filter: drop-shadow(0 0 0.75rem #000);
+    }
+
+    @keyframes scrollAttention {
+      0%{bottom:0;}
+      100%{bottom:1rem;}
+    }
   }
 
   .section-message-list{
@@ -102,6 +123,7 @@ const Wrapper = styled.div`
       align-items: center;
       flex-wrap: wrap;
       justify-content: center;
+      gap:1rem;
     }
 
     li{
@@ -128,22 +150,6 @@ const Wrapper = styled.div`
     }
   }
 
-  @media all and (max-width:460px) {
-    .section-message-list{
-      ul{
-        position: relative;
-        
-        /* flex-direction: column; */
-      }
-
-      li{
-        .user-info{
-          position: absolute;
-          left:0;
-        }
-      }
-    }
-  }
 `;
 
 export default function Allmessage() {
@@ -182,6 +188,15 @@ export default function Allmessage() {
           trigger: ".shout",
           scrub:true,
         },
+        y: -100,
+        rotation:10
+      });
+
+      gsap.to(".barcode", {
+        scrollTrigger: {
+          trigger: ".barcode",
+          scrub:true,
+        },
         y: -100
       });
 
@@ -190,7 +205,16 @@ export default function Allmessage() {
           trigger: ".lemon-boy",
           scrub:true,
         },
-        y: -150
+        y: -150,
+        rotation:-30
+      });
+
+      gsap.to(".scroll-toast", {
+        scrollTrigger: {
+          trigger: ".scroll-toast",
+          scrub:true,
+        },
+        opacity:0
       });
 
     },gsapRoot);
@@ -238,6 +262,9 @@ export default function Allmessage() {
           </div>
         </div>
         <img className='ripped-paper' src="/assets/image/bg_ripped_paper_01.png" alt=""/>
+        <p className='scroll-toast'>
+          <Icon.DoubleArrowBottom size="4rem"/>
+        </p>
       </section>
       <section className='section-message-list'>
         <h2 className='hide'>메세지 리스트</h2>
