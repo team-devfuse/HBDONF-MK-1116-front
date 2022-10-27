@@ -31,7 +31,7 @@ export const bubble_info = [
     level:5,
     title:"1116db 말풍선",
     image_url:"/assets/image/bubble/05_scream.svg",
-    ratio:"300 / 145",
-    padding:"16% 28%"
+    ratio:"210 / 133",
+    padding:"15%"
   },
 ];

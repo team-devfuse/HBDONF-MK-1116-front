@@ -50,7 +50,8 @@ export default function MessageBubble({writemode, size, level, text}){
     let width;
     
     if(level==5){
-        width = size*1.5;
+        // width = size*1.5;
+        width = size;
     } else {
         width = size;
     }
@@ -76,7 +77,7 @@ export default function MessageBubble({writemode, size, level, text}){
 
     return (
         <Wrapper level={level}>
-            <img src={data?.image_url} alt={data?.title}/>
+            <img src={`${data?.image_url}?t=123`} alt={data?.title}/>
             {
                 writemode ?
                 <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
