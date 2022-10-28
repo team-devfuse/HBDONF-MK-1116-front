@@ -38,15 +38,14 @@ const Wrapper = styled.div`
 
 export default function Custom404() {
     const { t } = useTranslation('common');
-    // TO DO : 랜덤이미지 추가 필요
-    const randomNumber = Math.floor((Math.random() * 32) + 1);
-    const imagePath = `/images/404/${randomNumber}.webp`;
+    const randomNumber = Math.floor((Math.random() * 8) + 1);
+    const imagePath = `/assets/image/system/404_${randomNumber}.png`;
 
     return (
         <Wrapper>
             <div className="inner center-content">
                 <p className="img">
-                    <img src="/assets/image/bg_level_3.png" alt=""/>
+                    <img src={imagePath} alt={imagePath}/>
                 </p>
                 <p className="txt">
                     <b>404 ERROR</b>
@@ -56,14 +55,6 @@ export default function Custom404() {
         </Wrapper>
     );
 }
-
-// export async function getServerSideProps({locale}) {
-//     return {
-//       props: {
-//         ...(await serverSideTranslations(locale, ["common"]))
-//       },
-//     };
-// }
 
 export const getStaticProps = async ({ locale }) => {
     return {

@@ -28,13 +28,13 @@ const StyledLoading = styled.div`
 
   .sticker{
     position: absolute;
-    top:0;
+    top:3%;
     
     p{
       position: relative;
 
       img{
-        width:24rem;
+        width:20rem;
       }
       
       img:last-child{
@@ -46,14 +46,14 @@ const StyledLoading = styled.div`
     }
     
     p:nth-child(2){
-      margin-top: -15%;
+      margin-top: -12%;
       img:last-child{
         animation-delay: 0.3s;
       }
     }
     
     p:nth-child(3){
-      margin-top: -15%;
+      margin-top: -12%;
       img:last-child{
         animation-delay: 0.7s;
       }
@@ -96,25 +96,28 @@ const StyledLoading = styled.div`
 `;
 
 export default function Loading(){
+  const randomNumber = Math.floor((Math.random() * 4) + 1);
+  const imagePath = `/assets/image/system/loading_${randomNumber}.png`;
+
     return (
         <StyledLoading>
           <div className="inner">
             <div className="sticker">
               <p>
-                <img src="/assets/image/sticker/skrr_off.png" alt=""/>
-                <img src="/assets/image/sticker/skrr_on.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_off.svg" alt=""/>
+                <img src="/assets/image/sticker/skrr_on.svg" alt=""/>
               </p>
               <p>
-                <img src="/assets/image/sticker/skrr_off.png" alt=""/>
-                <img src="/assets/image/sticker/skrr_on.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_off.svg" alt=""/>
+                <img src="/assets/image/sticker/skrr_on.svg" alt=""/>
               </p>
               <p>
-                <img src="/assets/image/sticker/skrr_off.png" alt=""/>
-                <img src="/assets/image/sticker/skrr_on.png" alt=""/>
+                <img src="/assets/image/sticker/skrr_off.svg" alt=""/>
+                <img src="/assets/image/sticker/skrr_on.svg" alt=""/>
               </p>
             </div>
             <div className="img">
-              <img src="/assets/image/bg_level_3.png" alt=""/>
+              <img src={imagePath} alt={imagePath}/>
             </div>
             <p className="txt">Loading</p>
           </div>

@@ -77,7 +77,7 @@ export default function MessageBubble({writemode, size, level, text}){
 
     return (
         <Wrapper level={level}>
-            <img src={`${data?.image_url}?t=123`} alt={data?.title}/>
+            <img src={data?.image_url} alt={data?.title}/>
             {
                 writemode ?
                 <p style={{"width":`${width}rem`, "aspectRatio":data?.ratio, "padding" : data?.padding}}>
