@@ -8,6 +8,7 @@ import { gsap } from "gsap/dist/gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useAuth } from '../context/auth-context';
 import { Icon } from '../components/Icons';
+import { API_URL } from '../lib/config';
 
 
 const Wrapper = styled.div`
@@ -144,7 +145,7 @@ const Wrapper = styled.div`
       width:100%;
       padding-top: 5rem;
 
-      &.sub-btn{
+      .sub-btn{
         pointer-events: none;
       }
     }
@@ -157,19 +158,22 @@ export default function Allmessage() {
   const [message, setMessage] = useState();
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [lastPage, setLastPage] = useState();
+  const [lastPage, setLastPage] = useState(false);
   const gsapRoot = useRef();
   const {isMobile, getIsMobile} = useAuth();
   gsap.registerPlugin(ScrollTrigger);
   
   const getMessage = useCallback(async () => {
     const result = await (
-      await fetch(`/api/message?page=${page}`)
+      await fetch(`${API_URL}/message?size=${page*6}`)
     ).json();
 
-    setMessage(result.message);
-    setLastPage(result.last);
+    setMessage(result);
     setLoading(false);
+    
+    if(message && (result.length === message?.length)){
+      setLastPage(true);
+    }
   }, [page]);
 
   useEffect(()=>{
@@ -227,7 +231,7 @@ export default function Allmessage() {
   }, [getMessage]);
   
   const loadMore = () => {
-    if (!loading && page < lastPage) {
+    if (!loading && !lastPage) {
       setPage((prevState) => prevState + 1);
     }
   };
@@ -276,20 +280,16 @@ export default function Allmessage() {
                   <p className='username'>@twitter</p>
                   <p className='date'>2021/02/01</p>
                 </div>
-                <MessageBubble key={index} size={isMobile ? 40 : 50} level={data.level} text={data.text} />
+                <MessageBubble key={index} size={isMobile ? 40 : 50} level={data.level} text={data.content} />
               </li>
             ))
           }
           <li className='load-more'>
-            <button className={`default-btn ${page == lastPage ? "sub-btn" : ""}`} onClick={loadMore}>
+            <button className={`default-btn ${lastPage ? "sub-btn" : ""}`} onClick={loadMore}>
               {
-                page == lastPage ?
-                <>
-                  {page}/{lastPage} {t("all_messages.마지막 페이지입니다.")}
-                </> :
-                <>
-                  {page}/{lastPage} {t("all_messages.더 보기")}
-                </>
+                lastPage ?
+                t("all_messages.마지막 메세지입니다.") :
+                t("all_messages.더 보기")
               }
             </button>
           </li>

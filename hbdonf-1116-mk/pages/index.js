@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useAuth } from '../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { API_URL } from '../lib/config';
 
 
 const Wrapper = styled.div`
@@ -334,10 +335,11 @@ export default function Home() {
   useEffect(() => {
     const getMessage = async () => {
       const result = await (
-        await fetch('/api/message')
+        await fetch(`${API_URL}/message?size=12`)
       ).json();
   
-      setMessage(result.message);
+      console.log(result);
+      setMessage(result);
     };
 
     const getMkWork = async () => {
@@ -383,7 +385,7 @@ export default function Home() {
         </div>
         <div className='inner'>
           <Marquee velocity={isMobile ? 10 : 40} resetAfterTries={100}>
-            {times(7, Number).map((id, index) => {
+            {times(message?.length, Number).map((id, index) => {
               let size;
 
               if(message){
@@ -397,7 +399,7 @@ export default function Home() {
               return (
                 message &&
                 <div className='box'>
-                  <MessageBubble key={index} size={size} level={message[id]?.level} text={message[id]?.text} />
+                  <MessageBubble key={index} size={size} level={message[id]?.level} text={message[id]?.content} />
                 </div>
               );
             })}

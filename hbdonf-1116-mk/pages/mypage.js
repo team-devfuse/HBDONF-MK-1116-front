@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
@@ -7,6 +7,8 @@ import MessageBubble from '../components/MessageBubble';
 import { shareTwitter, shareFacebook, shareLink } from "../lib/util";
 import { Icon } from '../components/Icons';
 import Link from 'next/link';
+import { API_URL } from '../lib/config';
+import { AuthContext } from '../context/auth-context';
 
 const Wrapper = styled.div`
   /* color:red */
@@ -71,27 +73,44 @@ const Wrapper = styled.div`
 
 export default function mepage() {
   const { t } = useTranslation('common');
+  const {fbaseInfo} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [mymessage, setMymessage] = useState();
   const [shareUrl, setShareUrl] = useState();
 
-  useEffect(()=>{
-    const dummy = {
-      level:3,
-      text:"사용자 작성 메세지 테스트",
-      username:"twitterid",
-      date:"2022/12/12"
-    };
-    setMymessage(dummy);
-    setLoading(false);
 
-    const thisLink = document.location.hostname;
-    setShareUrl(thisLink);
-  },[]);
+  useEffect(()=>{
+    if(fbaseInfo){
+      fetch(`${API_URL}/message/user/${fbaseInfo?.uid}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+      }).then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if(data.messageId){
+          setMymessage(data);
+        }
+        setLoading(false);
+    
+        const thisLink = document.location.hostname;
+        setShareUrl(thisLink);
+      });
+    }
+  },[fbaseInfo]);
 
   const deleteMessage = () => {
     if(confirm("삭제한 메세지는 복구할 수 없어요. 그래도 삭제하시겠어요?")){
       alert("삭제~");
+      fetch(`${API_URL}/message/${mymessage.messageId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then(()=>{
+        setMymessage();
+      });
     } else {
       alert("노삭제~");
     }
@@ -107,10 +126,10 @@ export default function mepage() {
             <>
               <div className='section-my-message'>
                 <p className='user-info'>
-                  <b>@{mymessage?.username}</b>
+                  <b>@{mymessage?.tid}</b>
                   <span>{mymessage?.date}</span>
                 </p>
-                <MessageBubble size={40} level={mymessage?.level} text={mymessage?.text} />
+                <MessageBubble size={40} level={mymessage?.level} text={mymessage?.content} />
               </div>
               <div className='section-share'>
                 <button type="button" onClick={() => {shareTwitter(t("mypage.트윗공유안내문구"), shareUrl);}}>
