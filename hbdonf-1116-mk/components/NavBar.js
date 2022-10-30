@@ -279,18 +279,18 @@ export default function NavBar(){
                                     {
                                         // 로그인시 노출. 조건 수정 필요
                                         // getLocalStorage() &&
-                                        // fbaseInfo &&
+                                        fbaseInfo &&
                                         <li>
                                             <Link href="/mypage">
                                                 <a onClick={toggleNavMenu} className={router.pathname === "/mypage" ? "active" : ""}>{t('nav.내 메세지 보러가기')}</a>
                                             </Link>
                                         </li>
                                     }
-                                    <li>
+                                    {/* <li>
                                         <Link href="/makemessage">
                                             <a onClick={toggleNavMenu} className={router.pathname === "/makemessage" ? "active" : ""}>메세지 생성(삭제메뉴)</a>
                                         </Link>
-                                    </li>
+                                    </li> */}
                                     <li>
                                         <Link href="/allmessage">
                                             <a onClick={toggleNavMenu} className={router.pathname === "/allmessage" ? "active" : ""}>{t('nav.모든 메세지 보러가기')}</a>

@@ -102,7 +102,6 @@ export default function mepage() {
 
   const deleteMessage = () => {
     if(confirm("삭제한 메세지는 복구할 수 없어요. 그래도 삭제하시겠어요?")){
-      alert("삭제~");
       fetch(`${API_URL}/message/${mymessage.messageId}`, {
         method: "PUT",
         headers: {
@@ -110,9 +109,8 @@ export default function mepage() {
         }
       }).then(()=>{
         setMymessage();
+        localStorage.clear();
       });
-    } else {
-      alert("노삭제~");
     }
   };
 

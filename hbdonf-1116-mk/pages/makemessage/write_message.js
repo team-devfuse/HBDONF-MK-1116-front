@@ -95,6 +95,7 @@ export default function SetBubble() {
       },
       body: JSON.stringify(data)
     }).then(() => {
+      localStorage.setItem("userInfo", JSON.stringify(data));
       router.push("/mypage");
     });
   };
