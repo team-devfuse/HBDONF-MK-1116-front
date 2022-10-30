@@ -54,7 +54,7 @@ export default function Soriziller() {
     router.push({
       pathname: '/makemessage/set_bubble',
       query: { level: level },
-    })
+    }, '/makemessage/set_bubble');
   };
 
   /** 기본세팅 : 마이크 볼륨, 카운트다운 세팅 */
