@@ -42,6 +42,7 @@ export function transDateKo(date){
 // sns 공유
 
 export function shareTwitter(text, url){
+    // TO DO : 트위터 공유 텍스트 다국어 삽입
     const sendText = text;
 
     window.open(`https://twitter.com/intent/tweet?text=${sendText}&hashtags=HBD_to_MK&url=${url}`);
