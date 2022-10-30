@@ -11,6 +11,7 @@ import "swiper/css/scrollbar";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/auth-context';
 import { API_URL } from '../../lib/config';
+import * as gtag from "../../lib/gtag";
 
 
 const Wrapper = styled.div`

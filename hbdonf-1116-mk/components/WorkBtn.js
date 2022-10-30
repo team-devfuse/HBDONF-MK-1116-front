@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { S3_BASE_URL } from "../lib/config";
+import * as gtag from "../lib/gtag";
 
 const StyledBtn = styled.button`
     width: 100%;

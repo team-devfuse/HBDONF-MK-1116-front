@@ -7,6 +7,8 @@ import LevelArea from '../../components/LevelArea';
 import { useAuth } from '../../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import * as gtag from "../../lib/gtag";
+
 
 const Wrapper = styled.div`
   padding-top: var(--page-padding-top);

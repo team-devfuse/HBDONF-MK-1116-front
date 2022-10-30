@@ -12,6 +12,7 @@ import { useAuth } from '../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { API_URL } from '../lib/config';
+import * as gtag from "../lib/gtag";
 
 
 const Wrapper = styled.div`
@@ -377,6 +378,13 @@ export default function Home() {
     setLoading(false);
   }, []);
 
+  //6. GA이벤트 날리기
+  const gaValue = { 
+    action :"listen_mk_work_cate",
+    category : "event",
+    label :mkWorkCate
+  };
+
   return (
     loading ? <Loading/> :
     <Wrapper id="wrapper">
@@ -457,16 +465,16 @@ export default function Home() {
           <div className='info-area'>
             <ul className='tab-menu'>
               <li className={mkWorkCate === "composed" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("composed");}}>Composed</button>
+                <button onClick={() => {setMkWorkCate("composed"); gtag.event(gaValue);}}>Composed</button>
               </li>
               <li className={mkWorkCate === "lyrics" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("lyrics");}}>Lyrics</button>
+                <button onClick={() => {setMkWorkCate("lyrics"); gtag.event(gaValue);}}>Lyrics</button>
               </li>
               <li className={mkWorkCate === "cover" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("cover");}}>Cover</button>
+                <button onClick={() => {setMkWorkCate("cover"); gtag.event(gaValue);}}>Cover</button>
               </li>
               <li className={mkWorkCate === "featuring" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("featuring");}}>Featuring</button>
+                <button onClick={() => {setMkWorkCate("featuring"); gtag.event(gaValue);}}>Featuring</button>
               </li>
             </ul>
             <ul className='work-list'>
