@@ -95,6 +95,15 @@ export default function SetBubble() {
       },
       body: JSON.stringify(data)
     }).then(() => {
+      //6. GA이벤트 날리기
+      const gaValue = { 
+        action :"soriziller",
+        category : "event",
+        label :"end"
+      };
+      
+      gtag.event(gaValue);
+
       localStorage.setItem("userInfo", JSON.stringify(data));
       router.push("/mypage");
     });

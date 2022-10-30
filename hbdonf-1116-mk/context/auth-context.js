@@ -83,7 +83,16 @@ function AuthProvider (props){
                         router.push("/mypage");
                     } else {
                         router.push("/makemessage");
-                    }  
+                    }
+
+                    //6. GA이벤트 날리기
+                    const gaValue = { 
+                        action :"login",
+                        category : "user",
+                        label :"login"
+                    };
+
+                    gtag.event(gaValue);
                   });
                 }          
             }).catch((error) => {

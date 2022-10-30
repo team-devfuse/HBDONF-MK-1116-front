@@ -17,8 +17,15 @@ const StyledBtn = styled.button`
 `;
 
 export default function WorkBtn({data, onclick}){
+    //6. GA이벤트 날리기
+    const gaValue = { 
+        action :"listen_mk_work",
+        category : "event",
+        label :data.title.ko
+    };
+      
     return (
-        <StyledBtn backgroundImage={`${S3_BASE_URL}/mk_1116/work_thumbnail/${data.id}.png`} onClick={() => {onclick(data);}}>
+        <StyledBtn backgroundImage={`${S3_BASE_URL}/mk_1116/work_thumbnail/${data.id}.png`} onClick={() => {onclick(data); gtag.event(gaValue);}}>
             <p>{data.title.ko}</p>
         </StyledBtn>
     );

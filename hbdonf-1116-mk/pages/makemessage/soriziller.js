@@ -94,6 +94,15 @@ export default function Soriziller() {
           nextStep();
         }
       });
+    
+    //6. GA이벤트 날리기
+    const gaValue = { 
+      action :"soriziller",
+      category : "event",
+      label :"start"
+    };
+    
+    gtag.event(gaValue);
 
     /** 시간 카운트다운*/
     const counter = setInterval(() => {
