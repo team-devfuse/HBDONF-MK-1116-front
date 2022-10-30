@@ -172,6 +172,21 @@ const Wrapper = styled.div`
         opacity: 0;
         transform: translateY(10%);
         transition: all 0.5s ease-in-out;
+        position: relative;
+
+        .txt{
+          position: absolute;
+          right:50%;
+          top:28%;
+          transform: translateX(110%);
+          font-weight: 600;
+          animation: txtAttention 1s ease-in-out alternate infinite;
+        }
+
+        @keyframes txtAttention {
+          0%{ opacity: 1;}
+          100%{ opacity: 0.5;}
+        }
       }
 
       .info-area{
@@ -271,6 +286,13 @@ const Wrapper = styled.div`
 
         .img-area{
           width:100vw;
+
+          .txt{
+            font-size: 2vw;
+            right:50%;
+            top:72%;
+            transform: translateX(90%);
+          }
         }
 
         .info-area{
@@ -338,7 +360,7 @@ export default function Home() {
         await fetch(`${API_URL}/message?size=12`)
       ).json();
   
-      console.log(result);
+      // console.log(result);
       setMessage(result);
     };
 
@@ -430,6 +452,7 @@ export default function Home() {
               <img 
               src="/assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
+            <p className='txt'>Click and Play!</p>
           </div>
           <div className='info-area'>
             <ul className='tab-menu'>
