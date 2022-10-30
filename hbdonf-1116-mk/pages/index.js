@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { useAuth } from '../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { API_URL } from '../lib/config';
+import * as gtag from "../lib/gtag";
 
 
 const Wrapper = styled.div`
@@ -171,6 +173,21 @@ const Wrapper = styled.div`
         opacity: 0;
         transform: translateY(10%);
         transition: all 0.5s ease-in-out;
+        position: relative;
+
+        .txt{
+          position: absolute;
+          right:50%;
+          top:28%;
+          transform: translateX(110%);
+          font-weight: 600;
+          animation: txtAttention 1s ease-in-out alternate infinite;
+        }
+
+        @keyframes txtAttention {
+          0%{ opacity: 1;}
+          100%{ opacity: 0.5;}
+        }
       }
 
       .info-area{
@@ -270,6 +287,13 @@ const Wrapper = styled.div`
 
         .img-area{
           width:100vw;
+
+          .txt{
+            font-size: 2vw;
+            right:50%;
+            top:72%;
+            transform: translateX(90%);
+          }
         }
 
         .info-area{
@@ -334,10 +358,11 @@ export default function Home() {
   useEffect(() => {
     const getMessage = async () => {
       const result = await (
-        await fetch('/api/message')
+        await fetch(`${API_URL}/message?size=12`)
       ).json();
   
-      setMessage(result.message);
+      // console.log(result);
+      setMessage(result);
     };
 
     const getMkWork = async () => {
@@ -352,6 +377,13 @@ export default function Home() {
     getMkWork();
     setLoading(false);
   }, []);
+
+  //6. GA이벤트 날리기
+  const gaValue = { 
+    action :"listen_mk_work_cate",
+    category : "event",
+    label :mkWorkCate
+  };
 
   return (
     loading ? <Loading/> :
@@ -383,7 +415,7 @@ export default function Home() {
         </div>
         <div className='inner'>
           <Marquee velocity={isMobile ? 10 : 40} resetAfterTries={100}>
-            {times(7, Number).map((id, index) => {
+            {times(message?.length, Number).map((id, index) => {
               let size;
 
               if(message){
@@ -397,7 +429,7 @@ export default function Home() {
               return (
                 message &&
                 <div className='box'>
-                  <MessageBubble key={index} size={size} level={message[id]?.level} text={message[id]?.text} />
+                  <MessageBubble key={index} size={size} level={message[id]?.level} text={message[id]?.content} />
                 </div>
               );
             })}
@@ -428,20 +460,21 @@ export default function Home() {
               <img 
               src="/assets/image/img_who_is_mk_pc@3x.png" alt="who_is_mk"/>
             </picture>
+            <p className='txt'>Click and Play!</p>
           </div>
           <div className='info-area'>
             <ul className='tab-menu'>
               <li className={mkWorkCate === "composed" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("composed");}}>Composed</button>
+                <button onClick={() => {setMkWorkCate("composed"); gtag.event(gaValue);}}>Composed</button>
               </li>
               <li className={mkWorkCate === "lyrics" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("lyrics");}}>Lyrics</button>
+                <button onClick={() => {setMkWorkCate("lyrics"); gtag.event(gaValue);}}>Lyrics</button>
               </li>
               <li className={mkWorkCate === "cover" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("cover");}}>Cover</button>
+                <button onClick={() => {setMkWorkCate("cover"); gtag.event(gaValue);}}>Cover</button>
               </li>
               <li className={mkWorkCate === "featuring" ? "selected" : ""}>
-                <button onClick={() => {setMkWorkCate("featuring");}}>Featuring</button>
+                <button onClick={() => {setMkWorkCate("featuring"); gtag.event(gaValue);}}>Featuring</button>
               </li>
             </ul>
             <ul className='work-list'>

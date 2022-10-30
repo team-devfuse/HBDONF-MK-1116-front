@@ -53,57 +53,48 @@ function AuthProvider (props){
             }
     
             const authInfo = {
-                "method": name,
-                "nickName": userdisplayName,
-                "region": getUserRegion(),
                 "uid": user.uid,
-                "userId": user.reloadUserInfo.screenName
+                "tid": user.reloadUserInfo.screenName,
+                "region": getUserRegion(),
+                "tnickName": userdisplayName
             };
     
-            // if(user){
-            //     fetch(`${API_URL}/user/profile`, {
-            //         method: "POST",
-            //         headers: {
-            //             "Content-Type": "application/json",
-            //         },
-            //         body: JSON.stringify(authInfo)
-            //     }).then((response) => response.json())
-            //     .then((data) => {      
-            //         // 4. 세션은 loggedIn 체크, 단관용타이틀, 프로필 사진 넣어두는 용도!
-            //         const userInfo = {
-            //             loggedIn: true,
-            //             user: {
-            //                 uid: data.payload.uid,
-            //                 login_type: user.providerId,
-            //                 nickname: data.payload.nickName,
-            //                 profile_pic: userProfileImg,
-            //                 titlename: data.payload.title
-            //             }
-            //         };
-    
-            //         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-            
-            //         // 5. returnUrl 있으면 해당 위치, 없으면 대시보드로 이동
-            //         if(router.query.returnUrl){
-            //             router.push(router.query.returnUrl);
-            //         } else{
-            //             router.push("/dashboard");
-            //         }
+            if(user){
+                // 1. 로그인 POST
+                fetch(`${API_URL}/user`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(authInfo)
+                })
 
-            //         //6. GA이벤트 날리기
-            //         const gaValue = { 
-            //             action :"login",
-            //             category : "user",
-            //             label :"login"
-            //         };
+                // 2. 메세지 유무 확인해 로컬에 추가
+                fetch(`${API_URL}/message/user/${user.uid}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                  }).then((response) => response.json())
+                  .then((data) => {
+                    // console.log(data);
+                    if(data.messageId){
+                        localStorage.setItem("userInfo", JSON.stringify(data));
+                        router.push("/mypage");
+                    } else {
+                        router.push("/makemessage");
+                    }
 
-            //         gtag.event(gaValue);
-            //     });
-            // }        
+                    //6. GA이벤트 날리기
+                    const gaValue = { 
+                        action :"login",
+                        category : "user",
+                        label :"login"
+                    };
 
-            // to do : 메세지 있다면 대시보드로, 없다면 메세지 작성 확면으로 보낼 것
-            router.push("/makemessage");
-    
+                    gtag.event(gaValue);
+                  });
+                }          
             }).catch((error) => {
                 // Handle Errors here
                 console.log(error);
@@ -126,8 +117,8 @@ function AuthProvider (props){
         signOut(auth).then(() => {
             // Sign-out successful.
             localStorage.clear();
-            router.reload();
             router.push("/");
+            console.log("logout");
 
             //6. GA이벤트 날리기
             const gaValue = { 
@@ -139,6 +130,7 @@ function AuthProvider (props){
             gtag.event(gaValue);
         }).catch((error) => {
             // An error happened.
+            console.log(error);
         });          
     };
 
@@ -164,20 +156,20 @@ function AuthProvider (props){
     });
 
     // 로그인-비로그인 상태 감지해 리디렉
-    // if(fbaseInfo){
-    //     // 로그인 시 막을 페이지
-    //     if(props.path=="/login"){
-    //         router.push("/mypage");
-    //     }
-    // } else {
-    //     // 비로그인 시 막을 페이지
-    //     if(props.path.includes("makemessage/") || props.path.includes("mypage")){
-    //         if(typeof window != "undefined"){
-    //             router.push("/login");
-    //             alert("로그인이 필요합니다");
-    //         }
-    //     }
-    // }
+    if(getLocalStorage()){
+        // 로그인 시 막을 페이지
+        if(props.path=="/login"){
+            router.push("/mypage");
+        }
+    } else {
+        // 비로그인 시 막을 페이지
+        if(props.path.includes("makemessage/") || props.path.includes("mypage")){
+            if(typeof window != "undefined"){
+                // alert("로그인이 필요합니다");
+                router.push("/login");
+            }
+        }
+    }
 
     // 모바일 쿼리 체크
     const getIsMobile = () => {

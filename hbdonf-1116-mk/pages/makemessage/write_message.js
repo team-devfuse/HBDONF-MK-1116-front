@@ -8,6 +8,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { useContext } from 'react';
+import { AuthContext } from '../../context/auth-context';
+import { API_URL } from '../../lib/config';
+import * as gtag from "../../lib/gtag";
 
 
 const Wrapper = styled.div`
@@ -70,13 +74,40 @@ const Wrapper = styled.div`
 
 export default function SetBubble() {
   const { t } = useTranslation('common');
+  const {fbaseInfo} = useContext(AuthContext);
   const router = useRouter();
   const { bubbleLevel } = router.query;
 
   const complete = () => {
     // alert("complete");
     const textarea = document.getElementsByTagName("textarea");
-    alert(textarea[0].value);
+    // alert(textarea[0].value);
+
+    const data = {
+      "uid": fbaseInfo.uid,
+      "content": textarea[0].value,
+      "level": bubbleLevel
+    };
+
+    fetch(`${API_URL}/message`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    }).then(() => {
+      //6. GA이벤트 날리기
+      const gaValue = { 
+        action :"soriziller",
+        category : "event",
+        label :"end"
+      };
+      
+      gtag.event(gaValue);
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      router.push("/mypage");
+    });
   };
 
 
@@ -92,7 +123,7 @@ export default function SetBubble() {
         </div>
         <div className='btn-area'>
           <button className='default-btn' onClick={complete}>
-            {t("soriziller.다음 단계로")}
+            {t("soriziller.완성")}
           </button>
         </div>
       </div>

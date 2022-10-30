@@ -82,7 +82,7 @@ export default function SetBubble() {
     router.push({
       pathname: '/makemessage/write_message',
       query: { bubbleLevel: bubbleLevel },
-    })
+    }, '/makemessage/write_message');
   };
 
 

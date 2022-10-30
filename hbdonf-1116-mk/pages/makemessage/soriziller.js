@@ -7,6 +7,8 @@ import LevelArea from '../../components/LevelArea';
 import { useAuth } from '../../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import * as gtag from "../../lib/gtag";
+
 
 const Wrapper = styled.div`
   padding-top: var(--page-padding-top);
@@ -54,7 +56,7 @@ export default function Soriziller() {
     router.push({
       pathname: '/makemessage/set_bubble',
       query: { level: level },
-    })
+    }, '/makemessage/set_bubble');
   };
 
   /** 기본세팅 : 마이크 볼륨, 카운트다운 세팅 */
@@ -94,6 +96,15 @@ export default function Soriziller() {
           nextStep();
         }
       });
+    
+    //6. GA이벤트 날리기
+    const gaValue = { 
+      action :"soriziller",
+      category : "event",
+      label :"start"
+    };
+    
+    gtag.event(gaValue);
 
     /** 시간 카운트다운*/
     const counter = setInterval(() => {

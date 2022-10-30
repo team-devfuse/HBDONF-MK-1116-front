@@ -34,7 +34,7 @@ function App({Component, pageProps}){
   return (
     <>
       <Head>
-        <title>{process.env.NODE_ENV==='development' ? '[dev]' : ''}[HBDONF 1116]Soriziller!!!</title>
+        <title>{process.env.NODE_ENV==='development' ? '[dev]' : ''}[HBDONF-MK]1116 Soriziller Festival</title>
         <meta property="og:url" content={thisPage}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content="summary"/>
