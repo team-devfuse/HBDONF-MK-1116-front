@@ -151,9 +151,9 @@ export default function Soriziller() {
     <Wrapper>
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage" step={1}/>
-        <div className='txt-area'>
-          {time}{t("soriziller.말풍선획득안내")}
-        </div>
+        <div className='txt-area' dangerouslySetInnerHTML={{
+          __html:t("soriziller.말풍선획득안내").replace("nn",time)
+        }}/>
         <AudioProg width={isMobile ? 300 : 400} volume={volume} level={level}/>
         <div className='level-area'>
           <LevelArea level={level}/>
