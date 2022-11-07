@@ -165,6 +165,7 @@ const Wrapper = styled.div`
     .inner{
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
       max-width: 1920px;
 
       .img-area{
@@ -178,7 +179,7 @@ const Wrapper = styled.div`
         .txt{
           position: absolute;
           right:50%;
-          top:28%;
+          top:65%;
           transform: translateX(110%);
           font-weight: 600;
           animation: txtAttention 1s ease-in-out alternate infinite;
