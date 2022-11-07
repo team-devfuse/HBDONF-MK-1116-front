@@ -363,7 +363,7 @@ export default function Home() {
       ).json();
   
       // console.log(result);
-      setMessage(result);
+      setMessage(result.payload.messages);
     };
 
     const getMkWork = async () => {
