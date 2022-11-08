@@ -74,6 +74,7 @@ function AuthProvider (props){
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization:user.accessToken
                     },
                   }).then((response) => response.json())
                   .then((data) => {

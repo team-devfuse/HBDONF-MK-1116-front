@@ -93,6 +93,7 @@ export default function SetBubble() {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
+          Authorization:fbaseInfo?.accessToken
       },
       body: JSON.stringify(data)
     }).then(() => {

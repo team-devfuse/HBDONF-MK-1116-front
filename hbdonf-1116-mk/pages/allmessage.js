@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useAuth } from '../context/auth-context';
 import { Icon } from '../components/Icons';
 import { API_URL } from '../lib/config';
+import { transDate } from '../lib/util';
 
 
 const Wrapper = styled.div`
@@ -277,8 +278,8 @@ export default function Allmessage() {
             messageData?.messages.map((data, index) => (
               <li key={index}>
                 <div className='user-info'>
-                  <p className='username'>@twitter</p>
-                  <p className='date'>2021/02/01</p>
+                  <p className='username'>@{data.tid}</p>
+                  <p className='date'>{transDate(data.created)} (KST)</p>
                 </div>
                 <MessageBubble key={index} size={isMobile ? 40 : 50} level={data.level} text={data.content} />
               </li>
