@@ -12,20 +12,20 @@ const Wrapper = styled.div`
   .inner{
     max-width: 720px;
     height: 100%;
-    padding:4rem 0;
+    padding-bottom:10rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
     .txt-top{
-      font-size: var(--font-size-big);
+      font-size: var(--font-size-bigger);
       font-weight: 600;
     }
 
     .img-area{
       padding: 2rem 0;
-      height: 55vh;
+      height: 50vh;
 
       img{
         height: 100%;
