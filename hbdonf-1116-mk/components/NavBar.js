@@ -8,6 +8,7 @@ import { Icon } from "./Icons";
 import { Sticker } from "./Stickers";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { getRouteMatcher } from "next/dist/shared/lib/router/utils/route-matcher";
 
 
 const StyledNav = styled.nav`
@@ -260,7 +261,7 @@ export default function NavBar(){
             <MobileNav>
                     <h1>
                         <Link href="/">
-                            <a title="HOME">
+                            <a title="HOME" onClick={router.pathname === "/" && (() =>{document.getElementById("wrapper").scrollTo({top: 0, left: 0, behavior: 'smooth'});})}>
                                 <Icon.Logo/>
                             </a>
                         </Link>
