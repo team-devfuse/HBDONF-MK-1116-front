@@ -158,7 +158,7 @@ const Wrapper = styled.div`
   }
 
   .section-mk-work{
-    scroll-snap-align:top;
+    scroll-snap-align:start end;
     min-height: unset;
     padding:30rem 0 20rem;
 
