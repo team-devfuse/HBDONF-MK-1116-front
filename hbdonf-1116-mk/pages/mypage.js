@@ -9,6 +9,7 @@ import { Icon } from '../components/Icons';
 import Link from 'next/link';
 import { API_URL } from '../lib/config';
 import { AuthContext } from '../context/auth-context';
+import { useRouter } from 'next/router';
 
 const Wrapper = styled.div`
   /* color:red */
@@ -73,11 +74,11 @@ const Wrapper = styled.div`
 
 export default function mepage() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const {fbaseInfo} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [mymessage, setMymessage] = useState();
   const [shareUrl, setShareUrl] = useState();
-
 
   useEffect(()=>{
     if(fbaseInfo){
@@ -98,6 +99,8 @@ export default function mepage() {
         const thisLink = document.location.hostname;
         setShareUrl(thisLink);
       });
+    } else {
+      router.replace("/");
     }
   },[fbaseInfo]);
 
