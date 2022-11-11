@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Script from "next/script";
 import Layout from "../components/Layout";
 import "../styles/globals.css"
 import AuthProvider from "../context/auth-context";
@@ -34,19 +35,16 @@ function App({Component, pageProps}){
   return (
     <>
       <Head>
-        <title>{process.env.NODE_ENV==='development' ? '[dev]' : ''}[HBDONF-MK]1116 Soriziller Festival</title>
+        <title>{`[HBDONF-MK]1116 Soriziller Festival`}</title>
         <meta property="og:url" content={thisPage}/>
         <meta property="og:type" content="website"/>
         <meta name="twitter:card" content="summary"/>
         <link rel="shortcut icon" href={favicon.src} />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
+      </Head>
+      <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}/>
+      <Script 
+        dangerouslySetInnerHTML={{
+          __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -55,9 +53,8 @@ function App({Component, pageProps}){
               page_path: window.location.pathname,
             });
           `,
-            }}
-          />
-      </Head>
+        }}
+      />
       <AuthProvider path={router.pathname}>
         <Layout>
           <Component {...pageProps}/>
