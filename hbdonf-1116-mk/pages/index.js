@@ -35,7 +35,8 @@ const Wrapper = styled.div`
 
   /** 개별영역 style */
   .section-main-visual{
-    height:100vh;
+    height:100%;
+    min-height:100vh;
 
     .inner{
       width:100%;
@@ -322,6 +323,7 @@ export default function Home() {
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
   const {isMobile, getIsMobile} = useAuth();
+  const [isVertical, setIsVertical] = useState();
   const { t } = useTranslation('common');
 
   const listener = e => {
@@ -337,6 +339,17 @@ export default function Home() {
     setSection2Top(section1Height - padding);
     setSection3Top(section1Height + section2Height - padding);
   };
+
+  const getIsVertical = () => {
+    const winW = window.innerWidth;
+    const winH = window.innerHeight;
+
+    if (winW < winH) {
+        setIsVertical(true);
+    } else {
+        setIsVertical(false);
+    }
+  };
   
   useEffect(() => {
     if(!loading){
@@ -345,13 +358,17 @@ export default function Home() {
   
       getScrollTop();
       getIsMobile();
+      getIsVertical();
+
       window.addEventListener("resize", getScrollTop);
       window.addEventListener('resize', getIsMobile);
+      window.addEventListener('resize', getIsVertical);
       
       return () => {
         wrapper.removeEventListener("scroll", listener);
         window.removeEventListener("resize", getScrollTop);
         window.removeEventListener('resize', getIsMobile);
+        window.removeEventListener('resize', getIsVertical);
       };
     }
   });
@@ -399,10 +416,17 @@ export default function Home() {
             playsInline
             poster="/assets/image/bg_main_visual_poster.png"
           >
-            <source
-              src="/assets/video/vid_main_visual.mp4"
-              type="video/mp4"
-            />
+            {
+              isVertical ?
+              <source
+                src={`/assets/video/vid_main_visual_m.mp4`}
+                type="video/mp4"
+              />:
+              <source
+                src={`/assets/video/vid_main_visual_pc.mp4`}
+                type="video/mp4"
+              />
+            }
           </video>
           <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
