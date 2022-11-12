@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useAuth } from '../context/auth-context';
 import { Icon } from '../components/Icons';
 import { API_URL } from '../lib/config';
+import { transDate } from '../lib/util';
 
 
 const Wrapper = styled.div`
@@ -155,7 +156,7 @@ const Wrapper = styled.div`
 
 export default function Allmessage() {
   const { t } = useTranslation('common');
-  const [message, setMessage] = useState();
+  const [messageData, setMessageData] = useState();
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(false);
@@ -168,10 +169,10 @@ export default function Allmessage() {
       await fetch(`${API_URL}/message?size=${page*6}`)
     ).json();
 
-    setMessage(result);
+    setMessageData(result.payload);
     setLoading(false);
     
-    if(message && (result.length === message?.length)){
+    if(result.payload.count === result.payload.messages.length){
       setLastPage(true);
     }
   }, [page]);
@@ -261,7 +262,7 @@ export default function Allmessage() {
         <div className='inner center-content'>
           <div className='text'>
             <p dangerouslySetInnerHTML={{
-              __html: t("all_messages.메세지안내").replace("nnn","1234"),
+              __html: t("all_messages.메세지안내").replace("nnn",messageData.count),
             }}/>
           </div>
         </div>
@@ -274,11 +275,11 @@ export default function Allmessage() {
         <h2 className='hide'>메세지 리스트</h2>
         <ul className='center-content'>
           {
-            message?.map((data, index) => (
+            messageData?.messages.map((data, index) => (
               <li key={index}>
                 <div className='user-info'>
-                  <p className='username'>@twitter</p>
-                  <p className='date'>2021/02/01</p>
+                  <p className='username'>@{data.tid}</p>
+                  <p className='date'>{transDate(data.created)} (KST)</p>
                 </div>
                 <MessageBubble key={index} size={isMobile ? 40 : 50} level={data.level} text={data.content} />
               </li>

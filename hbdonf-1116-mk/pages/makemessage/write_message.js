@@ -8,10 +8,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/auth-context';
 import { API_URL } from '../../lib/config';
 import * as gtag from "../../lib/gtag";
+import Loading from '../../components/Loading';
 
 
 const Wrapper = styled.div`
@@ -74,9 +75,24 @@ const Wrapper = styled.div`
 
 export default function SetBubble() {
   const { t } = useTranslation('common');
-  const {fbaseInfo} = useContext(AuthContext);
+  const {fbaseInfo, getLocalStorage} = useContext(AuthContext);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
   const { bubbleLevel } = router.query;
+
+  useEffect(()=>{
+    if(getLocalStorage()?.messageId){
+      router.replace("/mypage");
+      alert("이미 작성한 메세지가 있습니다.");
+    } else {
+      if(!fbaseInfo){
+        router.replace("/login");
+        alert("로그인이 필요합니다.");
+      } else {
+        setLoading(false);
+      }
+    }
+  },[fbaseInfo]);
 
   const complete = () => {
     // alert("complete");
@@ -93,6 +109,7 @@ export default function SetBubble() {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
+          Authorization:fbaseInfo?.accessToken
       },
       body: JSON.stringify(data)
     }).then(() => {
@@ -111,7 +128,7 @@ export default function SetBubble() {
   };
 
 
-  return (
+  return ( loading ? <Loading/> :
     <Wrapper>
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage/soriziller" step={3}/>
@@ -132,7 +149,7 @@ export default function SetBubble() {
 }
 
 export async function getServerSideProps({locale}) {
-  console.log(locale);
+  // console.log(locale);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

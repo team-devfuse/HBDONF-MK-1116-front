@@ -3,6 +3,7 @@ import { AuthContext } from "../context/auth-context";
 import styled from "styled-components";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   height:100vh;
@@ -32,7 +33,12 @@ const Wrapper = styled.div`
 
 export default function loginPage(){
   const { t } = useTranslation('common');
-  const {SocialLogin, loginPopupOpend} = useContext(AuthContext);
+  const {SocialLogin, loginPopupOpend, fbaseInfo} = useContext(AuthContext);
+  const router = useRouter();
+
+  if(fbaseInfo){
+    router.replace("/mypage");
+  }
 
   return (
     <Wrapper className="center-content">

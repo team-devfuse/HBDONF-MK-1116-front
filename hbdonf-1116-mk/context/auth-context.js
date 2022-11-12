@@ -74,12 +74,13 @@ function AuthProvider (props){
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
+                        Authorization:user.accessToken
                     },
                   }).then((response) => response.json())
                   .then((data) => {
                     // console.log(data);
-                    if(data.messageId){
-                        localStorage.setItem("userInfo", JSON.stringify(data));
+                    if(data.payload.messageId){
+                        localStorage.setItem("userInfo", JSON.stringify(data.payload));
                         router.push("/mypage");
                     } else {
                         router.push("/makemessage");
@@ -116,8 +117,8 @@ function AuthProvider (props){
     const Logout = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
-            localStorage.clear();
             router.push("/");
+            localStorage.clear();
             console.log("logout");
 
             //6. GA이벤트 날리기
@@ -137,7 +138,7 @@ function AuthProvider (props){
     // 세션에서 userInfo 꺼내쓰기
     const getLocalStorage = () => {
         if (typeof window !== 'undefined') {
-            const localInfo = localStorage.getItem("userInfo", JSON.stringify(userInfo));
+            const localInfo = localStorage.getItem("userInfo");
             const userInfo = JSON.parse(localInfo);
     
             return userInfo;
@@ -156,20 +157,20 @@ function AuthProvider (props){
     });
 
     // 로그인-비로그인 상태 감지해 리디렉
-    if(getLocalStorage()){
-        // 로그인 시 막을 페이지
-        if(props.path=="/login"){
-            router.push("/mypage");
-        }
-    } else {
-        // 비로그인 시 막을 페이지
-        if(props.path.includes("makemessage/") || props.path.includes("mypage")){
-            if(typeof window != "undefined"){
-                // alert("로그인이 필요합니다");
-                router.push("/login");
-            }
-        }
-    }
+    // if(getLocalStorage()){
+    //     // 로그인 시 막을 페이지
+    //     if(props.path=="/login"){
+    //         router.push("/mypage");
+    //     }
+    // } else {
+    //     // 비로그인 시 막을 페이지
+    //     if(props.path.includes("makemessage/") || props.path.includes("mypage")){
+    //         if(typeof window != "undefined"){
+    //             // alert("로그인이 필요합니다");
+    //             router.push("/login");
+    //         }
+    //     }
+    // }
 
     // 모바일 쿼리 체크
     const getIsMobile = () => {

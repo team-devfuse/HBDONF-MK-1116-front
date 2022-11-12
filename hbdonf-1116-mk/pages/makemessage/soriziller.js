@@ -8,6 +8,7 @@ import { useAuth } from '../../context/auth-context';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import * as gtag from "../../lib/gtag";
+import Loading from '../../components/Loading';
 
 
 const Wrapper = styled.div`
@@ -50,7 +51,8 @@ export default function Soriziller() {
   const [volume, setVolume] = useState();
   const [level, setLevel] = useState(1);
   const [time, setTime] = useState(10);
-  const {isMobile, getIsMobile} = useAuth();
+  const [loading, setLoading] = useState(true);
+  const {isMobile, getIsMobile, fbaseInfo, getLocalStorage} = useAuth();
 
   const nextStep = () => {
     router.push({
@@ -61,60 +63,73 @@ export default function Soriziller() {
 
   /** 기본세팅 : 마이크 볼륨, 카운트다운 세팅 */
   useEffect(() => {
-    /** 마이크 볼륨 받아오기 */ 
-    navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true
-    })
-      .then(function(stream) {
-        const audioContext = new AudioContext();
-        const analyser = audioContext.createAnalyser();
-        const microphone = audioContext.createMediaStreamSource(stream);
-        const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
-    
-        analyser.smoothingTimeConstant = 0.8;
-        analyser.fftSize = 1024;
-    
-        microphone.connect(analyser);
-        analyser.connect(scriptProcessor);
-        scriptProcessor.connect(audioContext.destination);
-        scriptProcessor.onaudioprocess = function() {
-          const array = new Uint8Array(analyser.frequencyBinCount);
-          analyser.getByteFrequencyData(array);
-          const arraySum = array.reduce((a, value) => a + value, 0);
-          const average = arraySum / array.length;
-          // console.log(Math.round(average));
-          setVolume(Math.round(average));
-          // colorPids(average);
-        };
+    if(getLocalStorage()?.messageId){
+      router.replace("/mypage");
+      alert("이미 작성한 메세지가 있습니다.");
+    }
+
+    if(fbaseInfo){
+      /** 마이크 볼륨 받아오기 */ 
+      navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true
       })
-      .catch(function(err) {
-        /* handle the error */
-        const mic_confirm = confirm(t("soriziller.마이크 사용불가"));
+        .then(function(stream) {
+          const audioContext = new AudioContext();
+          const analyser = audioContext.createAnalyser();
+          const microphone = audioContext.createMediaStreamSource(stream);
+          const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+      
+          analyser.smoothingTimeConstant = 0.8;
+          analyser.fftSize = 1024;
+      
+          microphone.connect(analyser);
+          analyser.connect(scriptProcessor);
+          scriptProcessor.connect(audioContext.destination);
+          scriptProcessor.onaudioprocess = function() {
+            const array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            const arraySum = array.reduce((a, value) => a + value, 0);
+            const average = arraySum / array.length;
+            // console.log(Math.round(average));
+            setVolume(Math.round(average));
+            // colorPids(average);
 
-        if(mic_confirm){
-          nextStep();
-        }
-      });
-    
-    //6. GA이벤트 날리기
-    const gaValue = { 
-      action :"soriziller",
-      category : "event",
-      label :"start"
-    };
-    
-    gtag.event(gaValue);
-
-    /** 시간 카운트다운*/
-    const counter = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(counter);
-    };
-  }, []);
+            setLoading(false);
+          };
+        })
+        .catch(function(err) {
+          /* handle the error */
+          const mic_confirm = confirm(t("soriziller.마이크 사용불가"));
+  
+          if(mic_confirm){
+            nextStep();
+          }
+        });
+        
+      
+      //6. GA이벤트 날리기
+      const gaValue = { 
+        action :"soriziller",
+        category : "event",
+        label :"start"
+      };
+      
+      gtag.event(gaValue);
+  
+      /** 시간 카운트다운*/
+      const counter = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+  
+      return () => {
+        clearInterval(counter);
+      };
+    } else {
+      router.replace("/login");
+      alert("로그인이 필요합니다");
+    }
+  }, [fbaseInfo]);
 
   /** 시간 만료 시 다음단계로 이동 */
   useEffect(()=>{
@@ -147,7 +162,7 @@ export default function Soriziller() {
     };
   });
   
-  return (
+  return ( loading ? <Loading/> :
     <Wrapper>
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage" step={1}/>
@@ -169,7 +184,7 @@ export default function Soriziller() {
 }
 
 export async function getServerSideProps({locale}) {
-  console.log(locale);
+  // console.log(locale);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

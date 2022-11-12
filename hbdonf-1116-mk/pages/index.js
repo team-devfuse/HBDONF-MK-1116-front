@@ -35,7 +35,8 @@ const Wrapper = styled.div`
 
   /** 개별영역 style */
   .section-main-visual{
-    height:100vh;
+    height:100%;
+    min-height:100vh;
 
     .inner{
       width:100%;
@@ -158,13 +159,14 @@ const Wrapper = styled.div`
   }
 
   .section-mk-work{
-    scroll-snap-align:top;
+    scroll-snap-align:start end;
     min-height: unset;
     padding:30rem 0 20rem;
 
     .inner{
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
       max-width: 1920px;
 
       .img-area{
@@ -178,7 +180,7 @@ const Wrapper = styled.div`
         .txt{
           position: absolute;
           right:50%;
-          top:28%;
+          top:65%;
           transform: translateX(110%);
           font-weight: 600;
           animation: txtAttention 1s ease-in-out alternate infinite;
@@ -321,6 +323,7 @@ export default function Home() {
   const [section2Top, setSection2Top] = useState();
   const [section3Top, setSection3Top] = useState();
   const {isMobile, getIsMobile} = useAuth();
+  const [isVertical, setIsVertical] = useState();
   const { t } = useTranslation('common');
 
   const listener = e => {
@@ -336,6 +339,17 @@ export default function Home() {
     setSection2Top(section1Height - padding);
     setSection3Top(section1Height + section2Height - padding);
   };
+
+  const getIsVertical = () => {
+    const winW = window.innerWidth;
+    const winH = window.innerHeight;
+
+    if (winW < winH) {
+        setIsVertical(true);
+    } else {
+        setIsVertical(false);
+    }
+  };
   
   useEffect(() => {
     if(!loading){
@@ -344,13 +358,17 @@ export default function Home() {
   
       getScrollTop();
       getIsMobile();
+      getIsVertical();
+
       window.addEventListener("resize", getScrollTop);
       window.addEventListener('resize', getIsMobile);
+      window.addEventListener('resize', getIsVertical);
       
       return () => {
         wrapper.removeEventListener("scroll", listener);
         window.removeEventListener("resize", getScrollTop);
         window.removeEventListener('resize', getIsMobile);
+        window.removeEventListener('resize', getIsVertical);
       };
     }
   });
@@ -362,7 +380,7 @@ export default function Home() {
       ).json();
   
       // console.log(result);
-      setMessage(result);
+      setMessage(result.payload.messages);
     };
 
     const getMkWork = async () => {
@@ -398,15 +416,22 @@ export default function Home() {
             playsInline
             poster="/assets/image/bg_main_visual_poster.png"
           >
-            <source
-              src="/assets/video/vid_main_visual.mp4"
-              type="video/mp4"
-            />
+            {
+              isVertical ?
+              <source
+                src={`/assets/video/vid_main_visual_m.mp4`}
+                type="video/mp4"
+              />:
+              <source
+                src={`/assets/video/vid_main_visual_pc.mp4`}
+                type="video/mp4"
+              />
+            }
           </video>
           <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
-      <section className={`section-message ${scrollY > section2Top && scrollY < section3Top ? "on" : ""}`}>
+      <section className={`section-message ${scrollY >= section2Top && scrollY < section3Top ? "on" : ""}`}>
         <h2 className='hide'>메세지 영역</h2>
         <div className='stickers'>
           <Sticker.WhiteCircle/>
@@ -503,7 +528,7 @@ export default function Home() {
 }
 
 export async function getServerSideProps({locale}) {
-  console.log(locale);
+  // console.log(locale);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

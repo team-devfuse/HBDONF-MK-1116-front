@@ -11,7 +11,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../context/auth-context';
+import Loading from '../../components/Loading';
 
 
 const Wrapper = styled.div`
@@ -76,7 +78,9 @@ export default function SetBubble() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { level } = router.query;
+  const {fbaseInfo, getLocalStorage} = useContext(AuthContext);
   const [bubbleLevel, setBubbleLevel] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const nextStep = () => {
     router.push({
@@ -85,8 +89,22 @@ export default function SetBubble() {
     }, '/makemessage/write_message');
   };
 
+  useEffect(()=>{
+    if(getLocalStorage()?.messageId){
+      router.replace("/mypage");
+      alert("이미 작성한 메세지가 있습니다.");
+    } else {
+      if(!fbaseInfo){
+        router.replace("/login");
+        alert("로그인이 필요합니다.");
+      } else {
+        setLoading(false);
+      }
+    }
 
-  return (
+  },[fbaseInfo]);
+
+  return ( loading ? <Loading/> :
     <Wrapper>
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage/soriziller" step={2}/>

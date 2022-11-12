@@ -4,11 +4,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import Loading from '../components/Loading';
 import MessageBubble from '../components/MessageBubble';
-import { shareTwitter, shareFacebook, shareLink } from "../lib/util";
+import { shareTwitter, shareFacebook, shareLink, transDate } from "../lib/util";
 import { Icon } from '../components/Icons';
 import Link from 'next/link';
 import { API_URL } from '../lib/config';
 import { AuthContext } from '../context/auth-context';
+import { useRouter } from 'next/router';
 
 const Wrapper = styled.div`
   /* color:red */
@@ -73,11 +74,11 @@ const Wrapper = styled.div`
 
 export default function mepage() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const {fbaseInfo} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [mymessage, setMymessage] = useState();
   const [shareUrl, setShareUrl] = useState();
-
 
   useEffect(()=>{
     if(fbaseInfo){
@@ -85,18 +86,21 @@ export default function mepage() {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
+            Authorization:fbaseInfo?.accessToken
         },
       }).then((response) => response.json())
       .then((data) => {
-        // console.log(data);
-        if(data.messageId){
-          setMymessage(data);
+        // console.log(data.payload);
+        if(data.payload.messageId){
+          setMymessage(data.payload);
         }
         setLoading(false);
     
         const thisLink = document.location.hostname;
         setShareUrl(thisLink);
       });
+    } else {
+      router.replace("/");
     }
   },[fbaseInfo]);
 
@@ -106,10 +110,15 @@ export default function mepage() {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization:fbaseInfo?.accessToken
         }
-      }).then(()=>{
-        setMymessage();
-        localStorage.clear();
+      }).then((res)=>{
+        if(res.status===200){
+          setMymessage();
+          localStorage.clear();
+        } else{
+          alert(`${res.status} error!`);
+        }
       });
     }
   };
@@ -125,7 +134,7 @@ export default function mepage() {
               <div className='section-my-message'>
                 <p className='user-info'>
                   <b>@{mymessage?.tid}</b>
-                  <span>{mymessage?.date}</span>
+                  <span>{transDate(mymessage?.created)} (KST)</span>
                 </p>
                 <MessageBubble size={40} level={mymessage?.level} text={mymessage?.content} />
               </div>
@@ -162,7 +171,7 @@ export default function mepage() {
 }
 
 export async function getServerSideProps({locale}) {
-  console.log(locale);
+  // console.log(locale);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))

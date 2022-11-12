@@ -19,24 +19,25 @@ export function transTimeKo(duration){
     return `${hr}${min}${sec}`;
 };
 
-export function transDate(duration){
-    const time = parseInt(duration);
-    const sec = time % 60 >= 0 ? time%60+"초" : "";
-    const min = parseInt(time % 3600 / 60) > 0 ? parseInt(time % 3600 / 60)+"분 " : "";
-    const hr = parseInt(time / 3600 % 24) > 0 ? parseInt(time / 3600 % 24)+"시간 " : "";
-    const day = parseInt(time / 3600 / 24) > 0 ? parseInt(time / 3600 / 24)+"일 " : "";
+// export function transDate(duration){
+//     const time = parseInt(duration);
+//     const sec = time % 60 >= 0 ? time%60+"초" : "";
+//     const min = parseInt(time % 3600 / 60) > 0 ? parseInt(time % 3600 / 60)+"분 " : "";
+//     const hr = parseInt(time / 3600 % 24) > 0 ? parseInt(time / 3600 % 24)+"시간 " : "";
+//     const day = parseInt(time / 3600 / 24) > 0 ? parseInt(time / 3600 / 24)+"일 " : "";
 
-    return `${day}${hr}${min}${sec}`;
-};
+//     return `${day}${hr}${min}${sec}`;
+// };
 
-export function transDateKo(date){
+export function transDate(date){
     const year = new Date(date).getFullYear();
     const month = new Date(date).getMonth()+1;
     const day = new Date(date).getDate();
     const hour = new Date(date).getHours();
     const minute = new Date(date).getMinutes();
+    const second = new Date(date).getSeconds();
 
-    return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute > 0 ? minute+"분" : ""}`;
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 };
 
 // sns 공유
