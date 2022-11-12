@@ -42,6 +42,10 @@ const Wrapper = styled.div`
       width:100%;
       position: relative;
 
+      .mobile{
+        display:none;
+      }
+
       img{
         position: absolute;
         left:0;
@@ -282,6 +286,18 @@ const Wrapper = styled.div`
 
   @media all and (max-width: 1023px) {
     /** 개별영역 style */
+    .section-main-visual{
+      .inner{
+        .mobile{
+          display:block;
+        }
+
+        .pc{
+          display: none;
+        }
+      }
+    }
+
     .section-mk-work{
       padding-top:10rem;
 
@@ -411,34 +427,32 @@ export default function Home() {
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
         <div className='inner'>
-            {
-              isVertical ?
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/assets/image/bg_main_visual_poster.png"
-              >
-                <source
-                  src="/assets/video/vid_main_visual_m.mp4"
-                  type="video/mp4"
-                />
-              </video> :
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/assets/image/bg_main_visual_poster.png"
-              >
-                <source
-                  src="/assets/video/vid_main_visual_pc.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            }
-          
+          <video
+            className='mobile'
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/assets/image/bg_main_visual_poster.png"
+          >
+            <source
+              src="/assets/video/vid_main_visual_m.mp4"
+              type="video/mp4"
+            />
+          </video> 
+          <video
+            className='pc'
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/assets/image/bg_main_visual_poster.png"
+          >
+            <source
+              src="/assets/video/vid_main_visual_pc.mp4"
+              type="video/mp4"
+            />
+          </video>          
           <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
