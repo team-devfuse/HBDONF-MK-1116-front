@@ -11,9 +11,12 @@ const Wrapper = styled.ul`
         height:3rem;
         opacity: 0.2;
         transition: opacity 0.2s ease-in-out;
+        flex-grow: 0;
 
         img{
+            width:auto;
             height:100%;
+            object-fit: contain;
         }
 
         &:last-child{
