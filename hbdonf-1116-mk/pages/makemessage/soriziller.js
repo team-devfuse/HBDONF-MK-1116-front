@@ -146,11 +146,11 @@ export default function Soriziller() {
     // else if(volume >= 81 && volume <= 100){level<3 && setLevel(3)} // 3
     // else if(volume >= 101 && volume <= 110){level<4 && setLevel(4)} // 4
     // else if(volume >= 111 && volume <= 120){level<5 && setLevel(5)} // 5
-    if(volume >= 0 && volume <= 60){level<1 && setLevel(1)} // 1
-    else if(volume >= 61 && volume <= 80){level<2 && setLevel(2)} // 2
-    else if(volume >= 81 && volume <= 90){level<3 && setLevel(3)} // 3
-    else if(volume >= 91 && volume <= 110){level<4 && setLevel(4)} // 4
-    else if(volume >= 111 && volume <= 120){level<5 && setLevel(5)} // 5
+    if(volume >= 0 && volume <= 40){level<1 && setLevel(1)} // 1
+    else if(volume >= 41 && volume <= 60){level<2 && setLevel(2)} // 2
+    else if(volume >= 61 && volume <= 80){level<3 && setLevel(3)} // 3
+    else if(volume >= 81 && volume <= 100){level<4 && setLevel(4)} // 4
+    else if(volume >= 101 && volume <= 120){level<5 && setLevel(5)} // 5
   }, [volume]);
   
   /** 모바일 여부에 따라 prog-circle width 설정 */
