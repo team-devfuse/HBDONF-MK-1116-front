@@ -78,7 +78,7 @@ export default function SetBubble() {
   const { t } = useTranslation('common');
   const router = useRouter();
   const { level } = router.query;
-  const {fbaseInfo, getLocalStorage} = useContext(AuthContext);
+  const {fbaseInfo, getLocalStorage, isMobile, getIsMobile} = useContext(AuthContext);
   const [bubbleLevel, setBubbleLevel] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -99,6 +99,7 @@ export default function SetBubble() {
         alert(t("alert.로그인이 필요합니다."));
       } else {
         setLoading(false);
+        getIsMobile();
       }
     }
 
@@ -125,7 +126,7 @@ export default function SetBubble() {
                     return (
                       <SwiperSlide key={index}>
                         <div className='bubble-box'>
-                          <MessageBubble size={45} level={item.level} text={t(`set_messagebubble.${item.title}`)}/>
+                          <MessageBubble size={isMobile ? 40 : 45} level={item.level} text={t(`set_messagebubble.${item.title}`)}/>
                         </div>
                       </SwiperSlide>
                     );

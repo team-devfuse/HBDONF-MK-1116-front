@@ -13,7 +13,6 @@ import { transDate } from '../lib/util';
 
 
 const Wrapper = styled.div`
-  /* color:red */
   .section-main-visial{
     width:100%;
     height: 100vh;
@@ -152,6 +151,11 @@ const Wrapper = styled.div`
     }
   }
 
+  @media all and (max-width: 1023px) {
+    .section-main-visial{
+      height: 50vh;
+    }
+  }
 `;
 
 export default function Allmessage() {

@@ -411,25 +411,34 @@ export default function Home() {
       <section className='section-main-visual'>
         <h2 className='hide'>main visual</h2>
         <div className='inner'>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/assets/image/bg_main_visual_poster.png"
-          >
             {
               isVertical ?
-              <source
-                src={`/assets/video/vid_main_visual_m.mp4`}
-                type="video/mp4"
-              />:
-              <source
-                src={`/assets/video/vid_main_visual_pc.mp4`}
-                type="video/mp4"
-              />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/assets/image/bg_main_visual_poster.png"
+              >
+                <source
+                  src="/assets/video/vid_main_visual_m.mp4"
+                  type="video/mp4"
+                />
+              </video> :
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/assets/image/bg_main_visual_poster.png"
+              >
+                <source
+                  src="/assets/video/vid_main_visual_pc.mp4"
+                  type="video/mp4"
+                />
+              </video>
             }
-          </video>
+          
           <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
