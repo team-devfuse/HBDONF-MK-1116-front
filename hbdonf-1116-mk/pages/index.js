@@ -456,7 +456,7 @@ export default function Home() {
           <img src="/assets/image/bg_ripped_paper_01.png" alt=""/>
         </div>
       </section>
-      <section className={`section-message ${scrollY >= section2Top && scrollY < section3Top ? "on" : ""}`}>
+      <section className={`section-message ${scrollY >= 100 && scrollY < section3Top ? "on" : ""}`}>
         <h2 className='hide'>메세지 영역</h2>
         <div className='stickers'>
           <Sticker.WhiteCircle/>
