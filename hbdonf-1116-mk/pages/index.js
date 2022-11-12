@@ -283,6 +283,8 @@ const Wrapper = styled.div`
   @media all and (max-width: 1023px) {
     /** 개별영역 style */
     .section-mk-work{
+      padding-top:10rem;
+
       .inner{
         flex-direction: column;
         align-items: center;
