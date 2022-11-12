@@ -38,7 +38,7 @@ function App({Component, pageProps}){
         <title>{`[HBDONF-MK]1116 Soriziller Festival`}</title>
         <meta property="og:url" content={thisPage}/>
         <meta property="og:type" content="website"/>
-        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:card" content="summary_large_image"/>
         <link rel="shortcut icon" href={favicon.src} />
       </Head>
       <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}/>
