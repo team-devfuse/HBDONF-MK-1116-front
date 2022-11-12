@@ -81,13 +81,13 @@ export default function SetBubble() {
   const { bubbleLevel } = router.query;
 
   useEffect(()=>{
-    if(getLocalStorage()?.messageId){
+    if(getLocalStorage()?.content){
       router.replace("/mypage");
-      alert("이미 작성한 메세지가 있습니다.");
+      alert(t("alert.이미 남긴 말풍선이 있습니다."));
     } else {
       if(!fbaseInfo){
         router.replace("/login");
-        alert("로그인이 필요합니다.");
+        alert(t("alert.로그인이 필요합니다."));
       } else {
         setLoading(false);
       }
@@ -133,7 +133,7 @@ export default function SetBubble() {
       <div className='inner center-content'>
         <MessageNav backPath="/makemessage/soriziller" step={3}/>
         <div className='txt-area'>
-          {t("set_messagebubble.말풍선을 선택해주세요.")}
+          {t("set_messagebubble.메세지를 작성해주세요.")}
         </div>
         <div className='write-area'>
           <MessageBubble size={45} writemode={true} level={bubbleLevel}/>

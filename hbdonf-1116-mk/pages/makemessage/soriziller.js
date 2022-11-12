@@ -63,9 +63,9 @@ export default function Soriziller() {
 
   /** 기본세팅 : 마이크 볼륨, 카운트다운 세팅 */
   useEffect(() => {
-    if(getLocalStorage()?.messageId){
+    if(getLocalStorage()?.content){
       router.replace("/mypage");
-      alert("이미 작성한 메세지가 있습니다.");
+      alert(t("alert.이미 남긴 말풍선이 있습니다."));
     }
 
     if(fbaseInfo){
@@ -127,7 +127,7 @@ export default function Soriziller() {
       };
     } else {
       router.replace("/login");
-      alert("로그인이 필요합니다");
+      alert(t("alert.로그인이 필요합니다."));
     }
   }, [fbaseInfo]);
 

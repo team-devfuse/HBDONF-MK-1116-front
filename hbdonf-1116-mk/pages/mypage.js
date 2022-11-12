@@ -105,7 +105,7 @@ export default function mepage() {
   },[fbaseInfo]);
 
   const deleteMessage = () => {
-    if(confirm("삭제한 메세지는 복구할 수 없어요. 그래도 삭제하시겠어요?")){
+    if(confirm(t("mypage.삭제안내"))){
       fetch(`${API_URL}/message/${mymessage.messageId}`, {
         method: "PUT",
         headers: {

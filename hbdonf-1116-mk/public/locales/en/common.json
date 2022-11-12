@@ -35,7 +35,7 @@
     "set_messagebubble":{
         "말풍선을 선택해주세요." : "Please choose the callout",
         "메세지를 작성해주세요." : "Please leave a message",
-        "작성안내" : "Please leave a message within 140 characters. (Messages with abusive or threatening language will be deleted without prior notice.)",
+        "작성안내" : "Please leave a message within 120 characters. (Messages with abusive or threatening language will be deleted without prior notice.)",
         "기본 말풍선" : "Default Callout",
         "떨리는 마음 말풍선" : "'Fluttering Heart' Callout",
         "사랑 가득 말풍선" : "'Full of Love' Callout",
@@ -58,5 +58,9 @@
         "모든 말풍선 보러가기": "Check all callouts",
         "빈칸안내": "You haven't left a callout yet.",
         "삭제안내": "You cannot bring back your callout once you delete. Do you still want to delete yours?"
+    },
+    "alert":{
+        "로그인이 필요합니다." : "Please log in first.",
+        "이미 남긴 말풍선이 있습니다." : "You've already left a callout."
     }
 }

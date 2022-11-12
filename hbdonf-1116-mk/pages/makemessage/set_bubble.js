@@ -90,13 +90,13 @@ export default function SetBubble() {
   };
 
   useEffect(()=>{
-    if(getLocalStorage()?.messageId){
+    if(getLocalStorage()?.content){
       router.replace("/mypage");
-      alert("이미 작성한 메세지가 있습니다.");
+      alert(t("alert.이미 남긴 말풍선이 있습니다."));
     } else {
       if(!fbaseInfo){
         router.replace("/login");
-        alert("로그인이 필요합니다.");
+        alert(t("alert.로그인이 필요합니다."));
       } else {
         setLoading(false);
       }
@@ -146,7 +146,7 @@ export default function SetBubble() {
 }
 
 export async function getServerSideProps({locale}) {
-  console.log(locale);
+  // console.log(locale);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["common"]))
