@@ -61,6 +61,7 @@
     },
     "alert":{
         "로그인이 필요합니다." : "Please log in first.",
-        "이미 남긴 말풍선이 있습니다." : "You've already left a callout."
+        "이미 남긴 말풍선이 있습니다." : "You've already left a callout.",
+        "작성종료":"Message writing period has ended."
     }
 }

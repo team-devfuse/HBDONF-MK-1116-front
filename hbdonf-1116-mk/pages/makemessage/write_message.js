@@ -95,7 +95,7 @@ export default function SetBubble() {
   },[fbaseInfo]);
 
   const complete = () => {
-    // alert("complete");
+    alert(t("alert.작성종료"));
     const textarea = document.getElementsByTagName("textarea");
     // alert(textarea[0].value);
 
@@ -105,26 +105,34 @@ export default function SetBubble() {
       "level": bubbleLevel
     };
 
-    fetch(`${API_URL}/message`, {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-          Authorization:fbaseInfo?.accessToken
-      },
-      body: JSON.stringify(data)
-    }).then(() => {
-      //6. GA이벤트 날리기
-      const gaValue = { 
-        action :"soriziller",
-        category : "event",
-        label :"end"
-      };
-      
-      gtag.event(gaValue);
+    const gaValue = { 
+      action :"soriziller",
+      category : "event",
+      label :"end_after_16"
+    };
+    
+    gtag.event(gaValue);
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      router.push("/mypage");
-    });
+    // fetch(`${API_URL}/message`, {
+    //   method: "POST",
+    //   headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization:fbaseInfo?.accessToken
+    //   },
+    //   body: JSON.stringify(data)
+    // }).then(() => {
+    //   //6. GA이벤트 날리기
+    //   const gaValue = { 
+    //     action :"soriziller",
+    //     category : "event",
+    //     label :"end_after_16"
+    //   };
+      
+    //   gtag.event(gaValue);
+
+    //   localStorage.setItem("userInfo", JSON.stringify(data));
+    //   router.push("/mypage");
+    // });
   };
 
 
